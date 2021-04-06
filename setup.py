@@ -26,7 +26,13 @@ setup(
     },
     package_data={
         'q2_types_genomics': ['citations.bib'],
-        'q2_types_genomics.tests': ['data/*']
+        'q2_types_genomics.tests': ['data/*'],
+        'q2_types_genomics.per_sample_data.tests':
+            ['data/*',
+             'data/mags/mags-fa/*',
+             'data/mags/mags-fasta/*',
+             'data/mags/mags-unorganized/*',
+             'data/manifests/*']
     },
     zip_safe=False,
 )

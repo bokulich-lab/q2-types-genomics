@@ -90,23 +90,23 @@ class MultiMAGManifestFormat(_FastaManifestBase):
                               n={'min': 10, 'max': None}[level])
 
 
-class MultiFileDirectoryFormat(model.DirectoryFormat):
-    sequences = model.FileCollection(r'.+\/.+\.(fa|fasta)$',
-                                     format=DNAFASTAFormat)
+class MultiFASTADirectoryFormat(model.DirectoryFormat):
+    sequences = model.FileCollection(r'.+\.(fa|fasta)$', format=DNAFASTAFormat)
 
     @sequences.set_path_maker
     def sequences_path_maker(self, sample_id, mag_id):
+        # write out with fasta extension, regardless if input was fa or fasta
         return '%s/%s.fasta' % (sample_id, mag_id)
 
     def _validate_(self, level):
         for p in self.path.iterdir():
             if not p.is_dir() and p.name not in ['MANIFEST', 'metadata.yml']:
                 raise ValidationError(
-                    "Files should be organised in directories")
+                    "Files should be organised in per-sample directories")
 
 
-class MAGSequencesDirFmt(MultiFileDirectoryFormat):
+class MAGSequencesDirFmt(MultiFASTADirectoryFormat):
     manifest = model.File('MANIFEST', format=MultiMAGManifestFormat)
 
 
-plugin.register_formats(MultiFileDirectoryFormat, MAGSequencesDirFmt)
+plugin.register_formats(MultiFASTADirectoryFormat, MAGSequencesDirFmt)
