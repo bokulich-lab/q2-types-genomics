@@ -6,6 +6,8 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
+import importlib
+
 import qiime2.plugin
 
 from q2_types_genomics import __version__
@@ -23,3 +25,5 @@ plugin = qiime2.plugin.Plugin(
     short_description=('Plugin defining types for analysis of '
                        'genomics datasets.')
 )
+
+importlib.import_module('q2_types_genomics.per_sample_data')
