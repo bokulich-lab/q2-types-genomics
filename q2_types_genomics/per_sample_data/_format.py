@@ -8,6 +8,7 @@
 
 import os
 
+from q2_types.bowtie2 import Bowtie2IndexDirFmt
 from q2_types.feature_data import DNAFASTAFormat
 from qiime2.core.exceptions import ValidationError
 from qiime2.plugin import model
@@ -93,7 +94,7 @@ class MultiMAGManifestFormat(_FastaManifestBase):
 class MultiDirValidationMixin:
     def _validate_(self, level):
         for p in self.path.iterdir():
-            if not p.is_dir() and p.name not in ['MANIFEST', 'metadata.yml']:
+            if not p.is_dir() and p.name not in ['MANIFEST']:
                 raise ValidationError(
                     "Files should be organised in per-sample directories")
 
@@ -112,6 +113,10 @@ class MAGSequencesDirFmt(MultiFASTADirectoryFormat):
     manifest = model.File('MANIFEST', format=MultiMAGManifestFormat)
 
 
+class MultiBowtie2IndexDirFmt(MultiDirValidationMixin, Bowtie2IndexDirFmt):
+    pass
+
+
 ContigSequencesDirFmt = model.SingleFileDirectoryFormat(
     'ContigSequencesDirFmt', 'contigs.fasta', DNAFASTAFormat
 )
@@ -119,5 +124,6 @@ ContigSequencesDirFmt = model.SingleFileDirectoryFormat(
 plugin.register_formats(
     MultiFASTADirectoryFormat,
     MAGSequencesDirFmt,
-    ContigSequencesDirFmt
+    ContigSequencesDirFmt,
+    MultiBowtie2IndexDirFmt
 )
