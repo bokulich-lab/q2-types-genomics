@@ -1,0 +1,33 @@
+{% set data = load_setup_py_data() %}
+{% set version = data.get('version') or 'placehold' %}
+{% set release = '.'.join(version.split('.')[:2]) %}
+
+package:
+  name: q2-types-genomics
+  version: {{ version }}
+
+source:
+  path: ../..
+
+build:
+  script: make install
+
+requirements:
+  host:
+    - python {{ python }}
+    - setuptools
+
+  run:
+    - python {{ python }}
+    - q2-types {{ release }}.*
+    - qiime2 {{ release }}.*
+
+test:
+  imports:
+    - q2_types_genomics
+    - qiime2.plugins.types_genomics
+
+about:
+  home: https://github.com/bokulich-lab/q2-types-genomics
+  license: BSD-3-Clause
+  license_family: BSD
