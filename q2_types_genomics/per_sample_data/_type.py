@@ -9,14 +9,21 @@
 from q2_types.sample_data import SampleData
 from qiime2.core.type import SemanticType
 
-from . import MAGSequencesDirFmt
+from . import MAGSequencesDirFmt, MultiBowtie2IndexDirFmt
 from ..plugin_setup import plugin
 
-MAGs = SemanticType('MAGs', variant_of=SampleData.field['type'])
+MAGs = SemanticType(
+    'MAGs', variant_of=SampleData.field['type'])
+MultiBowtie2Index = SemanticType(
+    'MultiBowtie2Index', variant_of=SampleData.field['type'])
 
-plugin.register_semantic_types(MAGs)
+plugin.register_semantic_types(MAGs, MultiBowtie2Index)
 
 plugin.register_semantic_type_to_format(
     SampleData[MAGs],
     artifact_format=MAGSequencesDirFmt
+)
+plugin.register_semantic_type_to_format(
+    SampleData[MultiBowtie2Index],
+    artifact_format=MultiBowtie2IndexDirFmt
 )

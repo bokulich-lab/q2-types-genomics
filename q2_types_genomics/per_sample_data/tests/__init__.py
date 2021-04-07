@@ -1,3 +1,4 @@
+# ----------------------------------------------------------------------------
 # Copyright (c) 2021, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.

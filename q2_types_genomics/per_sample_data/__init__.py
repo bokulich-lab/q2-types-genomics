@@ -9,12 +9,13 @@
 import importlib
 
 from ._format import (
-    MAGSequencesDirFmt, MultiMAGManifestFormat
+    MAGSequencesDirFmt, MultiMAGManifestFormat, MultiBowtie2IndexDirFmt
 )
 from._type import (
-    MAGs
+    MAGs, MultiBowtie2Index
 )
 
-__all__ = ['MAGs', 'MAGSequencesDirFmt', 'MultiMAGManifestFormat']
+__all__ = ['MAGs', 'MAGSequencesDirFmt', 'MultiMAGManifestFormat',
+           'MultiBowtie2Index', 'MultiBowtie2IndexDirFmt']
 
 importlib.import_module('q2_types_genomics.per_sample_data._transformer')

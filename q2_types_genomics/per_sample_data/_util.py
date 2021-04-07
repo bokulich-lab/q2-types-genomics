@@ -38,3 +38,23 @@ def _mag_manifest_helper(dirfmt, output_cls, manifest_fmt,
     result.manifest.write_data(manifest, manifest_fmt)
 
     return result
+
+
+# def _bowtie2_fmt_helper(dirfmt, output_cls, bowtie_fmt):
+#     result = output_cls()
+#     for path, view in dirfmt.sequences.iter_views(bowtie_fmt):
+#         sample_id, mag_id = _parse_mag_filename(path)
+#         result.sequences.write_data(view, bowtie_fmt,
+#                                     sample_id=sample_id,
+#                                     mag_id=mag_id)
+#
+#         filepath = result.sequences.path_maker(sample_id=sample_id,
+#                                                mag_id=mag_id)
+#         name = f"{filepath.parent.name}/{filepath.name}"
+#
+#         manifest_fh.write('%s,%s,%s\n' % (sample_id, mag_id, name))
+#
+#     manifest_fh.close()
+#     result.manifest.write_data(manifest, manifest_fmt)
+#
+#     return result

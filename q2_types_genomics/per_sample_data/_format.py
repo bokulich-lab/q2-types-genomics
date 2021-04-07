@@ -8,6 +8,7 @@
 
 import os
 
+from q2_types.bowtie2 import Bowtie2IndexDirFmt
 from q2_types.feature_data import DNAFASTAFormat
 from qiime2.core.exceptions import ValidationError
 from qiime2.plugin import model
@@ -112,4 +113,11 @@ class MAGSequencesDirFmt(MultiFASTADirectoryFormat):
     manifest = model.File('MANIFEST', format=MultiMAGManifestFormat)
 
 
-plugin.register_formats(MultiFASTADirectoryFormat, MAGSequencesDirFmt)
+class MultiBowtie2IndexDirFmt(MultiDirValidationMixin, Bowtie2IndexDirFmt):
+    pass
+
+
+plugin.register_formats(
+    MultiFASTADirectoryFormat, MAGSequencesDirFmt,
+    MultiBowtie2IndexDirFmt
+)
