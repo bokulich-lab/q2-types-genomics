@@ -7,14 +7,16 @@
 # ----------------------------------------------------------------------------
 
 import os
+import shutil
 import string
 import unittest
 
 from qiime2.core.exceptions import ValidationError
 from qiime2.plugin.testing import TestPluginBase
 
-from q2_types_genomics.per_sample_data._format import \
-    (MultiFASTADirectoryFormat, MultiMAGManifestFormat)
+from q2_types_genomics.per_sample_data._format import (
+    MultiFASTADirectoryFormat, MultiMAGManifestFormat, ContigSequencesDirFmt
+)
 
 
 class TestMultiMAGManifestFormat(TestPluginBase):
@@ -90,6 +92,12 @@ class TestFormats(TestPluginBase):
         with self.assertRaisesRegex(
                 ValidationError, 'should be .* per-sample directories'):
             format.validate()
+
+    def test_contig_seqs_dirfmt(self):
+        filepath = self.get_data_path('mags/mags-fasta/sample2/mag1.fasta')
+        shutil.copy(filepath, os.path.join(
+            self.temp_dir.name, 'contigs.fasta'))
+        ContigSequencesDirFmt(self.temp_dir.name, mode='r').validate()
 
 
 if __name__ == '__main__':

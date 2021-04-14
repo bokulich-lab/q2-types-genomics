@@ -112,4 +112,12 @@ class MAGSequencesDirFmt(MultiFASTADirectoryFormat):
     manifest = model.File('MANIFEST', format=MultiMAGManifestFormat)
 
 
-plugin.register_formats(MultiFASTADirectoryFormat, MAGSequencesDirFmt)
+ContigSequencesDirFmt = model.SingleFileDirectoryFormat(
+    'ContigSequencesDirFmt', 'contigs.fasta', DNAFASTAFormat
+)
+
+plugin.register_formats(
+    MultiFASTADirectoryFormat,
+    MAGSequencesDirFmt,
+    ContigSequencesDirFmt
+)

@@ -9,14 +9,19 @@
 from q2_types.sample_data import SampleData
 from qiime2.core.type import SemanticType
 
-from . import MAGSequencesDirFmt
+from . import MAGSequencesDirFmt, ContigSequencesDirFmt
 from ..plugin_setup import plugin
 
 MAGs = SemanticType('MAGs', variant_of=SampleData.field['type'])
+Contigs = SemanticType('Contigs', variant_of=SampleData.field['type'])
 
-plugin.register_semantic_types(MAGs)
+plugin.register_semantic_types(MAGs, Contigs)
 
 plugin.register_semantic_type_to_format(
     SampleData[MAGs],
     artifact_format=MAGSequencesDirFmt
+)
+plugin.register_semantic_type_to_format(
+    SampleData[Contigs],
+    artifact_format=ContigSequencesDirFmt
 )
