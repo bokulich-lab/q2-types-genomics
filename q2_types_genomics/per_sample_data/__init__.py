@@ -8,9 +8,13 @@
 
 import importlib
 
-from ._version import get_versions
+from ._format import (
+    MAGSequencesDirFmt, MultiMAGManifestFormat
+)
+from._type import (
+    MAGs
+)
 
-__version__ = get_versions()['version']
-del get_versions
+__all__ = ['MAGs', 'MAGSequencesDirFmt', 'MultiMAGManifestFormat']
 
-importlib.import_module('q2_types_genomics.per_sample_data')
+importlib.import_module('q2_types_genomics.per_sample_data._transformer')
