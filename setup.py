@@ -36,7 +36,7 @@ setup(
              'data/manifests/*',
              'data/bowtie/unorganized/*',
              'data/bowtie/valid/sample1/mag1/*',
-             'data/bowtie/valid/sample2/mag1/*',]
+             'data/bowtie/valid/sample2/mag1/*']
     },
     zip_safe=False,
 )
