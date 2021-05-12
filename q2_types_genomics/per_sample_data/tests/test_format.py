@@ -15,7 +15,8 @@ from qiime2.core.exceptions import ValidationError
 from qiime2.plugin.testing import TestPluginBase
 
 from q2_types_genomics.per_sample_data._format import (
-    MultiFASTADirectoryFormat, MultiMAGManifestFormat, ContigSequencesDirFmt
+    MultiFASTADirectoryFormat, MultiMAGManifestFormat,
+    ContigSequencesDirFmt, MultiBowtie2IndexDirFmt
 )
 
 
@@ -88,6 +89,20 @@ class TestFormats(TestPluginBase):
     def test_multifasta_dirfmt_unorganized(self):
         dirpath = self.get_data_path('mags/mags-unorganized')
         format = MultiFASTADirectoryFormat(dirpath, mode='r')
+
+        with self.assertRaisesRegex(
+                ValidationError, 'should be .* per-sample directories'):
+            format.validate()
+
+    def test_multibowtie_dirfmt(self):
+        dirpath = self.get_data_path('bowtie/valid')
+        format = MultiBowtie2IndexDirFmt(dirpath, mode='r')
+
+        format.validate()
+
+    def test_multibowtie_dirfmt_unorganized(self):
+        dirpath = self.get_data_path('bowtie/unorganized')
+        format = MultiBowtie2IndexDirFmt(dirpath, mode='r')
 
         with self.assertRaisesRegex(
                 ValidationError, 'should be .* per-sample directories'):
