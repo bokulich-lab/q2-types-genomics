@@ -109,7 +109,7 @@ class MultiFASTADirectoryFormat(MultiDirValidationMixin,
         return '%s/%s.fasta' % (sample_id, mag_id)
 
 
-class MAGSequencesDirFmt(MultiFASTADirectoryFormat):
+class MultiMAGSequencesDirFmt(MultiFASTADirectoryFormat):
     manifest = model.File('MANIFEST', format=MultiMAGManifestFormat)
 
 
@@ -123,7 +123,7 @@ ContigSequencesDirFmt = model.SingleFileDirectoryFormat(
 
 plugin.register_formats(
     MultiFASTADirectoryFormat,
-    MAGSequencesDirFmt,
+    MultiMAGSequencesDirFmt,
     ContigSequencesDirFmt,
     MultiBowtie2IndexDirFmt
 )

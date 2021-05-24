@@ -9,7 +9,7 @@
 import importlib
 
 from ._format import (
-    MAGSequencesDirFmt, MultiMAGManifestFormat,
+    MultiMAGSequencesDirFmt, MultiMAGManifestFormat,
     ContigSequencesDirFmt, MultiBowtie2IndexDirFmt
 )
 from ._type import (
@@ -17,7 +17,7 @@ from ._type import (
 )
 
 __all__ = [
-    'MAGs', 'MAGSequencesDirFmt', 'MultiMAGManifestFormat',
+    'MAGs', 'MultiMAGSequencesDirFmt', 'MultiMAGManifestFormat',
     'ContigSequencesDirFmt', 'Contigs', 'MultiBowtie2Index',
     'MultiBowtie2IndexDirFmt'
 ]
