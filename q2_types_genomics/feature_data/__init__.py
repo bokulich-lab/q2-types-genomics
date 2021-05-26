@@ -8,11 +8,11 @@
 
 import importlib
 
-from ._format import MAGSequencesDirFmt
+from ._format import MAGFASTAFormat, MAGSequencesDirFmt
 from ._type import MAG
 
 __all__ = [
-    'MAG', 'MAGSequencesDirFmt'
+    'MAG', 'MAGFASTAFormat', 'MAGSequencesDirFmt'
 ]
 
 importlib.import_module('q2_types_genomics.feature_data._transformer')

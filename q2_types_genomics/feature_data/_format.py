@@ -11,8 +11,13 @@ from qiime2.plugin import model
 
 from ..plugin_setup import plugin
 
+
+class MAGFASTAFormat(DNAFASTAFormat):
+    pass
+
+
 MAGSequencesDirFmt = model.SingleFileDirectoryFormat(
-    'MAGSequencesDirFmt', r'mag[0-9]+\.(fa|fasta)$', DNAFASTAFormat)
+    'MAGSequencesDirFmt', r'mag[0-9]+\.(fa|fasta)$', MAGFASTAFormat)
 
 plugin.register_formats(
     MAGSequencesDirFmt
