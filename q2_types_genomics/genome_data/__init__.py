@@ -9,15 +9,18 @@
 import importlib
 
 from ._format import (
-    GenesDirectoryFormat, ProteinsDirectoryFormat, LociDirectoryFormat
+    GenesDirectoryFormat, ProteinsDirectoryFormat,
+    GFF3Format, LociDirectoryFormat
 )
+from ._transformer import IntervalMetadataIterator
 from ._type import (
     GenomeData, Genes, Proteins, Loci
 )
 
 __all__ = [
-    'GenomeData', 'Genes', 'Proteins', 'Loci',
-    'GenesDirectoryFormat', 'ProteinsDirectoryFormat', 'LociDirectoryFormat'
+    'GenomeData', 'Genes', 'Proteins', 'Loci', 'GFF3Format',
+    'GenesDirectoryFormat', 'ProteinsDirectoryFormat', 'LociDirectoryFormat',
+    'IntervalMetadataIterator'
 ]
 
 importlib.import_module('q2_types_genomics.genome_data._transformer')

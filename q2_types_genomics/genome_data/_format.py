@@ -31,8 +31,13 @@ class ProteinsDirectoryFormat(model.DirectoryFormat):
         return '%s_proteins.fasta' % genome_id
 
 
-
 class GFF3Format(model.TextFileFormat):
+    """
+    Generic Feature Format Version 3 (GFF3) spec:
+    https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md
+    NCBI modifications to the above:
+    https://www.ncbi.nlm.nih.gov/datasets/docs/reference-docs/file-formats/about-ncbi-gff3/
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.directives = {}

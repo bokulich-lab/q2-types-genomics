@@ -8,15 +8,16 @@
 
 import unittest
 
+from qiime2.plugin.testing import TestPluginBase
+
 from q2_types_genomics.genome_data import (
     GenomeData, Genes, Proteins, Loci,
     GenesDirectoryFormat, ProteinsDirectoryFormat, LociDirectoryFormat
 )
-from qiime2.plugin.testing import TestPluginBase
 
 
 class TestTypes(TestPluginBase):
-    package = "q2_types_genomics.genome_data.tests"
+    package = 'q2_types_genomics.genome_data.tests'
 
     def test_genome_data_semantic_type_registration(self):
         self.assertRegisteredSemanticType(GenomeData)

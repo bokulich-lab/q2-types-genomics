@@ -8,11 +8,10 @@
 
 from qiime2.plugin import SemanticType
 
-from ..plugin_setup import plugin
 from . import (
     GenesDirectoryFormat, ProteinsDirectoryFormat, LociDirectoryFormat
 )
-
+from ..plugin_setup import plugin
 
 GenomeData = SemanticType('GenomeData', field_names='type')
 Genes = SemanticType('Genes', variant_of=GenomeData.field['type'])
