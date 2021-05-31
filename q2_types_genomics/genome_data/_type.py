@@ -9,14 +9,17 @@
 from qiime2.plugin import SemanticType
 
 from ..plugin_setup import plugin
-from . import GenesDirectoryFormat, ProteinsDirectoryFormat
+from . import (
+    GenesDirectoryFormat, ProteinsDirectoryFormat, LociDirectoryFormat
+)
 
 
 GenomeData = SemanticType('GenomeData', field_names='type')
 Genes = SemanticType('Genes', variant_of=GenomeData.field['type'])
 Proteins = SemanticType('Proteins', variant_of=GenomeData.field['type'])
+Loci = SemanticType('Loci', variant_of=GenomeData.field['type'])
 
-plugin.register_semantic_types(GenomeData, Genes, Proteins)
+plugin.register_semantic_types(GenomeData, Genes, Proteins, Loci)
 
 plugin.register_semantic_type_to_format(
     GenomeData[Genes],
@@ -26,4 +29,9 @@ plugin.register_semantic_type_to_format(
 plugin.register_semantic_type_to_format(
     GenomeData[Proteins],
     artifact_format=ProteinsDirectoryFormat
+)
+
+plugin.register_semantic_type_to_format(
+    GenomeData[Loci],
+    artifact_format=LociDirectoryFormat
 )

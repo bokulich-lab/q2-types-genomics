@@ -8,12 +8,16 @@
 
 import importlib
 
-from ._format import GenesDirectoryFormat, ProteinsDirectoryFormat
-from ._type import GenomeData, Genes, Proteins
+from ._format import (
+    GenesDirectoryFormat, ProteinsDirectoryFormat, LociDirectoryFormat
+)
+from ._type import (
+    GenomeData, Genes, Proteins, Loci
+)
 
 __all__ = [
-    'GenomeData', 'Genes', 'Proteins',
-    'GenesDirectoryFormat', 'ProteinsDirectoryFormat'
+    'GenomeData', 'Genes', 'Proteins', 'Loci',
+    'GenesDirectoryFormat', 'ProteinsDirectoryFormat', 'LociDirectoryFormat'
 ]
 
 importlib.import_module('q2_types_genomics.genome_data._transformer')
