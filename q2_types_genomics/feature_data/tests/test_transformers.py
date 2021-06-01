@@ -6,14 +6,19 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
+import glob
 import unittest
+from itertools import repeat
 
 import pandas as pd
+import skbio
 from qiime2.plugin.testing import TestPluginBase
+from skbio import DNA
 
 from q2_types_genomics.feature_data import (
-    MAGFASTAFormat
+    MAGSequencesDirFmt, MAGIterator
 )
+from q2_types_genomics.feature_data._transformer import _get_filename
 
 
 class TestTransformers(TestPluginBase):
@@ -57,32 +62,68 @@ class TestTransformers(TestPluginBase):
     @staticmethod
     def mags_to_df(mags):
         df = pd.DataFrame.from_dict(mags, orient='index')
-        df = df.astype(str)
+        df = df.astype(str).replace({'nan': None})
         df.index.name = 'Feature ID'
         return df
 
-    def test_mag_fa_to_dataframe(self):
-        _, obs = self.transform_format(MAGFASTAFormat, pd.DataFrame,
+    @staticmethod
+    def create_multi_generator(seqs_dict):
+        for k1, v1 in seqs_dict.items():
+            yield from zip(
+                repeat(k1),
+                (DNA(v2, metadata={'id': k2, 'description': ''})
+                 for k2, v2 in v1.items())
+            )
+
+    @staticmethod
+    def read_seqs_into_dict(loc):
+        seqs = {}
+        for f in sorted(glob.glob(f'{loc}/*')):
+            seqs[_get_filename(f)] = {
+                seq.metadata['id']: str(seq)
+                for seq in skbio.read(f, format='fasta')
+            }
+        return seqs
+
+    def test_mag_sequences_dir_fmt_to_dataframe(self):
+        _, obs = self.transform_format(MAGSequencesDirFmt, pd.DataFrame,
                                        filenames=[
-                                           "mags-fa/mag1.fa",
-                                           "mags-fa/mag2.fa",
-                                           "mags-fa/mag3.fa"
+                                           'mags-fasta/mag1.fasta',
+                                           'mags-fasta/mag2.fasta',
                                        ])
-        exp = pd.DataFrame.from_dict(self.mags_fa, orient='index')
-        exp = exp.astype(str)
-        exp.index.name = 'Feature ID'
+        exp = self.mags_to_df(self.mags_fasta)
         pd.testing.assert_frame_equal(exp, obs)
 
-    def test_mag_fasta_to_dataframe(self):
-        _, obs = self.transform_format(MAGFASTAFormat, pd.DataFrame,
+    def test_dataframe_to_mag_sequences_dir_fmt(self):
+        transformer = self.get_transformer(pd.DataFrame, MAGSequencesDirFmt)
+        df = self.mags_to_df(self.mags_fasta)
+
+        obs = transformer(df)
+        self.assertIsInstance(obs, MAGSequencesDirFmt)
+
+        obs_seqs = self.read_seqs_into_dict(str(obs))
+        self.assertDictEqual(self.mags_fasta, obs_seqs)
+
+    def test_mag_sequences_dir_fmt_to_mag_iterator(self):
+        _, obs = self.transform_format(MAGSequencesDirFmt, MAGIterator,
                                        filenames=[
-                                           "mags-fasta/mag1.fasta",
-                                           "mags-fasta/mag2.fasta",
+                                           'mags-fasta/mag1.fasta',
+                                           'mags-fasta/mag2.fasta',
                                        ])
-        exp = pd.DataFrame.from_dict(self.mags_fasta, orient='index')
-        exp = exp.astype(str)
-        exp.index.name = 'Feature ID'
-        pd.testing.assert_frame_equal(exp, obs)
+
+        exp = self.create_multi_generator(self.mags_fasta)
+        for e, o in zip(exp, obs):
+            self.assertEqual(e, o)
+
+    def test_mag_iterator_to_mag_sequences_dir_fmt(self):
+        transformer = self.get_transformer(MAGIterator, MAGSequencesDirFmt)
+        seq_iter = self.create_multi_generator(self.mags_fa)
+
+        obs = transformer(seq_iter)
+        self.assertIsInstance(obs, MAGSequencesDirFmt)
+
+        obs_seqs = self.read_seqs_into_dict(str(obs))
+        self.assertDictEqual(self.mags_fa, obs_seqs)
 
 
 if __name__ == '__main__':

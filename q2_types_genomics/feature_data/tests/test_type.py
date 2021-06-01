@@ -9,14 +9,13 @@
 import unittest
 
 from q2_types.feature_data import FeatureData
-from q2_types_genomics.feature_data import (
-    MAG, MAGSequencesDirFmt
-)
 from qiime2.plugin.testing import TestPluginBase
+
+from q2_types_genomics.feature_data import MAG, MAGSequencesDirFmt
 
 
 class TestTypes(TestPluginBase):
-    package = "q2_types_genomics.feature_data.tests"
+    package = 'q2_types_genomics.feature_data.tests'
 
     def test_mag_semantic_type_registration(self):
         self.assertRegisteredSemanticType(MAG)
