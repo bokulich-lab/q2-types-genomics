@@ -109,9 +109,8 @@ class TestFormats(TestPluginBase):
             format.validate()
 
     def test_contig_seqs_dirfmt(self):
-        filepath = self.get_data_path('mags/mags-fasta/sample2/mag1.fasta')
-        shutil.copy(filepath, os.path.join(
-            self.temp_dir.name, 'contigs.fasta'))
+        filepath = self.get_data_path('contigs/')
+        shutil.copytree(filepath, self.temp_dir.name, dirs_exist_ok=True)
         ContigSequencesDirFmt(self.temp_dir.name, mode='r').validate()
 
 
