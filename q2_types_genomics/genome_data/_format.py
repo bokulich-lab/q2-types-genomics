@@ -38,6 +38,7 @@ class GFF3Format(model.TextFileFormat):
     NCBI modifications to the above:
     https://www.ncbi.nlm.nih.gov/datasets/docs/reference-docs/file-formats/about-ncbi-gff3/
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.directives = {}
@@ -153,11 +154,14 @@ class GFF3Format(model.TextFileFormat):
                                       f'{line_number}') from e
 
 
-LociDirectoryFormat = model.SingleFileDirectoryFormat(
-    'LociDirectoryFormat',
-    r'loci[0-9]+\.gff$',
-    GFF3Format
-)
+class LociDirectoryFormat(model.DirectoryFormat):
+    loci = model.FileCollection(r'loci[0-9]+\.gff$',
+                                format=GFF3Format)
+
+    @loci.set_path_maker
+    def loci_path_maker(self, genome_id):
+        return '%s_loci.gff' % genome_id
+
 
 plugin.register_formats(
     GenesDirectoryFormat, ProteinsDirectoryFormat, LociDirectoryFormat
