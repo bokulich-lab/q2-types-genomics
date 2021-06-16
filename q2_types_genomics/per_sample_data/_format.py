@@ -117,9 +117,14 @@ class MultiBowtie2IndexDirFmt(MultiDirValidationMixin, Bowtie2IndexDirFmt):
     pass
 
 
-ContigSequencesDirFmt = model.SingleFileDirectoryFormat(
-    'ContigSequencesDirFmt', 'contigs.fasta', DNAFASTAFormat
-)
+class ContigSequencesDirFmt(model.DirectoryFormat):
+    sequences = model.FileCollection(r'.+_contigs\.(fa|fasta)$',
+                                     format=DNAFASTAFormat)
+
+    @sequences.set_path_maker
+    def sequences_path_maker(self, sample_id):
+        return r'%s_contigs\.fasta' % sample_id
+
 
 plugin.register_formats(
     MultiFASTADirectoryFormat,

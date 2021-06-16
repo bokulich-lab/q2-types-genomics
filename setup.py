@@ -33,7 +33,7 @@ setup(
              'data/mags/mags-fasta/sample1/*',
              'data/mags/mags-fasta/sample2/*',
              'data/mags/mags-unorganized/*',
-             'data/manifests/*',
+             'data/manifests/*', 'data/contigs/*',
              'data/bowtie/unorganized/*',
              'data/bowtie/valid/sample1/mag1/*',
              'data/bowtie/valid/sample2/mag1/*'],
