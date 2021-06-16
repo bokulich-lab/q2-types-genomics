@@ -8,14 +8,16 @@
 
 import unittest
 
-from q2_types_genomics.genome_data import (
-    GenomeData, Genes, Proteins, GenesDirectoryFormat, ProteinsDirectoryFormat
-)
 from qiime2.plugin.testing import TestPluginBase
+
+from q2_types_genomics.genome_data import (
+    GenomeData, Genes, Proteins, Loci,
+    GenesDirectoryFormat, ProteinsDirectoryFormat, LociDirectoryFormat
+)
 
 
 class TestTypes(TestPluginBase):
-    package = "q2_types_genomics.genome_data.tests"
+    package = 'q2_types_genomics.genome_data.tests'
 
     def test_genome_data_semantic_type_registration(self):
         self.assertRegisteredSemanticType(GenomeData)
@@ -26,6 +28,9 @@ class TestTypes(TestPluginBase):
     def test_proteins_semantic_type_registration(self):
         self.assertRegisteredSemanticType(Proteins)
 
+    def test_loci_semantic_type_registration(self):
+        self.assertRegisteredSemanticType(Loci)
+
     def test_genome_data_genes_to_genes_dir_fmt_registration(self):
         self.assertSemanticTypeRegisteredToFormat(
             GenomeData[Genes], GenesDirectoryFormat)
@@ -33,6 +38,10 @@ class TestTypes(TestPluginBase):
     def test_genome_data_proteins_to_proteins_dir_fmt_registration(self):
         self.assertSemanticTypeRegisteredToFormat(
             GenomeData[Proteins], ProteinsDirectoryFormat)
+
+    def test_genome_data_loci_to_loci_dir_fmt_registration(self):
+        self.assertSemanticTypeRegisteredToFormat(
+            GenomeData[Loci], LociDirectoryFormat)
 
 
 if __name__ == '__main__':
