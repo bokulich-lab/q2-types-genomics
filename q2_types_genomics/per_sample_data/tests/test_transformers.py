@@ -11,7 +11,7 @@ from qiime2.plugin.testing import TestPluginBase
 
 from q2_types_genomics.per_sample_data._format import (
     MultiFASTADirectoryFormat,
-    MAGSequencesDirFmt, MultiMAGManifestFormat
+    MultiMAGSequencesDirFmt, MultiMAGManifestFormat
 )
 
 
@@ -41,7 +41,7 @@ class TestTransformers(TestPluginBase):
     def test_multifile_dirfmt_to_mag_seqs_dirfmt_fa(self):
         obs = self.apply_transformation(
             MultiFASTADirectoryFormat,
-            MAGSequencesDirFmt,
+            MultiMAGSequencesDirFmt,
             'mags/mags-fa'
         )
         with obs.manifest.view(MultiMAGManifestFormat).open() as obs_manifest:
@@ -52,7 +52,7 @@ class TestTransformers(TestPluginBase):
     def test_multifile_dirfmt_to_mag_seqs_dirfmt_fasta(self):
         obs = self.apply_transformation(
             MultiFASTADirectoryFormat,
-            MAGSequencesDirFmt,
+            MultiMAGSequencesDirFmt,
             'mags/mags-fasta'
         )
         with obs.manifest.view(MultiMAGManifestFormat).open() as obs_manifest:

@@ -12,7 +12,7 @@ from q2_types.sample_data import SampleData
 from qiime2.plugin.testing import TestPluginBase
 
 from q2_types_genomics.per_sample_data import (
-    MAGs, MAGSequencesDirFmt,
+    MAGs, MultiMAGSequencesDirFmt,
     Contigs, ContigSequencesDirFmt,
     MultiBowtie2Index, MultiBowtie2IndexDirFmt
 )
@@ -27,7 +27,7 @@ class TestTypes(TestPluginBase):
     def test_mags_semantic_type_to_format_registration(self):
         self.assertSemanticTypeRegisteredToFormat(
             SampleData[MAGs],
-            MAGSequencesDirFmt
+            MultiMAGSequencesDirFmt
         )
 
     def test_contigs_semantic_type_registration(self):

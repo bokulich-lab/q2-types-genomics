@@ -10,7 +10,7 @@ from q2_types.sample_data import SampleData
 from qiime2.core.type import SemanticType
 
 from . import (
-    MAGSequencesDirFmt, ContigSequencesDirFmt, MultiBowtie2IndexDirFmt
+    MultiMAGSequencesDirFmt, ContigSequencesDirFmt, MultiBowtie2IndexDirFmt
 )
 from ..plugin_setup import plugin
 
@@ -25,7 +25,7 @@ plugin.register_semantic_types(MAGs, Contigs, MultiBowtie2Index)
 
 plugin.register_semantic_type_to_format(
     SampleData[MAGs],
-    artifact_format=MAGSequencesDirFmt
+    artifact_format=MultiMAGSequencesDirFmt
 )
 plugin.register_semantic_type_to_format(
     SampleData[Contigs],

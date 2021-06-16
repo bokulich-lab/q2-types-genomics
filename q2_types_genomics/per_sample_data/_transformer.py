@@ -13,13 +13,14 @@ from q2_types_genomics.plugin_setup import plugin
 from q2_types_genomics.per_sample_data._util import _mag_manifest_helper
 from q2_types_genomics.per_sample_data._format import (
     MultiMAGManifestFormat,
-    MAGSequencesDirFmt,
+    MultiMAGSequencesDirFmt,
     MultiFASTADirectoryFormat
 )
 
 
 @plugin.register_transformer
 def _1(dirfmt: MultiFASTADirectoryFormat) \
-        -> MAGSequencesDirFmt:
+        -> MultiMAGSequencesDirFmt:
     return _mag_manifest_helper(
-        dirfmt, MAGSequencesDirFmt, MultiMAGManifestFormat, DNAFASTAFormat)
+        dirfmt, MultiMAGSequencesDirFmt,
+        MultiMAGManifestFormat, DNAFASTAFormat)
