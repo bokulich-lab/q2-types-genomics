@@ -8,10 +8,12 @@
 
 import importlib
 
-from ._version import get_versions
+from ._format import GenesDirectoryFormat, ProteinsDirectoryFormat
+from ._type import GenomeData, Genes, Proteins
 
-__version__ = get_versions()['version']
-del get_versions
+__all__ = [
+    'GenomeData', 'Genes', 'Proteins',
+    'GenesDirectoryFormat', 'ProteinsDirectoryFormat'
+]
 
-importlib.import_module('q2_types_genomics.per_sample_data')
-importlib.import_module('q2_types_genomics.genome_data')
+importlib.import_module('q2_types_genomics.genome_data._transformer')

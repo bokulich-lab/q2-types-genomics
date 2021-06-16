@@ -38,7 +38,10 @@ setup(
              'data/bowtie/valid/sample1/mag1/*',
              'data/bowtie/valid/sample2/mag1/*'],
         'q2_types_genomics.feature_data.tests':
-            ['data/*', 'data/mags-fa/*', 'data/mags-fasta/*']
+            ['data/*', 'data/mags-fa/*', 'data/mags-fasta/*'],
+        'q2_types_genomics.genome_data.tests':
+            ['data/*', 'data/genes/*', 'data/loci/*',
+             'data/loci-invalid/*', 'data/proteins/*']
     },
     zip_safe=False,
 )
