@@ -40,7 +40,7 @@ def _series_to_fasta(series, ff, seq_type='DNA'):
 
 def _fastafiles_to_dataframe(ff):
     data = {}
-    for fp in glob.glob(os.path.join(str(ff), '*.fa*')):
+    for fp in sorted(glob.glob(os.path.join(str(ff), '*.fa*'))):
         fname = _get_filename(fp)
         data[fname] = _fastaformats_to_series(fp, constructor=skbio.DNA)
     df = pd.DataFrame.from_dict(data, orient='index')
@@ -77,7 +77,7 @@ def _4(ff: MAGSequencesDirFmt) -> MAGIterator:
             fg = skbio.read(fp, format='fasta', constructor=skbio.DNA)
             yield from zip(repeat(fname), fg)
 
-    fps = glob.glob(os.path.join(str(ff), '*.fa*'))
+    fps = sorted(glob.glob(os.path.join(str(ff), '*.fa*')))
     return MAGIterator(_multi_generator(fps))
 
 
