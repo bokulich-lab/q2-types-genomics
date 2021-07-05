@@ -19,11 +19,10 @@ class EggnogBase(model.TextFileFormat):
 
     def _check_seperator(self, level):
         try:
-            with self.open() as fh:
-                for i, line in enumerate(fh, 1):
-                    re.split(r'\t', line)
-                    if i == level:
-                        break
+            for i, line in enumerate(self, 1):
+                re.split(r'\t', line)
+                if i == level:
+                    break
 
         except:
             raise ValueError("Incorrect separator in file")

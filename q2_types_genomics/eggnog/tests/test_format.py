@@ -20,11 +20,25 @@ from qiime2.plugin.testing import TestPluginBase
 class TestBase(TestPluginBase):
     package = 'q2_types_genomics.eggnog.tests'
 
-    def setup(self):
-        pass
+    def test_base_eggnog(self):
+        filename = 'sample_eggnog_annotations.annotations'
+        filepath = self.get_data_path(filename)
 
-    def test_tsv(self):
-        pass
+        fmt = EggnogBase(filepath, 'r')
+
+        fmt.validate(level='max')
+
+    def test_separator_incorrect(self):
+        filename = 'sample_csv.csv'
+        filepath = self.get_data_path(filename)
+
+        fmt = EggnogBase(filepath, 'r')
+
+        with self.assertRaisesRegex(ValueError,
+                                    "Incorrect separator in file"
+                                    ):
+            fmt.validate()
+        
 
     def test_encoding(self):
         pass
