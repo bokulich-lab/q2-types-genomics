@@ -34,9 +34,12 @@ setup(
              'data/mags/mags-fasta/sample2/*',
              'data/mags/mags-unorganized/*',
              'data/manifests/*', 'data/contigs/*',
-             'data/bowtie/unorganized/*',
-             'data/bowtie/valid/sample1/mag1/*',
-             'data/bowtie/valid/sample2/mag1/*'],
+             'data/bowtie/index-unorganized/*', 'data/bowtie/index-valid/*'
+             'data/bowtie/index-valid/sample1/mag1/*',
+             'data/bowtie/index-valid/sample2/mag1/*',
+             'data/bowtie/maps-invalid/*', 'data/bowtie/maps-single/*',
+             'data/bowtie/maps-multi/*', 'data/bowtie/maps-multi/sample1',
+             'data/bowtie/maps-multi/sample2'],
         'q2_types_genomics.feature_data.tests':
             ['data/*', 'data/mags-fa/*', 'data/mags-fasta/*'],
         'q2_types_genomics.genome_data.tests':

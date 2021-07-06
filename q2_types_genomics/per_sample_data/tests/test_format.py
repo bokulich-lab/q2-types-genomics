@@ -16,7 +16,7 @@ from qiime2.plugin.testing import TestPluginBase
 
 from q2_types_genomics.per_sample_data._format import (
     MultiFASTADirectoryFormat, MultiMAGManifestFormat,
-    ContigSequencesDirFmt, MultiBowtie2IndexDirFmt
+    ContigSequencesDirFmt, MultiBowtie2IndexDirFmt, BAMDirFmt, MultiBAMDirFmt
 )
 
 
@@ -94,14 +94,14 @@ class TestFormats(TestPluginBase):
                 ValidationError, 'should be .* per-sample directories'):
             format.validate()
 
-    def test_multibowtie_dirfmt(self):
-        dirpath = self.get_data_path('bowtie/valid')
+    def test_multibowtie_index_dirfmt(self):
+        dirpath = self.get_data_path('bowtie/index-valid')
         format = MultiBowtie2IndexDirFmt(dirpath, mode='r')
 
         format.validate()
 
-    def test_multibowtie_dirfmt_unorganized(self):
-        dirpath = self.get_data_path('bowtie/unorganized')
+    def test_multibowtie_index_dirfmt_unorganized(self):
+        dirpath = self.get_data_path('bowtie/index-unorganized')
         format = MultiBowtie2IndexDirFmt(dirpath, mode='r')
 
         with self.assertRaisesRegex(
@@ -112,6 +112,26 @@ class TestFormats(TestPluginBase):
         filepath = self.get_data_path('contigs/')
         shutil.copytree(filepath, self.temp_dir.name, dirs_exist_ok=True)
         ContigSequencesDirFmt(self.temp_dir.name, mode='r').validate()
+
+    def test_bam_dirmt(self):
+        filepath = self.get_data_path('bowtie/maps-single')
+        format = BAMDirFmt(filepath, mode='r')
+
+        format.validate()
+
+    def test_bam_dirmt_invalid(self):
+        filepath = self.get_data_path('bowtie/maps-invalid')
+        format = BAMDirFmt(filepath, mode='r')
+
+        with self.assertRaisesRegex(
+                ValidationError, 'samtools quickcheck -v failed on'):
+            format.validate()
+
+    def test_multibam_dirmt(self):
+        filepath = self.get_data_path('bowtie/maps-multi')
+        format = MultiBAMDirFmt(filepath, mode='r')
+
+        format.validate()
 
 
 if __name__ == '__main__':

@@ -7,6 +7,7 @@
 # ----------------------------------------------------------------------------
 
 import os
+import subprocess
 
 from q2_types.bowtie2 import Bowtie2IndexDirFmt
 from q2_types.feature_data import DNAFASTAFormat
@@ -126,9 +127,34 @@ class ContigSequencesDirFmt(model.DirectoryFormat):
         return r'%s_contigs\.fasta' % sample_id
 
 
+# borrowed from q2-phylogenomics
+class BAMFormat(model.BinaryFileFormat):
+    def _validate_(self, level):
+        cmd = ['samtools', 'quickcheck', '-v', str(self)]
+        result = subprocess.run(cmd)
+        if result.returncode != 0:
+            raise model.ValidationError(
+                'samtools quickcheck -v failed on %s' % self.path.name)
+
+
+# borrowed from q2-phylogenomics
+class BAMDirFmt(model.DirectoryFormat):
+    bams = model.FileCollection(r'.+\.bam', format=BAMFormat)
+
+    @bams.set_path_maker
+    def bams_path_maker(self, sample_id):
+        return '%s.bam' % sample_id
+
+
+class MultiBAMDirFmt(MultiDirValidationMixin, BAMDirFmt):
+    pass
+
+
 plugin.register_formats(
     MultiFASTADirectoryFormat,
     MultiMAGSequencesDirFmt,
     ContigSequencesDirFmt,
-    MultiBowtie2IndexDirFmt
+    MultiBowtie2IndexDirFmt,
+    BAMDirFmt,
+    MultiBAMDirFmt
 )

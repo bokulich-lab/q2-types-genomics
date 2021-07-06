@@ -10,16 +10,18 @@ import importlib
 
 from ._format import (
     MultiMAGSequencesDirFmt, MultiMAGManifestFormat,
-    ContigSequencesDirFmt, MultiBowtie2IndexDirFmt
+    ContigSequencesDirFmt, MultiBowtie2IndexDirFmt,
+    BAMFormat, BAMDirFmt, MultiBAMDirFmt
 )
 from ._type import (
-    MAGs, Contigs, MultiBowtie2Index
+    MAGs, Contigs, SingleBowtie2Index, MultiBowtie2Index
 )
 
 __all__ = [
     'MAGs', 'MultiMAGSequencesDirFmt', 'MultiMAGManifestFormat',
-    'ContigSequencesDirFmt', 'Contigs', 'MultiBowtie2Index',
-    'MultiBowtie2IndexDirFmt'
+    'ContigSequencesDirFmt', 'Contigs', 'SingleBowtie2Index',
+    'MultiBowtie2Index', 'MultiBowtie2IndexDirFmt',
+    'BAMFormat', 'BAMDirFmt', 'MultiBAMDirFmt'
 ]
 
 importlib.import_module('q2_types_genomics.per_sample_data._transformer')
