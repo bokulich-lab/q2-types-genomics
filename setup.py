@@ -28,11 +28,11 @@ setup(
         'q2_types_genomics': ['citations.bib'],
         'q2_types_genomics.tests': ['data/*'],
         'q2_types_genomics.per_sample_data.tests':
-            ['data/*/*/*'],
+            ['data/*', 'data/*/*', 'data/*/*/*', 'data/*/*/*/*'],
         'q2_types_genomics.feature_data.tests':
-            ['data/*/*'],
+            ['data/*', 'data/*/*'],
         'q2_types_genomics.genome_data.tests':
-            ['data/*/*']
+            ['data/*', 'data/*/*']
     },
     zip_safe=False,
 )
