@@ -28,18 +28,10 @@ setup(
         'q2_types_genomics': ['citations.bib'],
         'q2_types_genomics.tests': ['data/*'],
         'q2_types_genomics.per_sample_data.tests':
-            ['data/*', 'data/mags/*'
-             'data/mags/mags-fa/sample1/*', 'data/mags/mags-fa/sample2/*',
-             'data/mags/mags-fasta/sample1/*',
-             'data/mags/mags-fasta/sample2/*',
-             'data/mags/mags-unorganized/*',
-             'data/manifests/*', 'data/contigs/*', 'data/bowtie/*'
-             'data/bowtie/index-unorganized/*', 'data/bowtie/index-valid/*'
-             'data/bowtie/index-valid/sample1/mag1/*',
-             'data/bowtie/index-valid/sample2/mag1/*',
-             'data/bowtie/maps-invalid/*', 'data/bowtie/maps-single/*',
-             'data/bowtie/maps-multi/*', 'data/bowtie/maps-multi/sample1',
-             'data/bowtie/maps-multi/sample2'],
+            ['data/*',
+             'data/mags/*/*', 'data/mags/*/*/*',
+             'data/manifests/*', 'data/contigs/*',
+             'data/bowtie/*/*', 'data/bowtie/*/*/*/*', 'data/bowtie/*/*/*'],
         'q2_types_genomics.feature_data.tests':
             ['data/*', 'data/mags-fa/*', 'data/mags-fasta/*'],
         'q2_types_genomics.genome_data.tests':
