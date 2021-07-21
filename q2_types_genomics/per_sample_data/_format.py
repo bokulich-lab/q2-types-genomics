@@ -146,8 +146,12 @@ class BAMDirFmt(model.DirectoryFormat):
         return '%s.bam' % sample_id
 
 
-class MultiBAMDirFmt(MultiDirValidationMixin, BAMDirFmt):
-    pass
+class MultiBAMDirFmt(MultiDirValidationMixin, model.DirectoryFormat):
+    bams = model.FileCollection(r'.+\/.+\.bam', format=BAMFormat)
+
+    @bams.set_path_maker
+    def bams_path_maker(self, sample_id, genome_id):
+        return '%s/%s.bam' % sample_id, genome_id
 
 
 plugin.register_formats(
