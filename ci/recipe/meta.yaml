@@ -20,6 +20,8 @@ requirements:
 
   run:
     - python {{ python }}
+    - bowtie2
+    - samtools
     - q2-types {{ release }}.*
     - qiime2 {{ release }}.*
 
