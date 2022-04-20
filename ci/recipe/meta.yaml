@@ -1,7 +1,7 @@
 # revert to proper versioning when ready for the first release
 {% set data = load_setup_py_data() %}
-{% set version = '2021.8.0.dev0' %}
-{% set release = '2021.8' %}
+{% set version = '2022.4.0.dev0' %}
+{% set release = '2022.4' %}
 
 package:
   name: q2-types-genomics
