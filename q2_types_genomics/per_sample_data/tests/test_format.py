@@ -10,6 +10,7 @@ import os
 import shutil
 import string
 import unittest
+from unittest.mock import patch, Mock
 
 from qiime2.core.exceptions import ValidationError
 from qiime2.plugin.testing import TestPluginBase
@@ -113,13 +114,18 @@ class TestFormats(TestPluginBase):
         shutil.copytree(filepath, self.temp_dir.name, dirs_exist_ok=True)
         ContigSequencesDirFmt(self.temp_dir.name, mode='r').validate()
 
-    def test_bam_dirmt(self):
+    @patch('subprocess.run', return_value=Mock(returncode=0))
+    def test_bam_dirmt(self, p):
         filepath = self.get_data_path('bowtie/maps-single')
         format = BAMDirFmt(filepath, mode='r')
 
         format.validate()
 
-    def test_bam_dirmt_invalid(self):
+    @patch('subprocess.run', return_value=Mock(returncode=3))
+    def test_bam_dirmt_invalid(self, p):
+        # this patch is not ideal but samtools' installation sometimes can
+        # be messed up and the tool returns an error regardless of the invoked
+        # command, so let's just assume here that it works as it should
         filepath = self.get_data_path('bowtie/maps-invalid')
         format = BAMDirFmt(filepath, mode='r')
 
@@ -127,7 +133,8 @@ class TestFormats(TestPluginBase):
                 ValidationError, 'samtools quickcheck -v failed on'):
             format.validate()
 
-    def test_multibam_dirmt(self):
+    @patch('subprocess.run', return_value=Mock(returncode=0))
+    def test_multibam_dirmt(self, p):
         filepath = self.get_data_path('bowtie/maps-multi')
         format = MultiBAMDirFmt(filepath, mode='r')
 
