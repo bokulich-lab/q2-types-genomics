@@ -5,7 +5,9 @@
 #
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
+import os
 
+import pandas as pd
 from q2_types.feature_data import DNAFASTAFormat
 
 from q2_types_genomics.plugin_setup import plugin
@@ -24,3 +26,12 @@ def _1(dirfmt: MultiFASTADirectoryFormat) \
     return _mag_manifest_helper(
         dirfmt, MultiMAGSequencesDirFmt,
         MultiMAGManifestFormat, DNAFASTAFormat)
+
+
+@plugin.register_transformer
+def _21(ff: MultiMAGManifestFormat) -> pd.DataFrame:
+    df = pd.read_csv(str(ff), header=0, comment='#')
+    df.filename = df.filename.apply(
+        lambda f: os.path.join(ff.path.parent, f))
+    df.set_index(['sample-id', 'mag-id'], inplace=True)
+    return df
