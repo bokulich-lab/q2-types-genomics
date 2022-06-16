@@ -44,6 +44,5 @@ jobs:
       with:
         package-name: q2-types-genomics
         additional-tests: pytest --pyargs q2_types_genomics
-        # TODO: update this to `release` when tagging release
-        build-target: staged
+        build-target: dev
         library-token: ${{ secrets.LIBRARY_TOKEN }}

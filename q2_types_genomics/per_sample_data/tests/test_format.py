@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Copyright (c) 2021, QIIME 2 development team.
+# Copyright (c) 2022, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
@@ -10,13 +10,14 @@ import os
 import shutil
 import string
 import unittest
+from unittest.mock import patch, Mock
 
 from qiime2.core.exceptions import ValidationError
 from qiime2.plugin.testing import TestPluginBase
 
 from q2_types_genomics.per_sample_data._format import (
     MultiFASTADirectoryFormat, MultiMAGManifestFormat,
-    ContigSequencesDirFmt, MultiBowtie2IndexDirFmt
+    ContigSequencesDirFmt, MultiBowtie2IndexDirFmt, BAMDirFmt, MultiBAMDirFmt
 )
 
 
@@ -94,14 +95,14 @@ class TestFormats(TestPluginBase):
                 ValidationError, 'should be .* per-sample directories'):
             format.validate()
 
-    def test_multibowtie_dirfmt(self):
-        dirpath = self.get_data_path('bowtie/valid')
+    def test_multibowtie_index_dirfmt(self):
+        dirpath = self.get_data_path('bowtie/index-valid')
         format = MultiBowtie2IndexDirFmt(dirpath, mode='r')
 
         format.validate()
 
-    def test_multibowtie_dirfmt_unorganized(self):
-        dirpath = self.get_data_path('bowtie/unorganized')
+    def test_multibowtie_index_dirfmt_unorganized(self):
+        dirpath = self.get_data_path('bowtie/index-unorganized')
         format = MultiBowtie2IndexDirFmt(dirpath, mode='r')
 
         with self.assertRaisesRegex(
@@ -112,6 +113,32 @@ class TestFormats(TestPluginBase):
         filepath = self.get_data_path('contigs/')
         shutil.copytree(filepath, self.temp_dir.name, dirs_exist_ok=True)
         ContigSequencesDirFmt(self.temp_dir.name, mode='r').validate()
+
+    @patch('subprocess.run', return_value=Mock(returncode=0))
+    def test_bam_dirmt(self, p):
+        filepath = self.get_data_path('bowtie/maps-single')
+        format = BAMDirFmt(filepath, mode='r')
+
+        format.validate()
+
+    @patch('subprocess.run', return_value=Mock(returncode=3))
+    def test_bam_dirmt_invalid(self, p):
+        # this patch is not ideal but samtools' installation sometimes can
+        # be messed up and the tool returns an error regardless of the invoked
+        # command, so let's just assume here that it works as it should
+        filepath = self.get_data_path('bowtie/maps-invalid')
+        format = BAMDirFmt(filepath, mode='r')
+
+        with self.assertRaisesRegex(
+                ValidationError, 'samtools quickcheck -v failed on'):
+            format.validate()
+
+    @patch('subprocess.run', return_value=Mock(returncode=0))
+    def test_multibam_dirmt(self, p):
+        filepath = self.get_data_path('bowtie/maps-multi')
+        format = MultiBAMDirFmt(filepath, mode='r')
+
+        format.validate()
 
 
 if __name__ == '__main__':

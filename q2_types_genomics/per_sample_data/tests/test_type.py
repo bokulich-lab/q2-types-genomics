@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Copyright (c) 2021, QIIME 2 development team.
+# Copyright (c) 2022, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
@@ -8,14 +8,18 @@
 
 import unittest
 
+from q2_types.bowtie2 import Bowtie2IndexDirFmt
 from q2_types.sample_data import SampleData
 from qiime2.plugin.testing import TestPluginBase
 
 from q2_types_genomics.per_sample_data import (
     MAGs, MultiMAGSequencesDirFmt,
     Contigs, ContigSequencesDirFmt,
-    MultiBowtie2Index, MultiBowtie2IndexDirFmt
+    SingleBowtie2Index, MultiBowtie2Index, MultiBowtie2IndexDirFmt, BAMDirFmt,
+    MultiBAMDirFmt
 )
+from q2_types_genomics.per_sample_data._type import (AlignmentMap,
+                                                     MultiAlignmentMap)
 
 
 class TestTypes(TestPluginBase):
@@ -39,13 +43,40 @@ class TestTypes(TestPluginBase):
             ContigSequencesDirFmt
         )
 
-    def test_multibowtie_semantic_type_registration(self):
+    def test_singlebowtie_semantic_type_registration(self):
+        self.assertRegisteredSemanticType(SingleBowtie2Index)
+
+    def test_singlebowtie_semantic_type_to_format_registration(self):
+        self.assertSemanticTypeRegisteredToFormat(
+            SampleData[SingleBowtie2Index],
+            Bowtie2IndexDirFmt
+        )
+
+    def test_multibowtie_index_semantic_type_registration(self):
         self.assertRegisteredSemanticType(MultiBowtie2Index)
 
-    def test_multibowtie_semantic_type_to_format_registration(self):
+    def test_multibowtie_index_semantic_type_to_format_registration(self):
         self.assertSemanticTypeRegisteredToFormat(
             SampleData[MultiBowtie2Index],
             MultiBowtie2IndexDirFmt
+        )
+
+    def test_aln_map_semantic_type_registration(self):
+        self.assertRegisteredSemanticType(AlignmentMap)
+
+    def test_aln_map_semantic_type_to_format_registration(self):
+        self.assertSemanticTypeRegisteredToFormat(
+            SampleData[AlignmentMap],
+            BAMDirFmt
+        )
+
+    def test_multi_aln_map_semantic_type_registration(self):
+        self.assertRegisteredSemanticType(MultiAlignmentMap)
+
+    def test_multi_aln_map_semantic_type_to_format_registration(self):
+        self.assertSemanticTypeRegisteredToFormat(
+            SampleData[MultiAlignmentMap],
+            MultiBAMDirFmt
         )
 
 

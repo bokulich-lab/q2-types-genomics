@@ -1,12 +1,15 @@
 # ----------------------------------------------------------------------------
-# Copyright (c) 2021, QIIME 2 development team.
+# Copyright (c) 2022, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
+import os
 import unittest
 
+import pandas as pd
+from pandas._testing import assert_frame_equal
 from qiime2.plugin.testing import TestPluginBase
 
 from q2_types_genomics.per_sample_data._format import (
@@ -59,6 +62,30 @@ class TestTransformers(TestPluginBase):
             self.assertEqual(
                 obs_manifest.read(), self.construct_manifest('fasta')
             )
+
+    def test_mag_manifest_to_df(self):
+        obs = self.apply_transformation(
+            MultiMAGManifestFormat,
+            pd.DataFrame,
+            'manifests/MANIFEST-mags-fa'
+        )
+        exp = pd.DataFrame({
+            'sample-id': [
+                'sample1', 'sample1', 'sample1', 'sample2', 'sample2'
+            ],
+            'mag-id': ['mag1', 'mag2', 'mag3', 'mag1', 'mag2'],
+            'filename': [
+                os.path.join(self.get_data_path('manifests'), x)
+                for x in [
+                    'sample1/mag1.fasta', 'sample1/mag2.fasta',
+                    'sample1/mag3.fasta', 'sample2/mag1.fasta',
+                    'sample2/mag2.fasta'
+                ]
+            ]
+        })
+        exp.set_index(['sample-id', 'mag-id'], inplace=True)
+
+        assert_frame_equal(exp, obs)
 
 
 if __name__ == '__main__':

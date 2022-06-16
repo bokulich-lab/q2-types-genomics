@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Copyright (c) 2021, QIIME 2 development team.
+# Copyright (c) 2022, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
@@ -29,14 +29,9 @@ setup(
         'q2_types_genomics.tests': ['data/*'],
         'q2_types_genomics.per_sample_data.tests':
             ['data/*',
-             'data/mags/mags-fa/sample1/*', 'data/mags/mags-fa/sample2/*',
-             'data/mags/mags-fasta/sample1/*',
-             'data/mags/mags-fasta/sample2/*',
-             'data/mags/mags-unorganized/*',
+             'data/mags/*/*', 'data/mags/*/*/*',
              'data/manifests/*', 'data/contigs/*',
-             'data/bowtie/unorganized/*',
-             'data/bowtie/valid/sample1/mag1/*',
-             'data/bowtie/valid/sample2/mag1/*'],
+             'data/bowtie/*/*', 'data/bowtie/*/*/*/*', 'data/bowtie/*/*/*'],
         'q2_types_genomics.feature_data.tests':
             ['data/*', 'data/mags-fa/*', 'data/mags-fasta/*'],
         'q2_types_genomics.genome_data.tests':
