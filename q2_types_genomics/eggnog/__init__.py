@@ -9,9 +9,9 @@
 from ._type import NOG
 
 from ._format import (
-    EggnogFmt, EggnogDirFmt, HeaderlessEggnogFmt,
+    FunctionalAnnotationFmt, FunctionalAnnotationDirFmt
 )
 
 __all__ = [
-    'NOG', 'EggnogFmt', 'HeaderlessEggnogFmt', 'EggnogDirFmt',
+    'NOG', 'FunctionalAnnotationFmt', 'FunctionalAnnotationDirFmt',
 ]

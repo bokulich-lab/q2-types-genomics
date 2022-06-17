@@ -9,7 +9,7 @@
 from qiime2.core.type import SemanticType
 from q2_types.feature_data import FeatureData
 
-from q2_types_genomics.eggnog._format import EggnogDirFmt
+from q2_types_genomics.eggnog._format import FunctionalAnnotationDirFmt
 
 from ..plugin_setup import plugin
 
@@ -18,6 +18,6 @@ NOG = SemanticType('NOG', variant_of=FeatureData.field['type'])
 plugin.register_semantic_types(NOG)
 
 plugin.register_semantic_type_to_format(
-    semantic_type=NOG,
-    artifact_format=EggnogDirFmt
+    semantic_type=FeatureData[NOG],
+    artifact_format= FunctionalAnnotationDirFmt
 )

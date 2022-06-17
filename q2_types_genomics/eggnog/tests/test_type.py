@@ -11,7 +11,7 @@ import unittest
 from q2_types.feature_data import FeatureData
 from qiime2.plugin.testing import TestPluginBase
 
-from q2_types_genomics.eggnog import NOG, EggnogDirFmt
+from q2_types_genomics.eggnog import NOG
 
 class TestTypes(TestPluginBase):
     package = 'q2_types_genomics.eggnog.tests'

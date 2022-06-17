@@ -15,29 +15,45 @@ import qiime2.plugin.model as model
 from ..plugin_setup import plugin
 
 
-class EggnogBase(model.TextFileFormat):
+class FunctionalAnnotationFmt(model.TextFileFormat):
 
     def _check_seperator(self, level):
-        try:
-            for i, line in enumerate(self, 1):
+        with self.open() as fh:
+            for i, line in enumerate(fh, 1):
+                if not re.search(r'\t', line):
+                    raise ValueError("No correct separator detected in input "
+                                     "file on line: {}".format(i))
+
                 re.split(r'\t', line)
                 if i == level:
                     break
 
-        except:
-            raise ValueError("Incorrect separator in file")
-
     def _validate_(self, level):
         self._check_seperator(level={'min': 5, 'max': None}[level])
 
-class EggnogFmt(EggnogBase):
+class HeaderlessFunctionaAnnotationFmt(FunctionalAnnotationFmt):
     pass
 
-class HeaderlessEggnogFmt(EggnogBase):
-    pass
+plugin.register_formats(FunctionalAnnotationFmt)
 
-EggnogDirFmt = model.SingleFileDirectoryFormat('EggnogDirFmt',
-                                               'eggnog.tsv',
-                                               EggnogFmt)
+FunctionalAnnotationDirFmt = model.SingleFileDirectoryFormat(
+                                 'FunctionalAnnotationDirFmt',
+                                 'eggnog.tsv',
+                                 FunctionalAnnotationFmt)
 
-plugin.register_formats(EggnogFmt, EggnogDirFmt)
+plugin.register_formats(FunctionalAnnotationDirFmt)
+
+class OrthologousGroupsFormat(model.TextFileFormat):
+    def _check_seperator(self, level):
+        with self.open() as fh:
+            for i, line in enumerate(fh, 1):
+                if not re.search(r'\t', line):
+                    raise ValueError("No correct separator detected in input "
+                                     "file on line: {}".format(i))
+
+                re.split(r'\t', line)
+                if i == level:
+                    break
+
+    def _validate_(self, level):
+        self._check_seperator(level={'min': 5, 'max': None}[level])
