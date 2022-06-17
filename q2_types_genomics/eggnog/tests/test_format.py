@@ -6,10 +6,9 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
-import os.path
 import unittest
 
-from q2_types_genomics.eggnog._format import (
+from .._format import (
     FunctionalAnnotationFmt, FunctionalAnnotationDirFmt
 )
 
@@ -31,10 +30,10 @@ class TestFunctionalAnnotationFmt(TestPluginBase):
     #    fmt.validate(level='max')
 
     def test_separator_incorrect(self):
-        filename = 'sample_csv.csv'
+        filename = 'sample.csv'
         filepath = self.get_data_path(filename)
 
-        fmt = FunctionalAnnotationDirFmt(filepath, 'r')
+        fmt = FunctionalAnnotationFmt(filepath, 'r')
 
         with self.assertRaisesRegex(ValueError,
                                     r"No correct separator detected in " \

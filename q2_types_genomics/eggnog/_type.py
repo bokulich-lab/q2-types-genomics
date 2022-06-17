@@ -6,7 +6,7 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
-from qiime2.core.type import SemanticType
+from qiime2.plugin import SemanticType
 from q2_types.feature_data import FeatureData
 
 from q2_types_genomics.eggnog._format import FunctionalAnnotationDirFmt

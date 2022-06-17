@@ -14,7 +14,6 @@ import qiime2.plugin.model as model
 
 from ..plugin_setup import plugin
 
-
 class FunctionalAnnotationFmt(model.TextFileFormat):
 
     def _check_seperator(self, level):
