@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Copyright (c) 2021, QIIME 2 development team.
+# Copyright (c) 2021-2022, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
@@ -10,9 +10,8 @@ import re
 
 import qiime2.plugin.model as model
 
-#from qiime2.core.exceptions import ValidationError
-
 from ..plugin_setup import plugin
+
 
 class FunctionalAnnotationFmt(model.TextFileFormat):
 
@@ -30,8 +29,10 @@ class FunctionalAnnotationFmt(model.TextFileFormat):
     def _validate_(self, level):
         self._check_seperator(level={'min': 5, 'max': None}[level])
 
+
 class HeaderlessFunctionaAnnotationFmt(FunctionalAnnotationFmt):
     pass
+
 
 plugin.register_formats(FunctionalAnnotationFmt)
 
@@ -41,6 +42,7 @@ FunctionalAnnotationDirFmt = model.SingleFileDirectoryFormat(
                                  FunctionalAnnotationFmt)
 
 plugin.register_formats(FunctionalAnnotationDirFmt)
+
 
 class OrthologousGroupsFormat(model.TextFileFormat):
     def _check_seperator(self, level):

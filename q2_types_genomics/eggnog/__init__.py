@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Copyright (c) 2021, QIIME 2 development team.
+# Copyright (c) 2021-2022, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
@@ -16,7 +16,7 @@ from ..plugin_setup import plugin
 
 plugin.register_semantic_type_to_format(
     semantic_type=FeatureData[NOG],
-    artifact_format= FunctionalAnnotationDirFmt
+    artifact_format=FunctionalAnnotationDirFmt
 )
 
 __all__ = [
