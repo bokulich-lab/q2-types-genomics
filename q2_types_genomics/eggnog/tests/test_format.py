@@ -9,20 +9,20 @@
 import unittest
 
 from .._format import (
-    FunctionalAnnotationFmt
+    EggnogAnnotationFmt
 )
 
 from qiime2.plugin.testing import TestPluginBase
 
 
-class TestFunctionalAnnotationFmt(TestPluginBase):
+class TestEggnogAnnotationFmt(TestPluginBase):
     package = 'q2_types_genomics.eggnog.tests'
 
     def test_separator_incorrect(self):
         filename = 'sample.csv'
         filepath = self.get_data_path(filename)
 
-        fmt = FunctionalAnnotationFmt(filepath, 'r')
+        fmt = EggnogAnnotationFmt(filepath, 'r')
 
         with self.assertRaisesRegex(ValueError,
                                     r"No correct separator detected in "

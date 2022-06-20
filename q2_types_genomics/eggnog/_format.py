@@ -13,7 +13,7 @@ import qiime2.plugin.model as model
 from ..plugin_setup import plugin
 
 
-class FunctionalAnnotationFmt(model.TextFileFormat):
+class EggnogAnnotationFmt(model.TextFileFormat):
 
     def _check_seperator(self, level):
         with self.open() as fh:
@@ -30,18 +30,18 @@ class FunctionalAnnotationFmt(model.TextFileFormat):
         self._check_seperator(level={'min': 5, 'max': None}[level])
 
 
-class HeaderlessFunctionaAnnotationFmt(FunctionalAnnotationFmt):
+class HeaderlessEggnogAnnotationFmt(EggnogAnnotationFmt):
     pass
 
 
-plugin.register_formats(FunctionalAnnotationFmt)
+plugin.register_formats(EggnogAnnotationFmt)
 
-FunctionalAnnotationDirFmt = model.SingleFileDirectoryFormat(
-                                 'FunctionalAnnotationDirFmt',
+EggnogAnnotationDirFmt = model.SingleFileDirectoryFormat(
+                                 'EggnogAnnotationDirFmt',
                                  'eggnog.tsv',
-                                 FunctionalAnnotationFmt)
+                                 EggnogAnnotationFmt)
 
-plugin.register_formats(FunctionalAnnotationDirFmt)
+plugin.register_formats(EggnogAnnotationDirFmt)
 
 
 class OrthologousGroupsFormat(model.TextFileFormat):
