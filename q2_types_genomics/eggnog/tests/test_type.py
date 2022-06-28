@@ -6,31 +6,52 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
+
 import unittest
+import pytest
 
 from qiime2 import Artifact as Artifact
 from qiime2.plugin.testing import TestPluginBase
-from pandas import DataFrame as DataFrame
+import pandas as pd
 
+from q2_types_genomics.eggnog._format import EggnogAnnotationFmt
 from q2_types_genomics.eggnog import NOG
 
 
 class TestEggnogTypes(TestPluginBase):
     package = 'q2_types_genomics.eggnog.tests'
 
+    @pytest.mark.skip(reason="skipping for speed while developing other"
+                             " functions")
     def test_nog_registration(self):
         self.assertRegisteredSemanticType(NOG)
 
-    def test_base_eggnog_validation(self):
+    def test_base_eggnog_validation_integration(self):
         run_checker = False
-        filename = 'sample.csv'
+        header = 4
+        filename = 'sampleannotations.txt'
         filepath = self.get_data_path(filename)
 
-        test_file = Artifact.import_data('FeatureData[NOG]', filepath)
+        exp = pd.read_csv(filepath, sep="\t", header=header)
 
-        test_file.view(DataFrame)
+        ff = EggnogAnnotationFmt(filepath, mode='r')
+        obs = ff.view(pd.DataFrame)
+
         run_checker = True
+        self.assertTrue(obs.equals(exp))
         assert run_checker
+
+    @pytest.mark.skip(reason="skipping for speed while developing other"
+                             " functions")
+    def test_type_validation_failure_invalid_column(self):
+        run_checker = False
+        filename = 'sampleannotations.txt'
+        filepath = self.get_data_path(filename)
+
+        exp = pd.read_csv(filepath, sep="\t", header=4)
+        print(exp.columns, exp.index)
+        assert False
+
 
 
 

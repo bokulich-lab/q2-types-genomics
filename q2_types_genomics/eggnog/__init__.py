@@ -6,6 +6,7 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
+import importlib
 from ._type import NOG
 
 from ._format import (
@@ -18,6 +19,8 @@ plugin.register_semantic_type_to_format(
     semantic_type=FeatureData[NOG],
     artifact_format=EggnogAnnotationDirFmt
 )
+importlib.import_module('q2_types_genomics.eggnog._transformer')
+
 
 __all__ = [
     'NOG', 'EggnogAnnotationFmt', 'EggnogAnnotationDirFmt',

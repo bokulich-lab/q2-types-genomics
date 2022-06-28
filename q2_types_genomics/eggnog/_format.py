@@ -14,21 +14,25 @@ from ..plugin_setup import plugin
 
 
 class EggnogAnnotationFmt(model.TextFileFormat):
-    pass
+    #def __init__(self, mode=None, header='infer'):
+    #    self._mode=mode
+    #    self.header=header
+    #    #super().__init__(mode=self._mode)
 
-#    def _check_seperator(self, level):
-#        with self.open() as fh:
-#            for i, line in enumerate(fh, 1):
-#                if not re.search(r'\t', line):
-#                    raise ValueError("No correct separator detected in input "
-#                                     "file on line: {}".format(i))
-#
-#                re.split(r'\t', line)
-#                if i == level:
-#                    break
-#
-#    def _validate_(self, level):
-#        self._check_seperator(level={'min': 5, 'max': None}[level])
+    def _check_seperator(self, level):
+        with self.open() as fh:
+            for i, line in enumerate(fh, 1):
+                if not re.search(r'\t', line):
+                    raise ValueError("No correct separator detected in input "
+                                     "file on line: {}".format(i))
+
+                re.split(r'\t', line)
+                if i == level:
+                    break
+
+    def _validate_(self, level):
+        pass
+        #self._check_seperator(level={'min': 5, 'max': None}[level])
 
 
 class HeaderlessEggnogAnnotationFmt(EggnogAnnotationFmt):

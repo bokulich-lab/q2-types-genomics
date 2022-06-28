@@ -22,7 +22,7 @@ class TestEggnogAnnotationFmt(TestPluginBase):
         filename = 'sample.csv'
         filepath = self.get_data_path(filename)
 
-        fmt = EggnogAnnotationFmt(filepath, 'r')
+        fmt = EggnogAnnotationFmt(filepath)
 
         with self.assertRaisesRegex(ValueError,
                                     r"No correct separator detected in "
