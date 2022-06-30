@@ -14,6 +14,9 @@ from qiime2.plugin.testing import TestPluginBase
 
 
 class TestArbitraryHeaderTSVFmt(TestPluginBase):
+    """This format is for files written as TSVs with arbitrary header and/or
+    footer lengths and locations, verification of content should be performed
+    using Semantic Validators"""
     package = 'q2_types_genomics.eggnog.tests'
 
     def test_separator_incorrect(self):
