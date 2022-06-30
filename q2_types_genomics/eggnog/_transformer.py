@@ -8,7 +8,7 @@
 
 
 from ..plugin_setup import plugin
-from ._format import EggnogAnnotationFmt
+from ._format import ArbitraryHeaderTSVFmt
 import pandas as pd
 
 
@@ -16,10 +16,12 @@ def _parse_annotation_fmt_to_dataframe(ff):
     df = pd.read_csv(str(ff), sep='\t', header=ff.header)
     return df
 
+
 def _parse_headerless_annotation_fmt_to_dataframe(ff):
     df = pd.read_csv(str(ff), sep='\t', header=None)
     return df
 
+
 @plugin.register_transformer
-def _1(data: EggnogAnnotationFmt) -> pd.DataFrame:
+def _1(data: ArbitraryHeaderTSVFmt) -> pd.DataFrame:
     return _parse_annotation_fmt_to_dataframe(data)

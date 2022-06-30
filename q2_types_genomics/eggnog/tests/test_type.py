@@ -10,11 +10,10 @@
 import unittest
 import pytest
 
-from qiime2 import Artifact as Artifact
 from qiime2.plugin.testing import TestPluginBase
 import pandas as pd
 
-from q2_types_genomics.eggnog._format import EggnogAnnotationFmt
+from q2_types_genomics.eggnog._format import ArbitraryHeaderTSVFmt
 from q2_types_genomics.eggnog import NOG
 
 
@@ -34,7 +33,7 @@ class TestEggnogTypes(TestPluginBase):
 
         exp = pd.read_csv(filepath, sep="\t", header=header)
 
-        ff = EggnogAnnotationFmt(filepath, mode='r')
+        ff = ArbitraryHeaderTSVFmt(filepath, mode='r')
         obs = ff.view(pd.DataFrame)
 
         run_checker = True
@@ -44,18 +43,12 @@ class TestEggnogTypes(TestPluginBase):
     @pytest.mark.skip(reason="skipping for speed while developing other"
                              " functions")
     def test_type_validation_failure_invalid_column(self):
-        run_checker = False
         filename = 'sampleannotations.txt'
         filepath = self.get_data_path(filename)
 
         exp = pd.read_csv(filepath, sep="\t", header=4)
         print(exp.columns, exp.index)
         assert False
-
-
-
-
-
 
 
 if __name__ == '__main__':

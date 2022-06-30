@@ -1,3 +1,12 @@
+# ----------------------------------------------------------------------------
+# Copyright (c) 2021-2022, QIIME 2 development team.
+#
+# Distributed under the terms of the Modified BSD License.
+#
+# The full license is in the file LICENSE, distributed with this software.
+# ----------------------------------------------------------------------------
+
+
 transferded_annotation_field_names = """Preferred_name
 GOs
 EC
@@ -16,8 +25,8 @@ md5"""
 
 transferred_annotation_fields = transferded_annotation_field_names.split("\n")
 
+
 def parse_header_line(filepath, comment_char='#'):
-#def parse_header_line(filepath, comment_char = '#'):
     cnt = 0
     with filepath.open() as fh:
         while True:
@@ -27,7 +36,8 @@ def parse_header_line(filepath, comment_char='#'):
             else:
                 break
 
-    return cnt 
+    return cnt - 1
+
 
 def parse_footer_line(filepath, comment_char='#'):
     cnt = 0

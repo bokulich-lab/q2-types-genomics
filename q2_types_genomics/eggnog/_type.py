@@ -9,7 +9,7 @@
 from qiime2.plugin import SemanticType
 from q2_types.feature_data import FeatureData
 
-from q2_types_genomics.eggnog._format import EggnogAnnotationDirFmt
+from q2_types_genomics.eggnog._format import ArbitraryHeaderTSVDirFmt
 
 from ..plugin_setup import plugin
 
@@ -19,5 +19,5 @@ plugin.register_semantic_types(NOG)
 
 plugin.register_semantic_type_to_format(
     semantic_type=FeatureData[NOG],
-    artifact_format=EggnogAnnotationDirFmt
+    artifact_format=ArbitraryHeaderTSVDirFmt
 )

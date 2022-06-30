@@ -8,14 +8,12 @@
 
 import unittest
 
-from .._format import (
-    EggnogAnnotationFmt
-)
+from q2_types_genomics.eggnog import ArbitraryHeaderTSVFmt
 
 from qiime2.plugin.testing import TestPluginBase
 
 
-class TestEggnogAnnotationFmt(TestPluginBase):
+class TestArbitraryHeaderTSVFmt(TestPluginBase):
     package = 'q2_types_genomics.eggnog.tests'
 
     def test_separator_incorrect(self):
@@ -23,7 +21,7 @@ class TestEggnogAnnotationFmt(TestPluginBase):
         filename = 'sample.csv'
         filepath = self.get_data_path(filename)
 
-        fmt = EggnogAnnotationFmt(filepath, mode='r')
+        fmt = ArbitraryHeaderTSVFmt(filepath, mode='r')
 
         with self.assertRaisesRegex(ValueError,
                                     r"No correct separator detected in "
@@ -38,16 +36,24 @@ class TestEggnogAnnotationFmt(TestPluginBase):
         filename = 'sampleannotations.txt'
         filepath = self.get_data_path(filename)
 
-        fmt = EggnogAnnotationFmt(filepath, mode='r')
+        fmt = ArbitraryHeaderTSVFmt(filepath, mode='r')
 
-        #with self.assertNotRegex(ValueError,
-        #                         r"No correct separator detected in "
-        #                         "input file on line: [0-9]*"
-        #                         ):
         fmt.validate()
         has_run = True
         assert has_run
 
+    def test_no_header(self):
+        has_run = False
+        filename = 'noheadersample.txt'
+        filepath = self.get_data_path(filename)
+
+        fmt = ArbitraryHeaderTSVFmt(filepath, mode='r')
+        fmt.validate()
+        has_run = True
+        assert has_run
+
+        print(fmt.header)
+        self.assertEqual(fmt.header, 0)
 
     def test_encoding(self):
         pass

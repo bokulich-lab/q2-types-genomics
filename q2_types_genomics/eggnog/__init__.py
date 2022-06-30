@@ -10,18 +10,18 @@ import importlib
 from ._type import NOG
 
 from ._format import (
-    EggnogAnnotationFmt, EggnogAnnotationDirFmt
+    ArbitraryHeaderTSVFmt, ArbitraryHeaderTSVDirFmt
 )
 from q2_types.feature_data import FeatureData
 from ..plugin_setup import plugin
 
 plugin.register_semantic_type_to_format(
     semantic_type=FeatureData[NOG],
-    artifact_format=EggnogAnnotationDirFmt
+    artifact_format=ArbitraryHeaderTSVDirFmt
 )
 importlib.import_module('q2_types_genomics.eggnog._transformer')
 
 
 __all__ = [
-    'NOG', 'EggnogAnnotationFmt', 'EggnogAnnotationDirFmt',
+    'NOG', 'ArbitraryHeaderTSVFmt', 'ArbitraryHeaderTSVDirFmt',
 ]
