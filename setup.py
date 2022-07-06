@@ -37,7 +37,7 @@ setup(
         'q2_types_genomics.genome_data.tests':
             ['data/*', 'data/genes/*', 'data/loci/*',
              'data/loci-invalid/*', 'data/proteins/*'],
-        'q2_types_genomics.eggnog.test':
+        'q2_types_genomics.eggnog.tests':
             ['data/*', ],
 
     },

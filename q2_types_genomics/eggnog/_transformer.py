@@ -39,3 +39,8 @@ def _2(df: pd.DataFrame) -> ArbitraryHeaderTSVFmt:
 @plugin.register_transformer
 def _3(data: ArbitraryHeaderTSVFmt) -> Metadata:
     _tsvfmt_to_metadata(data)
+
+
+@plugin.register_transformer
+def _4(data: Metadata) -> ArbitraryHeaderTSVFmt:
+    pass
