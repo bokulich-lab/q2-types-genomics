@@ -18,6 +18,6 @@ NOG = SemanticType('NOG', variant_of=FeatureData.field['type'])
 plugin.register_semantic_types(NOG)
 
 plugin.register_semantic_type_to_format(
-    semantic_type=FeatureData[NOG],
+    semantic_type=NOG,
     artifact_format=ArbitraryHeaderTSVDirFmt
 )

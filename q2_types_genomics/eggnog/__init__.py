@@ -20,6 +20,7 @@ plugin.register_semantic_type_to_format(
     artifact_format=ArbitraryHeaderTSVDirFmt
 )
 importlib.import_module('q2_types_genomics.eggnog._transformer')
+importlib.import_module('q2_types_genomics.eggnog._validator')
 
 
 __all__ = [

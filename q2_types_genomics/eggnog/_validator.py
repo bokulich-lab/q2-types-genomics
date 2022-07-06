@@ -8,12 +8,26 @@
 
 
 from ..plugin_setup import plugin
-
 from qiime2.core.exceptions import ValidationError
+
+import pandas as pd
 from q2_types.feature_data import FeatureData
-from ._type import NOG
+from q2_types_genomics.eggnog import NOG
+
+eggnog_fields = set(['query_name', 'seed_eggNOG_ortholog',
+                     'seed_ortholog_evalue', 'seed_ortholog_score',
+                     'eggNOG OGs', 'narr_og_name', 'narr_og_cat',
+                     'narr_og_desc', 'best_og_name', 'best_og_cat',
+                     'best_og_desc', 'Preferred_name', 'GOs', 'EC',
+                     'KEGG_ko', 'KEGG_Pathway', 'KEGG_Module', 'KEGG_Reaction',
+                     'KEGG_rclass', 'BRITE', 'KEGG_TC', 'CAZy',
+                     'BiGG_Reaction', 'PFAMs', ])
 
 
 @plugin.register_validator(FeatureData[NOG])
-def check_fields(data, level):
-    raise ValidationError("Hermione was not here")
+def check_fields(data: pd.DataFrame, level):
+    df_labels_set = set(data.columns)
+    if not eggnog_fields.issubset(df_labels_set):
+        raise ValidationError(
+                "Required fields not found in data: {}".format(
+                    df_labels_set.difference(eggnog_fields)))

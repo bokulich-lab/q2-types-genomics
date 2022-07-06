@@ -32,27 +32,11 @@ class ArbitraryHeaderTSVFmt(model.TextFileFormat):
 
     @property
     def header(self):
-        try:
-            return self._header
-        except Exception:
-            self._header = parse_header_line(self)
-            return self._header
-
-    @header.setter
-    def set_header(self):
-        self._header = parse_header_line(self)
+        return parse_header_line(self)
 
     @property
     def footer(self):
-        try:
-            return self._footer
-        except Exception:
-            self._footer = parse_footer_line(self)
-            return self._footer
-
-    @footer.setter
-    def set_footer(self):
-        self._footer = parse_footer_line(self)
+        return parse_footer_line(self)
 
 
 class HeaderlessArbitraryHeaderTSVFmt(ArbitraryHeaderTSVFmt):
