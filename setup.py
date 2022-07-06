@@ -38,8 +38,7 @@ setup(
             ['data/*', 'data/genes/*', 'data/loci/*',
              'data/loci-invalid/*', 'data/proteins/*'],
         'q2_types_genomics.eggnog.test':
-            ['data/*',
-            ],
+            ['data/*', ],
 
     },
     zip_safe=False,
