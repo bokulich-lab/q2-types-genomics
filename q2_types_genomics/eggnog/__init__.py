@@ -7,7 +7,9 @@
 # ----------------------------------------------------------------------------
 
 import importlib
-from ._type import NOG
+from ._type import (
+    NOG, KEGG, OG,
+)
 
 from ._format import (
     ArbitraryHeaderTSVFmt, ArbitraryHeaderTSVDirFmt
@@ -15,14 +17,15 @@ from ._format import (
 from q2_types.feature_data import FeatureData
 from ..plugin_setup import plugin
 
-plugin.register_semantic_type_to_format(
-    semantic_type=FeatureData[NOG],
-    artifact_format=ArbitraryHeaderTSVDirFmt
-)
+#plugin.register_semantic_type_to_format(
+#    semantic_type=FeatureData[NOG],
+#    artifact_format=ArbitraryHeaderTSVDirFmt
+#)
+
 importlib.import_module('q2_types_genomics.eggnog._transformer')
 importlib.import_module('q2_types_genomics.eggnog._validator')
 
 
 __all__ = [
-    'NOG', 'ArbitraryHeaderTSVFmt', 'ArbitraryHeaderTSVDirFmt',
+    'NOG', 'ArbitraryHeaderTSVFmt', 'ArbitraryHeaderTSVDirFmt', 'KEGG', 'OG',
 ]

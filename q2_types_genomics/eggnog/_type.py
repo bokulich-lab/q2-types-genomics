@@ -17,7 +17,7 @@ from ..plugin_setup import plugin
 NOG = SemanticType('NOG', variant_of=FeatureData.field['type'])
 plugin.register_semantic_types(NOG)
 plugin.register_semantic_type_to_format(
-    semantic_type=NOG,
+    semantic_type=FeatureData[NOG],
     artifact_format=ArbitraryHeaderTSVDirFmt
 )
 
@@ -25,15 +25,14 @@ plugin.register_semantic_type_to_format(
 KEGG = SemanticType('KEGG', variant_of=FeatureData.field['type'])
 plugin.register_semantic_types(KEGG)
 plugin.register_semantic_type_to_format(
-        semantic_type=KEGG,
+        semantic_type=FeatureData[KEGG],
         artifact_format=ArbitraryHeaderTSVDirFmt
 )
 
 # OG stuff
 OG = SemanticType('OG', variant_of=FeatureData.field['type'])
 plugin.register_semantic_types(OG)
-
 plugin.register_semantic_type_to_format(
-        semantic_type=OG,
+        semantic_type=FeatureData[OG],
         artifact_format=ArbitraryHeaderTSVDirFmt
 )

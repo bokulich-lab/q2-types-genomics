@@ -7,7 +7,7 @@
 # ----------------------------------------------------------------------------
 
 
-from .._validator import check_fields
+from .._validator import validate_nog, validate_og, validate_kegg
 
 from qiime2.core.exceptions import ValidationError
 from qiime2.plugin.testing import TestPluginBase
@@ -34,4 +34,4 @@ class TestEggnogValidators(TestPluginBase):
         with self.assertRaisesRegex(
                 ValidationError,
                 r".*Required fields not found in data.*"):
-            check_fields(bad_df, 'max')
+            validate_nog(bad_df, 'max')
