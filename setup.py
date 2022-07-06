@@ -36,7 +36,11 @@ setup(
             ['data/*', 'data/mags-fa/*', 'data/mags-fasta/*'],
         'q2_types_genomics.genome_data.tests':
             ['data/*', 'data/genes/*', 'data/loci/*',
-             'data/loci-invalid/*', 'data/proteins/*']
+             'data/loci-invalid/*', 'data/proteins/*'],
+        'q2_types_genomics.eggnog.test':
+            ['data/*',
+            ],
+
     },
     zip_safe=False,
 )
