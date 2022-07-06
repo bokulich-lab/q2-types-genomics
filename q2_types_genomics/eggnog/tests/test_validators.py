@@ -17,7 +17,7 @@ import pandas as pd
 class TestEggnogValidators(TestPluginBase):
     package = 'q2_types_genomics.eggnog.tests'
 
-    def test_check_fields_passing(self):
+    def test_nog_fields_passing(self):
         has_run = False
         filename = "sampleannotations.txt"
         filepath = self.get_data_path(filename)
@@ -26,7 +26,7 @@ class TestEggnogValidators(TestPluginBase):
             has_run = True
         assert has_run
 
-    def test_raise_on_missing_field(self):
+    def test_raise_on_missing_nog_field(self):
         filename = "sampleannotationsmissingcolumn.txt"
         filepath = self.get_data_path(filename)
         bad_df = pd.read_csv(filepath, sep='\t', header=4)
