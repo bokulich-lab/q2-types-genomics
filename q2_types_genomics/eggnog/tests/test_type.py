@@ -29,10 +29,26 @@ class TestEggnogTypes(TestPluginBase):
 
         exp = pd.read_csv(filepath, sep="\t", header=header)
 
-        ff = ArbitraryHeaderTSVFmt(filepath, mode='r')
-        obs = ff.view(pd.DataFrame)
-        run_checker = True
-        self.assertTrue(obs.equals(exp))
+        with ArbitraryHeaderTSVFmt(filepath, mode='r') as ff:
+            obs = ff.view(pd.DataFrame)
+            run_checker = True
+            self.assertTrue(obs.equals(exp))
+
+        assert run_checker
+
+    def test_headerless_data(self):
+        run_checker = False
+        filename = "noheadersample.txt"
+        filepath = self.get_data_path(filename)
+
+        exp = pd.read_csv(filepath, sep="\t", header=None)
+
+        with ArbitraryHeaderTSVFmt(filepath, mode='r') as fh:
+            # invoking view so that we know the validator runs? Possibly
+            # un-necessary...
+            obs = ff.view(pd.DataFrame)
+            run_checker = True
+            self.assertEqual(obs, exp)
         assert run_checker
 
 
