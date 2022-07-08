@@ -28,27 +28,30 @@ class TestEggnogTypes(TestPluginBase):
         filepath = self.get_data_path(filename)
 
         exp = pd.read_csv(filepath, sep="\t", header=header)
+        exp.columns = [each.strip("#") for each in exp.columns]
 
-        with ArbitraryHeaderTSVFmt(filepath, mode='r') as ff:
-            obs = ff.view(pd.DataFrame)
-            run_checker = True
-            self.assertTrue(obs.equals(exp))
+        obs = ArbitraryHeaderTSVFmt(filepath, mode='r').view(pd.DataFrame)
+        run_checker = True
 
+        self.assertTrue(obs.equals(exp))
+
+        # ensure correct comment character stripping.
+        pd.util.testing.assert_index_equal(exp.columns, obs.columns)
         assert run_checker
 
-    def test_headerless_data(self):
+    def test_no_header_footer_data(self):
         run_checker = False
         filename = "noheadersample.txt"
         filepath = self.get_data_path(filename)
 
-        exp = pd.read_csv(filepath, sep="\t", header=None)
+        exp = pd.read_csv(filepath, sep="\t", header=0)
+        exp.columns = [each.strip("#") for each in exp.columns]
 
-        with ArbitraryHeaderTSVFmt(filepath, mode='r') as fh:
-            # invoking view so that we know the validator runs? Possibly
-            # un-necessary...
-            obs = ff.view(pd.DataFrame)
-            run_checker = True
-            self.assertEqual(obs, exp)
+        obs = ArbitraryHeaderTSVFmt(filepath, mode='r').view(pd.DataFrame)
+        run_checker = True
+
+        self.assertTrue(obs.equals(exp))
+
         assert run_checker
 
 

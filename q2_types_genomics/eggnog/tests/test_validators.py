@@ -19,7 +19,7 @@ class TestEggnogValidators(TestPluginBase):
 
     def test_nog_fields_passing(self):
         has_run = False
-        filename = "sampleannotations.txt"
+        filename = "nogannotations.txt"
         filepath = self.get_data_path(filename)
         good_df = pd.read_csv(filepath, sep='\t', header=4)
         if good_df is not None:
@@ -42,7 +42,7 @@ class TestEggnogValidators(TestPluginBase):
     # og validators
     def test_og_fields_passing(self):
         has_run = False
-        filename = "sampleannotations.txt"
+        filename = "ogannotations.txt"
         filepath = self.get_data_path(filename)
         good_df = pd.read_csv(filepath, sep='\t', header=4)
         if good_df is not None:
@@ -59,14 +59,12 @@ class TestEggnogValidators(TestPluginBase):
                 ValidationError,
                 r".*Required fields not found in data.*"):
             has_run = True
-            validate_nog(bad_df, 'max')
+            validate_og(bad_df, 'max')
         assert has_run
 
-
-    # kegg validators
     def test_kegg_fields_passing(self):
         has_run = False
-        filename = "sampleannotations.txt"
+        filename = "keggannotations.txt"
         filepath = self.get_data_path(filename)
         good_df = pd.read_csv(filepath, sep='\t', header=4)
         if good_df is not None:
@@ -83,6 +81,6 @@ class TestEggnogValidators(TestPluginBase):
                 ValidationError,
                 r".*Required fields not found in data.*"):
             has_run = True
-            validate_nog(bad_df, 'max')
+            validate_kegg(bad_df, 'max')
 
         assert has_run

@@ -15,6 +15,7 @@ from qiime2 import Metadata
 
 def _parse_annotation_fmt_to_dataframe(ff):
     df = pd.read_csv(str(ff), sep='\t', header=ff.header)
+    df.columns = [each.strip("#") for each in df.columns]
     return df
 
 
