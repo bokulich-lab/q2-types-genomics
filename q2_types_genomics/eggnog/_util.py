@@ -7,7 +7,7 @@
 # ----------------------------------------------------------------------------
 
 
-transferded_annotation_field_names = """Preferred_name
+transferred_annotation_field_names = """Preferred_name
 GOs
 EC
 KEGG_ko
