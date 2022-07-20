@@ -25,7 +25,6 @@ class TestEggnogValidators(TestPluginBase):
             Artifact.import_data("FeatureData[NOG]", filepath),
             True,
         )
-        good_nog
 
         assert has_run
 
@@ -40,7 +39,6 @@ class TestEggnogValidators(TestPluginBase):
                 "{'seed_eggNOG_ortholog'}"):
             has_run = True
             bad_nog = Artifact.import_data("FeatureData[NOG]", filepath)
-            bad_nog
 
         assert has_run
 
@@ -51,11 +49,9 @@ class TestEggnogValidators(TestPluginBase):
         filepath = self.get_data_path(filename)
 
         good_og, has_run = (
-            Artifact.import_data("FeatureData[OG]",
-            filepath),
-            True
+                Artifact.import_data("FeatureData[OG]", filepath),
+                True
         )
-        good_og
 
         assert has_run
 
@@ -75,7 +71,6 @@ class TestEggnogValidators(TestPluginBase):
                 "FeatureData[OG]",
                 filepath
             )
-            bad_og
 
         assert has_run
 
@@ -88,7 +83,6 @@ class TestEggnogValidators(TestPluginBase):
             Artifact.import_data("FeatureData[KEGG]", filepath),
             True,
         )
-        good_kegg
 
         assert has_run
 
@@ -105,6 +99,5 @@ class TestEggnogValidators(TestPluginBase):
                 "FeatureData[KEGG]",
                 filepath
             )
-            bad_kegg
 
         assert has_run
