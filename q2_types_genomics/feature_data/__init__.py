@@ -8,12 +8,20 @@
 
 import importlib
 
-from ._format import MAGSequencesDirFmt
-from ._type import MAG
+from ._format import (
+    ArbitraryHeaderTSVFmt, ArbitraryHeaderTSVDirFmt, MAGSequencesDirFmt,
+)
+from ._type import (
+    NOG, KEGG, OG, MAG,
+)
 from ._transformer import MAGIterator
 
+
+
 __all__ = [
-    'MAG', 'MAGSequencesDirFmt', 'MAGIterator'
+    'MAG', 'MAGSequencesDirFmt', 'MAGIterator', 'NOG',
+    'ArbitraryHeaderTSVFmt', 'ArbitraryHeaderTSVDirFmt', 'KEGG', 'OG',
 ]
 
 importlib.import_module('q2_types_genomics.feature_data._transformer')
+importlib.import_module('q2_types_genomics.feature_data._validator')

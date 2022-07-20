@@ -15,11 +15,11 @@ import pandas as pd
 
 
 class TestEggnogValidators(TestPluginBase):
-    package = 'q2_types_genomics.eggnog.tests'
+    package = 'q2_types_genomics.feature_data.tests'
 
     def test_nog_fields_passing(self):
         has_run = False
-        filename = "nogannotations.txt"
+        filename = "nog_annnotations.txt"
         filepath = self.get_data_path(filename)
         good_df = pd.read_csv(filepath, sep='\t', header=4)
         if good_df is not None:
@@ -28,7 +28,7 @@ class TestEggnogValidators(TestPluginBase):
 
     def test_raise_on_missing_nog_field(self):
         has_run = False
-        filename = "missingnogannotations.txt"
+        filename = "missing_nog_annotations.txt"
         filepath = self.get_data_path(filename)
         bad_df = pd.read_csv(filepath, sep='\t', header=4)
 
@@ -42,7 +42,7 @@ class TestEggnogValidators(TestPluginBase):
     # og validators
     def test_og_fields_passing(self):
         has_run = False
-        filename = "ogannotations.txt"
+        filename = "og_annotations.txt"
         filepath = self.get_data_path(filename)
         good_df = pd.read_csv(filepath, sep='\t', header=4)
         if good_df is not None:
@@ -51,7 +51,7 @@ class TestEggnogValidators(TestPluginBase):
 
     def test_raise_on_missing_og_field(self):
         has_run = False
-        filename = "missingogannotations.txt"
+        filename = "missing_og_annotations.txt"
         filepath = self.get_data_path(filename)
         bad_df = pd.read_csv(filepath, sep='\t', header=4)
 
@@ -64,7 +64,7 @@ class TestEggnogValidators(TestPluginBase):
 
     def test_kegg_fields_passing(self):
         has_run = False
-        filename = "keggannotations.txt"
+        filename = "kegg_annotations.txt"
         filepath = self.get_data_path(filename)
         good_df = pd.read_csv(filepath, sep='\t', header=4)
         if good_df is not None:
@@ -73,7 +73,7 @@ class TestEggnogValidators(TestPluginBase):
 
     def test_raise_on_missing_kegg_field(self):
         has_run = False
-        filename = "missingkeggannotations.txt"
+        filename = "missing_kegg_annotations.txt"
         filepath = self.get_data_path(filename)
         bad_df = pd.read_csv(filepath, sep='\t', header=4)
 

@@ -10,9 +10,11 @@
 from ..plugin_setup import plugin
 from qiime2.core.exceptions import ValidationError
 
-import pandas as pd
 from q2_types.feature_data import FeatureData
-from q2_types_genomics.eggnog import (NOG, OG, KEGG, )
+from q2_types_genomics.feature_data import (NOG, OG, KEGG, )
+
+import pandas as pd
+
 
 nog_fields = set(['query_name', 'seed_eggNOG_ortholog',
                   'seed_ortholog_evalue', 'seed_ortholog_score',
