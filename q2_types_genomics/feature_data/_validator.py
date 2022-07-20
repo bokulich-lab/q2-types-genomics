@@ -26,8 +26,8 @@ nog_fields = set(['query_name', 'seed_eggNOG_ortholog',
                   'BiGG_Reaction', 'PFAMs',
                   ])
 
-og_fields = set(['eggNOG', 'OGs', 'narr_og_name', 'narr_og_cat',
-                 'nar_og_desc',
+og_fields = set(['eggNOG OGs', 'narr_og_name', 'narr_og_cat',
+                 'narr_og_desc',
                  ])
 
 kegg_fields = set(['KEGG_ko', 'KEGG_Pathway', 'KEGG_Module', 'KEGG_Reaction',
@@ -55,4 +55,4 @@ def _check_fields(data: pd.DataFrame, level, reference_fields):
     if not reference_fields.issubset(df_labels_set):
         raise ValidationError(
                 "Required fields not found in data: {}".format(
-                    df_labels_set.difference(reference_fields)))
+                    reference_fields.difference(df_labels_set)))

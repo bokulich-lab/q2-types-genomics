@@ -7,11 +7,9 @@
 # ----------------------------------------------------------------------------
 
 
-from .._validator import validate_nog, validate_og, validate_kegg
-
 from qiime2.core.exceptions import ValidationError
 from qiime2.plugin.testing import TestPluginBase
-import pandas as pd
+from qiime2 import Artifact
 
 
 class TestEggnogValidators(TestPluginBase):
@@ -19,24 +17,31 @@ class TestEggnogValidators(TestPluginBase):
 
     def test_nog_fields_passing(self):
         has_run = False
-        filename = "nog_annnotations.txt"
+        filename = "nog_annotations.txt"
         filepath = self.get_data_path(filename)
-        good_df = pd.read_csv(filepath, sep='\t', header=4)
-        if good_df is not None:
-            has_run = True
+
+        # implicitly running the validators on instatiation
+        good_nog, has_run = (
+            Artifact.import_data("FeatureData[NOG]", filepath),
+            True,
+        )
+        good_nog
+
         assert has_run
 
     def test_raise_on_missing_nog_field(self):
         has_run = False
         filename = "missing_nog_annotations.txt"
         filepath = self.get_data_path(filename)
-        bad_df = pd.read_csv(filepath, sep='\t', header=4)
 
         with self.assertRaisesRegex(
                 ValidationError,
-                r".*Required fields not found in data.*"):
+                "Required fields not found in data: "
+                "{'seed_eggNOG_ortholog'}"):
             has_run = True
-            validate_nog(bad_df, 'max')
+            bad_nog = Artifact.import_data("FeatureData[NOG]", filepath)
+            bad_nog
+
         assert has_run
 
     # og validators
@@ -44,43 +49,62 @@ class TestEggnogValidators(TestPluginBase):
         has_run = False
         filename = "og_annotations.txt"
         filepath = self.get_data_path(filename)
-        good_df = pd.read_csv(filepath, sep='\t', header=4)
-        if good_df is not None:
-            has_run = True
+
+        good_og, has_run = (
+            Artifact.import_data("FeatureData[OG]",
+            filepath),
+            True
+        )
+        good_og
+
         assert has_run
 
     def test_raise_on_missing_og_field(self):
         has_run = False
         filename = "missing_og_annotations.txt"
         filepath = self.get_data_path(filename)
-        bad_df = pd.read_csv(filepath, sep='\t', header=4)
 
         with self.assertRaisesRegex(
                 ValidationError,
-                r".*Required fields not found in data.*"):
+                "Required fields not found in data: {"
+                "'(eggNOG OGs|narr_og_cat|narr_og_name)',"
+                " '(eggNOG OGs|narr_og_cat|narr_og_name)',"
+                " '(eggNOG OGs|narr_og_cat|narr_og_name)'}"):
             has_run = True
-            validate_og(bad_df, 'max')
+            bad_og = Artifact.import_data(
+                "FeatureData[OG]",
+                filepath
+            )
+            bad_og
+
         assert has_run
 
     def test_kegg_fields_passing(self):
         has_run = False
         filename = "kegg_annotations.txt"
         filepath = self.get_data_path(filename)
-        good_df = pd.read_csv(filepath, sep='\t', header=4)
-        if good_df is not None:
-            has_run = True
+
+        good_kegg, has_run = (
+            Artifact.import_data("FeatureData[KEGG]", filepath),
+            True,
+        )
+        good_kegg
+
         assert has_run
 
     def test_raise_on_missing_kegg_field(self):
         has_run = False
         filename = "missing_kegg_annotations.txt"
         filepath = self.get_data_path(filename)
-        bad_df = pd.read_csv(filepath, sep='\t', header=4)
 
         with self.assertRaisesRegex(
                 ValidationError,
-                r".*Required fields not found in data.*"):
+                r"Required fields not found in data: {'KEGG_Pathway'}"):
             has_run = True
-            validate_kegg(bad_df, 'max')
+            bad_kegg = Artifact.import_data(
+                "FeatureData[KEGG]",
+                filepath
+            )
+            bad_kegg
 
         assert has_run
