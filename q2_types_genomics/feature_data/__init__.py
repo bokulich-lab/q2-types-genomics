@@ -16,8 +16,6 @@ from ._type import (
 )
 from ._transformer import MAGIterator
 
-
-
 __all__ = [
     'MAG', 'MAGSequencesDirFmt', 'MAGIterator', 'NOG',
     'ArbitraryHeaderTSVFmt', 'ArbitraryHeaderTSVDirFmt', 'KEGG', 'OG',

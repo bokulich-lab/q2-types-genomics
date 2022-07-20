@@ -91,6 +91,7 @@ def _5(data: MAGIterator) -> MAGSequencesDirFmt:
             skbio.io.write(seq, format='fasta', into=fin)
     return result
 
+
 # EggnogTransformers
 def _parse_annotation_fmt_to_dataframe(ff):
     df = pd.read_csv(str(ff), sep='\t', header=ff.header)

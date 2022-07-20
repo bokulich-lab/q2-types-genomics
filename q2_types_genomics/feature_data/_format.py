@@ -25,7 +25,6 @@ plugin.register_formats(
 )
 
 
-
 class ArbitraryHeaderTSVFmt(model.TextFileFormat):
     def _check_seperator(self, level):
         with self.open() as fh:

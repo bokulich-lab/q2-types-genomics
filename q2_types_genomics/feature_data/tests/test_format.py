@@ -15,8 +15,6 @@ from q2_types_genomics.feature_data import (
         MAGSequencesDirFmt, ArbitraryHeaderTSVFmt,
 )
 
-from qiime2.core.exceptions import ValidationError
-
 
 class TestFeatureDataFormats(TestPluginBase):
     package = 'q2_types_genomics.feature_data.tests'
@@ -44,7 +42,6 @@ class TestArbitraryHeaderTSVFmt(TestPluginBase):
         filepath = self.get_data_path(os.path.join('./sample_annotations.txt'))
         format = ArbitraryHeaderTSVFmt(filepath, mode='r')
         format.validate()
-
 
     def test_separator_incorrect(self):
         has_run = False

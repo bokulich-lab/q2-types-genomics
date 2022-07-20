@@ -72,6 +72,3 @@ class TestEggnogTypes(TestPluginBase):
 
 if __name__ == '__main__':
     unittest.main()
-
-
-

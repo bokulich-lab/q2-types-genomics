@@ -23,7 +23,7 @@ PFAMs
 md5"""
 
 
-transferred_annotation_fields = transferded_annotation_field_names.split("\n")
+transferred_annotation_fields = transferred_annotation_field_names.split("\n")
 
 
 def parse_header_line(filepath, comment_char='#'):
