@@ -14,14 +14,16 @@ from qiime2 import Artifact
 
 class TestEggnogValidators(TestPluginBase):
     package = 'q2_types_genomics.feature_data.tests'
+    # these tests implicitly run the validators on instatiation/data loading
+    # noqa comments are to have flake8 ignore errors from assigned but
+    # un-accessed variables
 
     def test_nog_fields_passing(self):
         has_run = False
         filename = "nog_annotations.txt"
         filepath = self.get_data_path(filename)
 
-        # implicitly running the validators on instatiation
-        good_nog, has_run = (
+        good_nog, has_run = (  # noqa: F841
             Artifact.import_data("FeatureData[NOG]", filepath),
             True,
         )
@@ -38,7 +40,9 @@ class TestEggnogValidators(TestPluginBase):
                 "Required fields not found in data: "
                 "{'seed_eggNOG_ortholog'}"):
             has_run = True
-            bad_nog = Artifact.import_data("FeatureData[NOG]", filepath)
+            bad_nog = Artifact.import_data(  # noqa: F841
+                "FeatureData[NOG]",
+                filepath)
 
         assert has_run
 
@@ -48,7 +52,7 @@ class TestEggnogValidators(TestPluginBase):
         filename = "og_annotations.txt"
         filepath = self.get_data_path(filename)
 
-        good_og, has_run = (
+        good_og, has_run = (  # noqa: F841
                 Artifact.import_data("FeatureData[OG]", filepath),
                 True
         )
@@ -67,7 +71,7 @@ class TestEggnogValidators(TestPluginBase):
                 " '(eggNOG OGs|narr_og_cat|narr_og_name)',"
                 " '(eggNOG OGs|narr_og_cat|narr_og_name)'}"):
             has_run = True
-            bad_og = Artifact.import_data(
+            bad_og = Artifact.import_data(  # noqa: F841
                 "FeatureData[OG]",
                 filepath
             )
@@ -79,7 +83,7 @@ class TestEggnogValidators(TestPluginBase):
         filename = "kegg_annotations.txt"
         filepath = self.get_data_path(filename)
 
-        good_kegg, has_run = (
+        good_kegg, has_run = (  # noqa: F841
             Artifact.import_data("FeatureData[KEGG]", filepath),
             True,
         )
@@ -95,7 +99,7 @@ class TestEggnogValidators(TestPluginBase):
                 ValidationError,
                 r"Required fields not found in data: {'KEGG_Pathway'}"):
             has_run = True
-            bad_kegg = Artifact.import_data(
+            bad_kegg = Artifact.import_data(  # noqa: F841
                 "FeatureData[KEGG]",
                 filepath
             )

@@ -47,7 +47,6 @@ def parse_footer_line(filepath, comment_char='#'):
             line = fh.readline()
             cnt += 1
             if not past_header and not line.startswith(comment_char):
-                print(line)
                 past_header = True
             elif past_header and line.startswith(comment_char):
                 return cnt
