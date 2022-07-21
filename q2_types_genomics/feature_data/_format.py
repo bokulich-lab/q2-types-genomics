@@ -6,11 +6,17 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
-from q2_types.feature_data import DNAFASTAFormat
+from q2_types.feature_data import (
+    DNAFASTAFormat,
+)
+
 from qiime2.plugin import model
+from ._util import parse_header_line, parse_footer_line
+from qiime2.plugin import ValidationError
 
 from ..plugin_setup import plugin
 
+import re
 
 MAGSequencesDirFmt = model.SingleFileDirectoryFormat(
     'MAGSequencesDirFmt', r'mag[0-9]+\.(fa|fasta)$', DNAFASTAFormat)
@@ -18,3 +24,45 @@ MAGSequencesDirFmt = model.SingleFileDirectoryFormat(
 plugin.register_formats(
     MAGSequencesDirFmt
 )
+
+
+class ArbitraryHeaderTSVFmt(model.TextFileFormat):
+    """This format is for files written as TSVs with arbitrary header and/or
+    footer lengths and locations, verification of content should be performed
+    using Semantic Validators"""
+
+    def _check_seperator(self, level):
+        with self.open() as fh:
+            for i, line in enumerate(fh, 1):
+                if (not re.search(r'\t', line) and
+                        self.header + 1 <= i < self.footer):
+                    raise ValidationError("No correct separator detected in"
+                                          " input file on line: {}".format(i))
+
+                if i == level:
+                    break
+
+    def _validate_(self, level):
+        self._check_seperator(level={'min': 5, 'max': None}[level])
+
+    @property
+    def header(self):
+        return parse_header_line(self)
+
+    @property
+    def footer(self):
+        return parse_footer_line(self)
+
+
+class HeaderlessArbitraryHeaderTSVFmt(ArbitraryHeaderTSVFmt):
+    pass
+
+
+plugin.register_formats(ArbitraryHeaderTSVFmt)
+
+ArbitraryHeaderTSVDirFmt = model.SingleFileDirectoryFormat(
+                                 'ArbitraryHeaderTSVDirFmt',
+                                 'eggnog.tsv',
+                                 ArbitraryHeaderTSVFmt)
+
+plugin.register_formats(ArbitraryHeaderTSVDirFmt)
