@@ -21,6 +21,37 @@ from q2_types_genomics.feature_data import (
 from q2_types_genomics.feature_data._transformer import _get_filename
 
 
+class TestEggnogTransformers(TestPluginBase):
+    package = 'q2_types_genomics.feature_data.tests'
+
+    def test_nog_to_df(self):
+        pass
+
+    def test_og_to_df(self):
+        pass
+
+    def test_kegg_to_df(self):
+        pass
+
+    def test_df_to_nog(self):
+        pass
+
+    def test_df_to_og(self):
+        pass
+
+    def test_df_to_kegg(self):
+        pass
+
+    def test_nog_to_metdata(self):
+        pass
+
+    def test_og_to_metdata(self):
+        pass
+
+    def test_kegg_to_metdata(self):
+        pass
+
+
 class TestTransformers(TestPluginBase):
     package = 'q2_types_genomics.feature_data.tests'
 

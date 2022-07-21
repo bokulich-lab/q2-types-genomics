@@ -12,6 +12,7 @@ from q2_types.feature_data import (
 
 from qiime2.plugin import model
 from ._util import parse_header_line, parse_footer_line
+from qiime2.plugin import ValidationError
 
 from ..plugin_setup import plugin
 
@@ -26,13 +27,17 @@ plugin.register_formats(
 
 
 class ArbitraryHeaderTSVFmt(model.TextFileFormat):
+    """This format is for files written as TSVs with arbitrary header and/or
+    footer lengths and locations, verification of content should be performed
+    using Semantic Validators"""
+
     def _check_seperator(self, level):
         with self.open() as fh:
             for i, line in enumerate(fh, 1):
                 if (not re.search(r'\t', line) and
                         self.header + 1 <= i < self.footer):
-                    raise ValueError("No correct separator detected in input "
-                                     "file on line: {}".format(i))
+                    raise ValidationError("No correct separator detected in"
+                                          " input file on line: {}".format(i))
 
                 if i == level:
                     break
