@@ -30,7 +30,7 @@ class ArbitraryHeaderTSVFmt(model.TextFileFormat):
         with self.open() as fh:
             for i, line in enumerate(fh, 1):
                 if (not re.search(r'\t', line) and
-                        i >= self.header + 1 and i < self.footer):
+                        self.header + 1 <= i < self.footer):
                     raise ValueError("No correct separator detected in input "
                                      "file on line: {}".format(i))
 
