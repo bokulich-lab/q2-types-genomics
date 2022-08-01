@@ -12,13 +12,14 @@ from ._format import (
     ArbitraryHeaderTSVFmt, ArbitraryHeaderTSVDirFmt, MAGSequencesDirFmt,
 )
 from ._type import (
-    NOG, KEGG, OG, MAG,
+    NOG, KEGG, OG, MAG, DiamondDB, MMseq2DB,
 )
 from ._transformer import MAGIterator
 
 __all__ = [
     'MAG', 'MAGSequencesDirFmt', 'MAGIterator', 'NOG',
     'ArbitraryHeaderTSVFmt', 'ArbitraryHeaderTSVDirFmt', 'KEGG', 'OG',
+    'DiamondDB', 'MMseq2DB',
 ]
 
 importlib.import_module('q2_types_genomics.feature_data._transformer')

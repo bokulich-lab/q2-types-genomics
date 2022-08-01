@@ -45,3 +45,18 @@ plugin.register_semantic_type_to_format(
         semantic_type=FeatureData[OG],
         artifact_format=ArbitraryHeaderTSVDirFmt
 )
+
+# types for downloading the databases eggnogmapper is using.
+DiamondDB = SemanticType('DiamondDB', variant_of=FeatureData.field['type'])
+plugin.register_semantic_types(DiamondDB)
+plugin.register_semantic_type_to_format(
+        FeatureData[DiamondDB],
+        artifact_format=ArbitraryHeaderTSVDirFmt
+)
+
+MMseq2DB = SemanticType('MMseq2DB', variant_of=FeatureData.field['type'])
+plugin.register_semantic_types(MMseq2DB)
+plugin.register_semantic_type_to_format(
+        FeatureData[MMseq2DB],
+        artifact_format=ArbitraryHeaderTSVDirFmt
+)
