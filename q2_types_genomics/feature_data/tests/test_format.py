@@ -14,6 +14,7 @@ from qiime2.plugin.testing import TestPluginBase
 
 from q2_types_genomics.feature_data import (
         MAGSequencesDirFmt, ArbitraryHeaderTSVFmt,
+        BinaryReferenceDatabaseFormat, BinaryReferenceDatabaseDirectoryFormat,
 )
 
 
@@ -82,6 +83,20 @@ class TestArbitraryHeaderTSVFmt(TestPluginBase):
         assert has_run
 
         self.assertEqual(fmt.header, 0)
+
+
+class TestDBfmts(TestPluginBase):
+    """Some of the reference databases for Eggnog Mapper are binary files. The
+    formats for storing these are very general right now"""
+    package = 'q2_types_genomics.feature_data.tests'
+
+    def test_diamond_basics(self):
+        filename = 'diamond_test.dmnd'
+        filepath = self.get_data_path(filename)
+
+        fmt = BinaryReferenceDatabaseFormat(filepath, 'r')
+        fmt.validate(level='max')
+        assert False
 
 
 if __name__ == '__main__':
