@@ -9,7 +9,8 @@
 from q2_types.feature_data import FeatureData
 
 from q2_types_genomics.feature_data._format import (
-    MAGSequencesDirFmt, BinaryReferenceDatabaseDirectoryFormat,
+    MAGSequencesDirFmt, ArbitraryHeaderTSVDirFmt,
+    BinaryReferenceDBDirFmt,
     )
 from qiime2.core.type import SemanticType
 from ..plugin_setup import plugin
@@ -52,12 +53,12 @@ DiamondDB = SemanticType('DiamondDB', variant_of=FeatureData.field['type'])
 plugin.register_semantic_types(DiamondDB)
 plugin.register_semantic_type_to_format(
         FeatureData[DiamondDB],
-        artifact_format=BinaryReferenceDatabaseDirectoryFormat
+        artifact_format=BinaryReferenceDBDirFmt
 )
 
 MMseq2DB = SemanticType('MMseq2DB', variant_of=FeatureData.field['type'])
 plugin.register_semantic_types(MMseq2DB)
 plugin.register_semantic_type_to_format(
         FeatureData[MMseq2DB],
-        artifact_format=BinaryReferenceDatabaseDirectoryFormat
+        artifact_format=BinaryReferenceDBDirFmt
 )

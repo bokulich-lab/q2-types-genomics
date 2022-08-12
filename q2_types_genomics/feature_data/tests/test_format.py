@@ -6,6 +6,7 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
+
 import unittest
 import os
 from qiime2.core.exceptions import ValidationError
@@ -14,7 +15,7 @@ from qiime2.plugin.testing import TestPluginBase
 
 from q2_types_genomics.feature_data import (
         MAGSequencesDirFmt, ArbitraryHeaderTSVFmt,
-        BinaryReferenceDatabaseFormat, BinaryReferenceDatabaseDirectoryFormat,
+        BinaryReferenceDBFmt,
 )
 
 
@@ -90,13 +91,19 @@ class TestDBfmts(TestPluginBase):
     formats for storing these are very general right now"""
     package = 'q2_types_genomics.feature_data.tests'
 
-    def test_diamond_basics(self):
+    def test_registration_basics(self):
         filename = 'diamond_test.dmnd'
         filepath = self.get_data_path(filename)
 
-        fmt = BinaryReferenceDatabaseFormat(filepath, 'r')
+        fmt = BinaryReferenceDBFmt(filepath, 'r')
         fmt.validate(level='max')
-        assert False
+
+#    def test_fails_on_string(self):
+#        filename = 'sample_annotations.txt'
+#        filepath = self.get_data_path(filename)
+#
+#        fmt = BinaryReferenceDBFMT(filepath, 'rb')
+#        fmt.validate(level='max')
 
 
 if __name__ == '__main__':

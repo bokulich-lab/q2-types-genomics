@@ -18,6 +18,7 @@ from ..plugin_setup import plugin
 
 import re
 
+# mag
 MAGSequencesDirFmt = model.SingleFileDirectoryFormat(
     'MAGSequencesDirFmt', r'mag[0-9]+\.(fa|fasta)$', DNAFASTAFormat)
 
@@ -26,6 +27,7 @@ plugin.register_formats(
 )
 
 
+# GenericTSVfmt
 class ArbitraryHeaderTSVFmt(model.TextFileFormat):
     """This format is for files written as TSVs with arbitrary header and/or
     footer lengths and locations, verification of content should be performed
@@ -68,16 +70,32 @@ ArbitraryHeaderTSVDirFmt = model.SingleFileDirectoryFormat(
 plugin.register_formats(ArbitraryHeaderTSVDirFmt)
 
 
-class BinaryReferenceDatabaseFormat(model.BinaryFileFormat):
+# binary reference
+class BinaryReferenceDBFmt(model.BinaryFileFormat):
     """A format to hold reference data, originally created for the diamond
     formatted reference database information needed for Eggnog Mapper"""
-    pass
+
+    def _validate_(self, level):
+        bad_lines = []
+        try:
+            contents = self.open().readlines()
+            for line, content in enumerate(contents, 1):
+                if not isinstance(content, bytes):
+                    bad_lines.append(line)
+            if bad_lines:
+                raise ValueError
+        except ValueError:
+            raise ValueError("Your reference database appears to contain"
+                             " non-byte strings on lines: {}".format(
+                                 ", ".join(bad_lines)))
+        except Exception as e:
+            raise e
 
 
-BinaryReferenceDatabaseDirectoryFormat = model.SingleFileDirectoryFormat(
-        'BinaryReferenceDatabaseDirectoryFormat', 'reference_database',
-        BinaryReferenceDatabaseFormat)
+BinaryReferenceDBDirFmt = model.SingleFileDirectoryFormat(
+        'BinaryReferenceDBDirFmt', 'reference_database',
+        BinaryReferenceDBFmt)
 
 plugin.register_formats(
-    BinaryReferenceDatabaseFormat, BinaryReferenceDatabaseDirectoryFormat,
-)
+    BinaryReferenceDBFmt, BinaryReferenceDBDirFmt
+    )
