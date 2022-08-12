@@ -66,3 +66,18 @@ ArbitraryHeaderTSVDirFmt = model.SingleFileDirectoryFormat(
                                  ArbitraryHeaderTSVFmt)
 
 plugin.register_formats(ArbitraryHeaderTSVDirFmt)
+
+
+class BinaryReferenceDatabaseFormat(model.BinaryFileFormat):
+    """A format to hold reference data, originally created for the diamond
+    formatted reference database information needed for Eggnog Mapper"""
+    pass
+
+
+BinaryReferenceDatabaseDirectoryFormat = model.SingleFileDirectoryFormat(
+        'BinaryReferenceDatabaseDirectoryFormat', 'reference_database',
+        BinaryReferenceDatabaseFormat)
+
+plugin.register_formats(
+    BinaryReferenceDatabaseFormat, BinaryReferenceDatabaseDirectoryFormat,
+)
