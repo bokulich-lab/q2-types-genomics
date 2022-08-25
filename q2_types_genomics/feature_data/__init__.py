@@ -10,11 +10,12 @@ import importlib
 
 from ._format import (
     ArbitraryHeaderTSVFmt, ArbitraryHeaderTSVDirFmt, MAGSequencesDirFmt,
-    BinaryReferenceDBFmt, BinaryReferenceDBDirFmt,
+    BinaryReferenceDBFmt, BinaryReferenceDBDirFmt, EggnogRefBinFileFmt,
+    EggnogRefTextFileFmt, EggnogRefDirFmt,
 )
 
 from ._type import (
-    NOG, KEGG, OG, MAG, DiamondDB, MMseq2DB,
+    NOG, KEGG, OG, MAG, DiamondDB, MMseq2DB, EggnogDB,
 )
 from ._transformer import MAGIterator
 
@@ -22,7 +23,8 @@ __all__ = [
     'MAG', 'MAGSequencesDirFmt', 'MAGIterator', 'NOG',
     'ArbitraryHeaderTSVFmt', 'ArbitraryHeaderTSVDirFmt', 'KEGG', 'OG',
     'DiamondDB', 'MMseq2DB', 'BinaryReferenceDBFmt',
-    'BinaryReferenceDBDirFmt',
+    'BinaryReferenceDBDirFmt', 'EggnogDB', 'EggnogRefBinFileFmt',
+    'EggnogRefTextFileFmt', 'EggnogRefDirFmt',
 ]
 
 importlib.import_module('q2_types_genomics.feature_data._transformer')

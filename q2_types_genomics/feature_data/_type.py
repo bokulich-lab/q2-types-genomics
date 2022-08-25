@@ -10,7 +10,7 @@ from q2_types.feature_data import FeatureData
 
 from q2_types_genomics.feature_data._format import (
     MAGSequencesDirFmt, ArbitraryHeaderTSVDirFmt,
-    BinaryReferenceDBDirFmt,
+    BinaryReferenceDBDirFmt, EggnogRefDirFmt,
     )
 from qiime2.core.type import SemanticType
 from ..plugin_setup import plugin
@@ -62,3 +62,11 @@ plugin.register_semantic_type_to_format(
         FeatureData[MMseq2DB],
         artifact_format=BinaryReferenceDBDirFmt
 )
+
+EggnogDB = SemanticType('EggnogDB')
+plugin.register_semantic_types(EggnogDB)
+plugin.register_semantic_type_to_format(EggnogDB, EggnogRefDirFmt)
+# plugin.register_semantic_type_to_format(
+#         EggnogDB,
+#         artifact_format=BinaryReferenceDBDirFmt
+# )

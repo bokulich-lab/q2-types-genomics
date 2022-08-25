@@ -10,7 +10,8 @@ import unittest
 
 from q2_types.feature_data import FeatureData
 from q2_types_genomics.feature_data import (
-    ArbitraryHeaderTSVFmt, NOG, MAG, MAGSequencesDirFmt,
+    ArbitraryHeaderTSVFmt, NOG, MAG, MAGSequencesDirFmt, OG, KEGG, DiamondDB,
+    MMseq2DB, EggnogDB,
 )
 from qiime2.plugin.testing import TestPluginBase
 
@@ -35,6 +36,21 @@ class TestEggnogTypes(TestPluginBase):
 
     def test_nog_registration(self):
         self.assertRegisteredSemanticType(NOG)
+
+    def test_og_registration(self):
+        self.assertRegisteredSemanticType(OG)
+
+    def test_kegg_registration(self):
+        self.assertRegisteredSemanticType(KEGG)
+
+    def test_diamond_db_registration(self):
+        self.assertRegisteredSemanticType(DiamondDB)
+
+    def test_mmseqs_db_registration(self):
+        self.assertRegisteredSemanticType(MMseq2DB)
+
+    def test_eggnog_db_registration(self):
+        self.assertRegisteredSemanticType(EggnogDB)
 
     def test_base_eggnog_validation_integration(self):
         run_checker = False
