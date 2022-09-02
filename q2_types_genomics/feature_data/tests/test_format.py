@@ -86,24 +86,6 @@ class TestArbitraryHeaderTSVFmt(TestPluginBase):
         self.assertEqual(fmt.header, 0)
 
 
-class TestDBfmts(TestPluginBase):
-    """Some of the reference databases for Eggnog Mapper are binary files. The
-    formats for storing these are very general right now"""
-    package = 'q2_types_genomics.feature_data.tests'
-
-    def test_registration_basics(self):
-        filename = 'diamond_test.dmnd'
-        filepath = self.get_data_path(filename)
-
-        fmt = BinaryReferenceDBFmt(filepath, 'r')
-        fmt.validate(level='max')
-
-#    def test_fails_on_string(self):
-#        filename = 'sample_annotations.txt'
-#        filepath = self.get_data_path(filename)
-#
-#        fmt = BinaryReferenceDBFMT(filepath, 'rb')
-#        fmt.validate(level='max')
 
 
 if __name__ == '__main__':
