@@ -8,7 +8,10 @@
 
 
 from qiime2.plugin import model
-from ._util import parse_header_line, parse_footer_line
+from q2_types_genomics.feature_data._util import (
+        parse_header_line, parse_footer_line,
+        )
+
 from qiime2.plugin import ValidationError
 
 from ..plugin_setup import plugin
@@ -25,7 +28,8 @@ class EggnogRefTextFileFmt(model.TextFileFormat):
         pass
 
 
-plugin.register_formats(EggnogRefBinFileFmt, EggnogRefTextFileFmt)
+plugin.register_formats(EggnogRefBinFileFmt)
+plugin.register_formats(EggnogRefTextFileFmt)
 
 # Below is the definition for a Directory Format to hold all of the refer
 # databases for eggnog mapper, this probably should be moved somewhere else in
@@ -57,6 +61,7 @@ class EggnogRefDirFmt(model.DirectoryFormat):
 
 plugin.register_formats(EggnogRefDirFmt)
 
+
 class EggnogOutputDirFmt(model.DirectoryFormat):
     annotations = model.File(r".*\..*\.annotations",
                              format=EggnogRefBinFileFmt)
@@ -72,5 +77,6 @@ class EggnogOutputDirFmt(model.DirectoryFormat):
     seed_orthologs = model.File(r".*\..*\.seed_orthologs",
                                 format=EggnogRefTextFileFmt
                                 )
+
+
 plugin.register_formats(EggnogOutputDirFmt)
-# ----------------------------------------------------------------------------

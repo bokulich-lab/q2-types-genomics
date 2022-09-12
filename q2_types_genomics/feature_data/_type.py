@@ -8,9 +8,10 @@
 
 from q2_types.feature_data import FeatureData
 
+from q2_types_genomics.eggnog import EggnogRefDirFmt
 from q2_types_genomics.feature_data._format import (
     MAGSequencesDirFmt, ArbitraryHeaderTSVDirFmt,
-    BinaryReferenceDBDirFmt, EggnogRefDirFmt,
+    BinaryReferenceDBDirFmt,
     )
 from qiime2.core.type import SemanticType
 from ..plugin_setup import plugin

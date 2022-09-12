@@ -8,12 +8,14 @@
 
 
 from q2_types_genomics.eggnog import (
-        EggnogRefDirFmt, EggnogRefBinFileFmt, EggnogRe, 
-
+        EggnogRefDirFmt, EggnogRefBinFileFmt, EggnogRefTextFileFmt,
+        EggnogOutputDirFmt,
         )
+
 from qiime2.plugin.testing import TestPluginBase
 
 import shutil
+
 
 class TestRefFmts(TestPluginBase):
     """Some of the reference databases for Eggnog Mapper are binary files. The
@@ -29,11 +31,12 @@ class TestRefFmts(TestPluginBase):
         "eggnog.db", "eggnog.taxa.db", "eggnog.taxa.db.traverse.pkl",
         "eggnog_proteins.dmnd", "novel_fams.dmnd", "diamond_test.dmnd"
         ]
+
     def test_registration_basics(self):
         filename = 'diamond_test.dmnd'
         filepath = self.get_data_path(filename)
 
-        fmt = BinaryReferenceDBFmt(filepath, 'r')
+        fmt = EggnogRefDirFmt(filepath, 'r')
         fmt.validate(level='max')
 
 #    def test_fails_on_string(self):
@@ -43,8 +46,10 @@ class TestRefFmts(TestPluginBase):
 #        fmt = BinaryReferenceDBFMT(filepath, 'rb')
 #        fmt.validate(level='max')
 
+
 def _artifact_generator(*data):
     filenames = [each for each in data]
 
     for filename in filenames:
         fp = self.get_data_path(filename)
+        print(fp)

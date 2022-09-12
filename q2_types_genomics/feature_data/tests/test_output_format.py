@@ -13,7 +13,7 @@ from qiime2.plugin.testing import TestPluginBase
 from qiime2 import Artifact
 
 
-from q2_types_genomics.feature_data import EggnogOutputDirFmt
+from q2_types_genomics.eggnog import EggnogOutputDirFmt
 
 
 class TestEggnogOutput(TestPluginBase):
