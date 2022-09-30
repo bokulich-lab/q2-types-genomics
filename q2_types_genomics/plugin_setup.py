@@ -15,7 +15,7 @@ from q2_types_genomics import __version__
 citations = qiime2.plugin.Citations.load(
     'citations.bib', package='q2_types_genomics')
 plugin = qiime2.plugin.Plugin(
-    name='types-genomics',
+    name='q2-types-genomics',
     version=__version__,
     website='https://github.com/bokulich-lab/q2-types-genomics',
     package='q2_types_genomics',

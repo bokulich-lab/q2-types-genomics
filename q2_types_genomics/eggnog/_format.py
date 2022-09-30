@@ -35,28 +35,118 @@ plugin.register_formats(EggnogRefTextFileFmt)
 # databases for eggnog mapper, this probably should be moved somewhere else in
 # the future, possibly an eggnog specificy module in this plugin
 
+class HmmerDirFmt(model.DirectoryFormat):
+    pass
 
-class EggnogRefDirFmt(model.DirectoryFormat):
-    # match annotations
-    # [any]\.[any]\."annotations"
+class MMseqsDirFmt(model.DirectoryFormat):
+    mmseqs_db=model.File(r"mmseqs.db",
+                      format=EggnogRefBinFileFmt,
+                      optional=False)
 
-    eggnog_db = model.File(r"eggnog\.db",
-                           format=EggnogRefBinFileFmt)
+    mmseqs_dbtype=model.File(r"mmseqs.db.dbtype",
+                      format=EggnogRefBinFileFmt,
+                      optional=False)
 
-    eggnog_tax = model.File(r"eggnog\.taxa\.tar",
-                            format=EggnogRefBinFileFmt)
+    mmseqs_index=model.File(r"mmseqs.db.index",
+                            format=EggnogRefBinFileFmt,
+                            optional=False)
+
+    mmseqs_lookup=model.File(r"mmseqs.db.lookup",
+                             format=EggnogRefBinFileFmt,
+                             optional=True)
+
+    mmseqs_source=model.File(r"mmseqs.db.source",
+                             format=EggnogRefBinFileFmt,
+                             optional=True)
+
+    mmseqs_h_db=model.File(r"mmseqs.db_h",
+                           format=EggnogRefBinFileFmt,
+                           optional=True)
+
+    mmseqs_h_dbtype=model.File(r"mmseqs.db_h.dbtype",
+                               format=EggnogRefBinFileFmt,
+                               optional=True)
+
+    mmseqs_h_index=model.File(r"mmseqs.db_h.index",
+                              format=EggnogRefBinFileFmt,
+                              optional=True)
+
+
+class PfamDirFmt(model.DirectoryFormat):
+
+    clans=model.File(r"Pfam-A.clans.tsv.gz",
+                       format=EggnogRefBinFileFmt,
+                       optional=False)
+
+    base=model.File(r"Pfam-A.hmm",
+                       format=EggnogRefBinFileFmt,
+                       optional=False)
+
+    h3f=model.File(r"Pfam-A.hmm.h3f",
+                       format=EggnogRefBinFileFmt,
+                       optional=False)
+
+    h3i=model.File(r"Pfam-A.hmm.h3i",
+                    format=EggnogRefBinFileFmt,
+                    optional=False)
+
+    h3m=model.File(r"Pfam-A.hmm.h3m",
+                     format=EggnogRefBinFileFmt,
+                     optional=False)
+
+    ssi=model.File(r"Pfam-A.hmm.h3m.ssi",
+                       format=EggnogRefBinFileFmt,
+                       optional=False)
+
+    h3p=model.File(r"Pfam-A.hmm.h3p",
+                       format=EggnogRefBinFileFmt,
+                       optional=False)
+
+    idmap=model.File(r"Pfam-A.hmm.idmap",
+                       format=EggnogRefBinFileFmt,
+                       optional=False)
+
+
+class DiamondRefDirFmt(model.DirectoryFormat):
 
     eggnog_proteins = model.File(r"eggnog_proteins\.dmnd",
-                                 format=EggnogRefBinFileFmt)
+                                 format=EggnogRefBinFileFmt,
+                                 optional=True)
 
     novel_fams = model.File(r"novel_fams.dmnd",
-                            format=EggnogRefBinFileFmt)
+                            format=EggnogRefBinFileFmt,
+                            optional=True)
 
-    eggnogtaxadbtraversepkl = model.File(r"eggnog.taxa.db.traverse.pkl",
-                                         format=EggnogRefBinFileFmt)
 
-    def _validate_(self, level):
-        pass
+class EggnogRefDirFmt(model.DirectoryFormat):
+
+    eggnog_db = model.File(r"eggnog\.db",
+                           format=EggnogRefBinFileFmt,
+                           optional=True)
+
+    eggnog_taxa = model.File(r"eggnog\.taxa\.db",
+                            format=EggnogRefBinFileFmt,
+                            optional=True)
+
+    eggnog_taxa_pkl = model.File(r"eggnog.taxa.db.traverse.pkl",
+                                 format=EggnogRefBinFileFmt,
+                                 optional=True)
+
+
+"""
+eggnog.db
+eggnog.taxa.db
+eggnog.taxa.db.traverse.pkl
+eggnog_proteins.dmnd
+novel_fams.dmnd
+
+hmmer
+mmseqs
+pfam
+"""
+
+
+
 
 
 plugin.register_formats(EggnogRefDirFmt)

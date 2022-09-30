@@ -9,12 +9,13 @@
 
 from ._format import (
         EggnogRefBinFileFmt, EggnogRefTextFileFmt, EggnogRefDirFmt,
-        EggnogOutputDirFmt,
+        EggnogOutputDirFmt, PfamDirFmt, DiamondRefDirFmt,
         )
 
 from ._types import (Eggnog, ReferenceDB)
 
 __all__ = [
         'EggnogRefBinFileFmt', 'EggnogRefTextFileFmt', 'EggnogRefDirFmt',
-        'EggnogOutputDirFmt', 'Eggnog', 'ReferenceDB',
+        'EggnogOutputDirFmt', 'Eggnog', 'ReferenceDB', 'PfamDirFmt',
+        'DiamondRefDirFmt'
         ]

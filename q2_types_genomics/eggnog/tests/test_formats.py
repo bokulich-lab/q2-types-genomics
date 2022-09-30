@@ -9,7 +9,7 @@
 
 from q2_types_genomics.eggnog import (
         EggnogRefDirFmt, EggnogRefBinFileFmt, EggnogRefTextFileFmt,
-        EggnogOutputDirFmt,
+        EggnogOutputDirFmt, PfamDirFmt, DiamondRefDirFmt,
         )
 
 from qiime2.plugin.testing import TestPluginBase
@@ -25,60 +25,54 @@ class TestRefFmts(TestPluginBase):
     formats for storing these are very general right now"""
     package = 'q2_types_genomics.eggnog.tests'
 
-    good_file_names = [
-        "eggnog.db", "eggnog.taxa.db", "eggnog.taxa.db.traverse.pkl",
-        "eggnog_proteins.dmnd", "novel_fams.dmnd",
-        ]
+    # Diamond fmt tests are good to go.
+    def test_diamond_all(self):
+        test_source_fp = self.get_data_path('all_diamond/')
+        fmt_obj = DiamondRefDirFmt(test_source_fp, mode='r')
+        fmt_obj.validate()
 
-    bad_file_names = [
-        "eggnog.db", "eggnog.taxa.db", "eggnog.taxa.db.traverse.pkl",
-        "eggnog_proteins.dmnd", "novel_fams.dmnd", "diamond_testing.dmnd"
-        ]
+    def test_diamond_only_standard(self):
+        test_source_fp = self.get_data_path('standard_diamond/')
+        fmt_obj = DiamondRefDirFmt(test_source_fp, mode='r')
+        fmt_obj.validate()
 
-    # this will fail right now because Directory formats expect all files in
-    # the format definition to be present. Going to work on making optional.
-    def test_registration_basics(self):
-        filename = 'diamond_testing.dmnd'
-        filepath = self.get_data_path(filename)
+    def test_diamond_only_novel(self):
+        test_source_fp = self.get_data_path('novel_diamond/')
+        fmt_obj = DiamondRefDirFmt(test_source_fp, mode='r')
+        fmt_obj.validate()
 
-        fmt = EggnogRefDirFmt(mode='w')
-        shutil.copy(src=filepath, dst=fmt.path)
-        fmt.validate()
+    def test_eggnog_all(self):
+        test_source_fp = self.get_data_path('core_eggnog/')
+        fmt_obj = EggnogRefDirFmt(test_source_fp, mode='r')
+        fmt_obj.validate()
 
-#    def test_fails_on_string(self):
-#        filename = 'sample_annotations.txt'
-#        filepath = self.get_data_path(filename)
+    # TESTED FORMATS NOT READY
+    # def test_pfam(self):
+    #     test_source_fp = self.get_data_path('complete/pfam')
+
+    #     fmt = PfamDirFmt(test_source_fp, mode='r')
+    #     fmt.validate()
+
+
+# TODO: GET DATA READY FOR TESTING
+# class TestEggnogOutput(TestPluginBase):
+#     package='q2_types_genomics.eggnog.tests'
 #
-#        fmt = BinaryReferenceDBFMT(filepath, 'rb')
-#        fmt.validate(level='max')
-
-
-def _artifact_generator(*data):
-    filenames = [each for each in data]
-
-    for filename in filenames:
-        fp = self.get_data_path(filename)
-        print(fp)
-
-
-class TestEggnogOutput(TestPluginBase):
-    package='q2_types_genomics.eggnog.tests'
-
-    def test_initial_setup(self):
-        # Create directory
-        test_output = EggnogOutputDirFmt()
-
-        # trying putting a file in...
-        shutil.copy(self.get_data_path("sample_eggnog_annotations.annotations"),
-                    test_output.path)
-
-        shutil.copy(self.get_data_path("sample_annotations.txt"),
-                    test_output.path)
-        test_output.save(self.get_data_path("test_output.qza"))
-        artifacted = _return_artifact(test_output)
-
-        fh = Artifact.load(artifacted)
-        self.assertIn("sample_annotations.txt", fh)
+#     def test_initial_setup(self):
+#         # Create directory
+#         test_output = EggnogOutputDirFmt()
+#
+#         # trying putting a file in...
+#         shutil.copy(self.get_data_path("sample_eggnog_annotations.annotations"),
+#                     test_output.path)
+#
+#         shutil.copy(self.get_data_path("sample_annotations.txt"),
+#                     test_output.path)
+#         test_output.save(self.get_data_path("test_output.qza"))
+#         artifacted = _return_artifact(test_output)
+#
+#         fh = Artifact.load(artifacted)
+#         self.assertIn("sample_annotations.txt", fh)
 
 
 def _return_artifact(fmtd_object):
