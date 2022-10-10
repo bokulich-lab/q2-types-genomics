@@ -9,10 +9,11 @@
 
 from q2_types_genomics.eggnog import (
         EggnogRefDirFmt, EggnogRefBinFileFmt, EggnogRefTextFileFmt,
-        EggnogOutputDirFmt, PfamDirFmt, DiamondRefDirFmt,
+        EggnogOutputDirFmt, PfamDirFmt, DiamondRefDirFmt, MMseqsDirFmt,
         )
 
 from qiime2.plugin.testing import TestPluginBase
+from qiime2.core.exceptions import ValidationError
 
 import os
 import shutil
@@ -46,6 +47,18 @@ class TestRefFmts(TestPluginBase):
         fmt_obj = EggnogRefDirFmt(test_source_fp, mode='r')
         fmt_obj.validate()
 
+    def test_mmseqs_passes_all(self):
+        test_source_fp = self.get_data_path('mmseqs')
+        fmt_obj = MMseqsDirFmt(test_source_fp, mode='r')
+        fmt_obj.validate()
+
+    def test_mmseqs_fails_with_missing(self):
+        test_source_fp = self.get_data_path('mmseqs_missing')
+        with self.assertRaisesRegex(ValidationError,
+                                    "Missing one or more files for"
+                                    " MMseqsDirFmt"):
+            fmt_obj = MMseqsDirFmt(test_source_fp, mode='r')
+            fmt_obj.validate()
     # TESTED FORMATS NOT READY
     # def test_pfam(self):
     #     test_source_fp = self.get_data_path('complete/pfam')
