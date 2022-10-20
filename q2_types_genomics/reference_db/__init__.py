@@ -1,3 +1,5 @@
-from qiime2.plugin import SemanticType
+from q2_types_genomics.reference_db._type import ReferenceDB, Diamond, Eggnog
+from q2_types_genomics.reference_db._format import 
 
-ReferenceDB = SemanticType('ReferenceDB', field_names=)
+__all__ = { 'ReferenceDB', 'Diamond', 'Eggnog', }
+
