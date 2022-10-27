@@ -1,3 +1,3 @@
-from q2_types_genomics.eggnog._format import EggnogRefFileFmt, EggnogRefDirFmt
+from q2_types_genomics.eggnog._format import EggnogRefDirFmt, EggnogRefTextFileFmt, EggnogRefBinFileFmt
 
-__all__ = { 'EggnogRefFileFmt', 'EggnogRefDirFmt' }
+__all__ = { 'EggnogRefDirFmt', 'EggnogRefTextFileFmt', 'EggnogRefBinFileFmt' }

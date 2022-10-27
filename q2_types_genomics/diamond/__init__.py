@@ -1,4 +1,4 @@
-from diamond.format import (
+from q2_types_genomics.diamond._format import (
         DiamondDatabaseFileFmt, DiamondDatabaseDirFmt
         )
 

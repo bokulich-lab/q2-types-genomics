@@ -8,5 +8,6 @@ class DiamondDatabaseFileFmt(model.BinaryFileFormat):
         pass
 
 DiamondDatabaseDirFmt = model.SingleFileDirectoryFormat('DiamondDatabaseDirFmt', 'ref_db.dmnd', DiamondDatabaseFileFmt)
+
 plugin.register_formats(DiamondDatabaseFileFmt, DiamondDatabaseDirFmt)
-plugin.register_semantic_type_to_format(DiamondDatabaseDirFmt, ReferenceDB[Diamond])
+plugin.register_semantic_type_to_format(ReferenceDB[Diamond], DiamondDatabaseDirFmt)
