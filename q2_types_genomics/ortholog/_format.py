@@ -12,26 +12,23 @@ class OrthologFileFmt(model.TextFileFormat):
 #                      'orthologs.tsv',
 #                      OrthologFileFmt)
 
-class OrthologDirFmt(model.DirectoryFormat):
-     annotations = model.File(r".*\..*\.annotations",
-                             format=EggnogRefBinFileFmt)
-
-     gene_pred_seqs = model.File(r".*\.*\.genepred\.fasta",
-                                 format=EggnogRefTextFileFmt
-                                 )
-
-     gene_pred_gff = model.File(r".*\..*\.genepred.gff",
-                                format=EggnogRefTextFileFmt
-                                )
-
+class SeedOrthologDirFmt(model.DirectoryFormat):
      seed_orthologs = model.File(r".*\..*\.seed_orthologs",
-                                 format=EggnogRefTextFileFmt
-                                 )
+                                 format=EggnogRefTextFileFmt)
 
-
-
-plugin.register_formats(OrthologFileFmt, OrthologDirFmt)
+plugin.register_formats(OrthologFileFmt, SeedOrthologDirFmt)
 
 plugin.register_semantic_type_to_format(
     Ortholog[Seed],
-    artifact_format=OrthologDirFmt)
+    artifact_format=SeedOrthologDirFmt)
+
+## things to put in other formats
+#     gene_pred_seqs = model.File(r".*\..*\.genepred\.fasta",
+#                                 format=EggnogRefTextFileFmt
+#                                 )
+#
+#     gene_pred_gff = model.File(r".*\..*\.genepred.gff",
+#                                format=EggnogRefTextFileFmt
+#                                )
+#     annotations = model.File(r".*\..*\.annotations",
+#                              format=EggnogRefBinFileFmt)
