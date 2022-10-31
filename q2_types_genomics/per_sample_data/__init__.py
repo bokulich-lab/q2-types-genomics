@@ -10,9 +10,9 @@
 import importlib
 
 from q2_types_genomics.per_sample_data._format import (
-    MultiFASTADirectoryFormat, MultiMAGManifestFormat, 
+    MultiFASTADirectoryFormat, MultiMAGManifestFormat,
     MultiMAGSequencesDirFmt, ContigSequencesDirFmt, MultiBowtie2IndexDirFmt,
-    BAMFormat, BAMDirFmt, MultiBAMDirFmt, 
+    BAMFormat, BAMDirFmt, MultiBAMDirFmt,
 )
 
 from q2_types_genomics.per_sample_data._type import (
@@ -20,11 +20,11 @@ from q2_types_genomics.per_sample_data._type import (
 )
 
 __all__ = [
-    'MAGs', 
-    'MultiMAGSequencesDirFmt', 
+    'MAGs',
+    'MultiMAGSequencesDirFmt',
     'MultiMAGManifestFormat',
     'ContigSequencesDirFmt',
-    'Contigs', 
+    'Contigs',
     'SingleBowtie2Index',
     'MultiBowtie2Index', 'MultiBowtie2IndexDirFmt',
     'BAMFormat', 'BAMDirFmt', 'MultiBAMDirFmt',  'MultiFASTADirectoryFormat'
