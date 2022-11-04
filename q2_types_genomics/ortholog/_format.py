@@ -8,8 +8,7 @@
 
 
 from qiime2.plugin import model
-from q2_types_genomics.eggnog import EggnogRefTextFileFmt
-from q2_types_genomics.ortholog import Ortholog, Seed
+from q2_types_genomics.ortholog import Ortholog, Seed, Annotation
 from q2_types_genomics.plugin_setup import plugin
 
 
@@ -20,7 +19,7 @@ class OrthologFileFmt(model.TextFileFormat):
 
 class SeedOrthologDirFmt(model.DirectoryFormat):
     seed_orthologs = model.File(r".*\..*\.seed_orthologs",
-                                format=EggnogRefTextFileFmt)
+                                format=OrthologFileFmt)
 
 
 plugin.register_formats(OrthologFileFmt, SeedOrthologDirFmt)
@@ -28,3 +27,13 @@ plugin.register_formats(OrthologFileFmt, SeedOrthologDirFmt)
 plugin.register_semantic_type_to_format(
     Ortholog[Seed],
     artifact_format=SeedOrthologDirFmt)
+
+class AnnotationOrthologDirFmt(model.DirectoryFormat):
+    annotation_orthologs = model.File(r".*\.emapper\.annotations",
+                                      format=OrthologFileFmt)
+
+plugin.register_formats(AnnotationOrthologDirFmt)
+
+plugin.register_semantic_type_to_format(
+    Ortholog[Annotation],
+    artifact_format=AnnotationOrthologDirFmt)
