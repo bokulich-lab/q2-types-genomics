@@ -18,8 +18,13 @@ class OrthologFileFmt(model.TextFileFormat):
 
 
 class SeedOrthologDirFmt(model.DirectoryFormat):
-    seed_orthologs = model.File(r".*\..*\.seed_orthologs",
-                                format=OrthologFileFmt)
+    seed_orthologs = model.FileCollection(r".*\..*\.seed_orthologs",
+                                          format=OrthologFileFmt,
+                                          optional=False)
+
+    @seed_orthologs.set_path_maker
+    def seed_ortholog_pathmaker(self, sample_name):
+        return str(sample_name + ".seed_orthologs")
 
 
 plugin.register_formats(OrthologFileFmt, SeedOrthologDirFmt)
@@ -28,9 +33,11 @@ plugin.register_semantic_type_to_format(
     Ortholog[Seed],
     artifact_format=SeedOrthologDirFmt)
 
+
 class AnnotationOrthologDirFmt(model.DirectoryFormat):
     annotation_orthologs = model.File(r".*\.emapper\.annotations",
                                       format=OrthologFileFmt)
+
 
 plugin.register_formats(AnnotationOrthologDirFmt)
 
