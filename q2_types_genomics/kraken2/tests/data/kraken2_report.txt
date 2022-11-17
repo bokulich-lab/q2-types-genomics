@@ -1,0 +1,35 @@
+100.00  456     0       R       1       root
+100.00  456     0       R1      131567    cellular organisms
+ 99.78  455     5       D       2           Bacteria
+ 98.46  449     3       P       1224          Proteobacteria
+ 97.59  445     6       C       1236            Gammaproteobacteria
+ 96.05  438     1       O       135619            Oceanospirillales
+ 95.83  437     0       F       28256               Halomonadaceae
+ 95.83  437     29      G       2745                  Halomonas
+ 89.47  408     8       G1      2609666                 unclassified Halomonas
+ 87.72  400     400     S       1118153                   Halomonas sp. GFAJ-1
+  0.22  1       0       O       135622            Alteromonadales
+  0.22  1       0       F       267890              Shewanellaceae
+  0.22  1       0       G       22                    Shewanella
+  0.22  1       1       S       712036                  Shewanella dokdonensis
+  0.22  1       0       C       28216           Betaproteobacteria
+  0.22  1       0       O       80840             Burkholderiales
+  0.22  1       0       F       119060              Burkholderiaceae
+  0.22  1       0       G       1822464               Paraburkholderia
+  0.22  1       1       S       2026199                 Paraburkholderia aromaticivorans
+  0.22  1       0       D1      1783272       Terrabacteria group
+  0.22  1       0       P       201174          Actinobacteria
+  0.22  1       0       C       1760              Actinomycetia
+  0.22  1       0       O       85011               Streptomycetales
+  0.22  1       0       F       2062                  Streptomycetaceae
+  0.22  1       0       G       1883                    Streptomyces
+  0.22  1       1       S       319947                    Streptomyces durmitorensis
+  0.22  1       0       D       2157        Archaea
+  0.22  1       0       P       28890         Euryarchaeota
+  0.22  1       0       P1      2290931         Stenosarchaea group
+  0.22  1       0       C       183963            Halobacteria
+  0.22  1       0       O       1644060             Natrialbales
+  0.22  1       0       F       1644061               Natrialbaceae
+  0.22  1       0       G       1830421                 Halovarius
+  0.22  1       0       G1      2644936                   unclassified Halovarius
+  0.22  1       1       S       2931975                     Halovarius sp. SQT-29-1

@@ -8,11 +8,16 @@
 
 import importlib
 
-from ._version import get_versions
+from ._format import (
+    Kraken2ReportFormat
+)
+# from ._transformer import IntervalMetadataIterator
+# from ._type import (
+#     GenomeData, Genes, Proteins, Loci
+# )
 
-__version__ = get_versions()['version']
-del get_versions
+__all__ = [
+    'Kraken2ReportFormat'
+]
 
-importlib.import_module('q2_types_genomics.per_sample_data')
-importlib.import_module('q2_types_genomics.genome_data')
-importlib.import_module('q2_types_genomics.kraken2')
+# importlib.import_module('q2_types_genomics.kraken2._transformer')
