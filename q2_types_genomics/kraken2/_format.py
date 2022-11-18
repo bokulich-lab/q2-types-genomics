@@ -1,28 +1,68 @@
+# ----------------------------------------------------------------------------
+# Copyright (c) 2022, QIIME 2 development team.
+#
+# Distributed under the terms of the Modified BSD License.
+#
+# The full license is in the file LICENSE, distributed with this software.
+# ----------------------------------------------------------------------------
+
 import pandas as pd
+from pandas.core.dtypes.common import is_string_dtype
 from qiime2.core.exceptions import ValidationError
 from qiime2.plugin import model
 
+from ..per_sample_data._format import MultiDirValidationMixin
 from ..plugin_setup import plugin
 
 
 class Kraken2ReportFormat(model.TextFileFormat):
-    """
-    """
+    COLUMNS = {
+        'perc_frags_covered': float, 'no_frags_covered': int,
+        'no_frags_assigned': int, 'rank': str, 'ncbi_tax_id': int,
+        'name': str
+    }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def _validate_(self, level):
-        level_map = {'min': 100, 'max': float('inf')}
-        max_lines = level_map[level]
-
+        df = pd.read_csv(self.path, sep='\t', header=None)
         try:
-            df = pd.read_csv(self.path, sep='\t')
-            print(df)
-        except:
-            ...
+            df.columns = self.COLUMNS.keys()
+        except ValueError as e:
+            if 'Length mismatch' in str(e):
+                raise ValidationError(
+                    f'Expected 6 columns in the Kraken2 report file but '
+                    f'{df.shape[1]} were found.'
+                )
+            else:
+                raise ValidationError(
+                    'An error occurred when reading in the '
+                    'Kraken2 report file'
+                ) from e
+        for col, dtype in self.COLUMNS.items():
+            if dtype == str and is_string_dtype(df[col]):
+                continue
+            if df[col].dtype == dtype:
+                continue
+            raise ValidationError(
+                f'Expected {dtype} type in the "{col}" column, '
+                f'got {df[col].dtype}'
+            )
+
+
+class Kraken2ReportDirectoryFormat(MultiDirValidationMixin,
+                                   model.DirectoryFormat):
+    reports = model.FileCollection(
+        r'.+report\.(txt|tsv)$', format=Kraken2ReportFormat
+    )
+
+    @reports.set_path_maker
+    def reports_path_maker(self, sample_id, mag_id=None):
+        prefix = f'{sample_id}/{mag_id}_' if mag_id else f'{sample_id}/'
+        return f'{prefix}report.txt'
 
 
 plugin.register_formats(
-    Kraken2ReportFormat
+    Kraken2ReportDirectoryFormat
 )

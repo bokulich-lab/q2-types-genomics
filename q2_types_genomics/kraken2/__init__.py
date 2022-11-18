@@ -6,18 +6,11 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
-import importlib
-
 from ._format import (
-    Kraken2ReportFormat
+    Kraken2ReportFormat, Kraken2ReportDirectoryFormat
 )
-# from ._transformer import IntervalMetadataIterator
-# from ._type import (
-#     GenomeData, Genes, Proteins, Loci
-# )
+from ._type import Kraken2Reports
 
 __all__ = [
-    'Kraken2ReportFormat'
+    'Kraken2ReportFormat', 'Kraken2ReportDirectoryFormat', 'Kraken2Reports'
 ]
-
-# importlib.import_module('q2_types_genomics.kraken2._transformer')
