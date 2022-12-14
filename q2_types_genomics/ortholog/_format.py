@@ -18,7 +18,7 @@ class OrthologFileFmt(model.TextFileFormat):
 
 
 class SeedOrthologDirFmt(model.DirectoryFormat):
-    seed_orthologs = model.FileCollection(r".*\..*\.seed_orthologs",
+    seed_orthologs = model.FileCollection(r'.*\..*\.seed_orthologs',
                                           format=OrthologFileFmt,
                                           optional=False)
 
