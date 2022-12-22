@@ -11,7 +11,8 @@ from qiime2.core.exceptions import ValidationError
 from qiime2.plugin.testing import TestPluginBase
 
 from q2_types_genomics.kraken2._format import (
-    Kraken2ReportFormat, Kraken2ReportDirectoryFormat
+    Kraken2ReportFormat, Kraken2ReportDirectoryFormat,
+    Kraken2OutputFormat, Kraken2OutputDirectoryFormat
 )
 
 
@@ -55,6 +56,43 @@ class TestFormats(TestPluginBase):
     def test_report_dirfmt_from_mags(self):
         dirpath = self.get_data_path('reports-mags')
         format = Kraken2ReportDirectoryFormat(dirpath, mode='r')
+        format.validate()
+
+    def test_output_format_ok(self):
+        output_fp = self.get_data_path('outputs-single/output-ok.txt')
+        fmt = Kraken2OutputFormat(output_fp, mode='r')
+        fmt.validate()
+
+    def test_output_format_missing_col(self):
+        output_fp = self.get_data_path(
+            'outputs-single/output-missing-column.txt'
+        )
+        fmt = Kraken2OutputFormat(output_fp, mode='r')
+
+        with self.assertRaisesRegex(
+            ValidationError, '4 were found'
+        ):
+            fmt.validate()
+
+    def test_output_format_wrong_first_col(self):
+        output_fp = self.get_data_path(
+            'outputs-single/output-wrong-first-col.txt'
+        )
+        fmt = Kraken2OutputFormat(output_fp, mode='r')
+
+        with self.assertRaisesRegex(
+            ValidationError, 'Expected the first column to contain only'
+        ):
+            fmt.validate()
+
+    def test_output_dirfmt_from_reads(self):
+        dirpath = self.get_data_path('outputs-reads')
+        format = Kraken2OutputDirectoryFormat(dirpath, mode='r')
+        format.validate()
+
+    def test_output_dirfmt_from_mags(self):
+        dirpath = self.get_data_path('outputs-mags')
+        format = Kraken2OutputDirectoryFormat(dirpath, mode='r')
         format.validate()
 
 

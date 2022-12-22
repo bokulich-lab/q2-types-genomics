@@ -63,6 +63,35 @@ class Kraken2ReportDirectoryFormat(MultiDirValidationMixin,
         return f'{prefix}report.txt'
 
 
+class Kraken2OutputFormat(model.TextFileFormat):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def _validate_(self, level):
+        df = pd.read_csv(self.path, sep='\t', header=None)
+        if df.shape[1] != 5:
+            raise ValidationError(
+                f'Expected 5 columns in the Kraken2 output file but '
+                f'{df.shape[1]} were found.'
+            )
+        if set(df.iloc[:, 0].unique()) != {'C', 'U'}:
+            raise ValidationError(
+                'Expected the first column to contain only "C" or "U" values.'
+            )
+
+
+class Kraken2OutputDirectoryFormat(MultiDirValidationMixin,
+                                   model.DirectoryFormat):
+    reports = model.FileCollection(
+        r'.+output\.(txt|tsv)$', format=Kraken2OutputFormat
+    )
+
+    @reports.set_path_maker
+    def reports_path_maker(self, sample_id, mag_id=None):
+        prefix = f'{sample_id}/{mag_id}_' if mag_id else f'{sample_id}/'
+        return f'{prefix}output.txt'
+
+
 plugin.register_formats(
-    Kraken2ReportDirectoryFormat
+    Kraken2ReportDirectoryFormat, Kraken2OutputDirectoryFormat
 )
