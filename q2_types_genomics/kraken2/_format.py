@@ -74,7 +74,7 @@ class Kraken2OutputFormat(model.TextFileFormat):
                 f'Expected 5 columns in the Kraken2 output file but '
                 f'{df.shape[1]} were found.'
             )
-        if set(df.iloc[:, 0].unique()) != {'C', 'U'}:
+        if not set(df.iloc[:, 0].unique()).issubset({'C', 'U'}):
             raise ValidationError(
                 'Expected the first column to contain only "C" or "U" values.'
             )

@@ -85,6 +85,13 @@ class TestFormats(TestPluginBase):
         ):
             fmt.validate()
 
+    def test_output_format_only_classified(self):
+        output_fp = self.get_data_path(
+            'outputs-single/output-only-classified.txt'
+        )
+        fmt = Kraken2OutputFormat(output_fp, mode='r')
+        fmt.validate()
+
     def test_output_dirfmt_from_reads(self):
         dirpath = self.get_data_path('outputs-reads')
         format = Kraken2OutputDirectoryFormat(dirpath, mode='r')
