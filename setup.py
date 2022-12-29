@@ -36,7 +36,11 @@ setup(
             ['data/*', 'data/mags-fa/*', 'data/mags-fasta/*'],
         'q2_types_genomics.genome_data.tests':
             ['data/*', 'data/genes/*', 'data/loci/*',
-             'data/loci-invalid/*', 'data/proteins/*']
+             'data/loci-invalid/*', 'data/proteins/*'],
+        'q2_types_genomics.kraken2.tests':
+            ['data/*', 'data/outputs-single/*', 'data/outputs-reads/*/*',
+             'data/outputs-mags/*/*', 'data/reports-single/*',
+             'data/reports-reads/*/*', 'data/reports-mags/*/*']
     },
     zip_safe=False,
 )

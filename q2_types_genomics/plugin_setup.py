@@ -26,6 +26,7 @@ plugin = qiime2.plugin.Plugin(
                        'genomics datasets.')
 )
 
+importlib.import_module('q2_types_genomics.kraken2')
 importlib.import_module('q2_types_genomics.feature_data')
 importlib.import_module('q2_types_genomics.per_sample_data')
 importlib.import_module('q2_types_genomics.genome_data')
