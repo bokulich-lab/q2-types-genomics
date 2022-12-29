@@ -12,7 +12,8 @@ from qiime2.plugin.testing import TestPluginBase
 
 from q2_types_genomics.kraken2._format import (
     Kraken2ReportFormat, Kraken2ReportDirectoryFormat,
-    Kraken2OutputFormat, Kraken2OutputDirectoryFormat
+    Kraken2OutputFormat, Kraken2OutputDirectoryFormat,
+    Kraken2DBDirectoryFormat
 )
 
 
@@ -100,6 +101,11 @@ class TestFormats(TestPluginBase):
     def test_output_dirfmt_from_mags(self):
         dirpath = self.get_data_path('outputs-mags')
         format = Kraken2OutputDirectoryFormat(dirpath, mode='r')
+        format.validate()
+
+    def test_database_dirfmt(self):
+        dirpath = self.get_data_path('db')
+        format = Kraken2DBDirectoryFormat(dirpath, mode='r')
         format.validate()
 
 
