@@ -38,7 +38,8 @@ setup(
             ['data/*', 'data/genes/*', 'data/loci/*',
              'data/loci-invalid/*', 'data/proteins/*'],
         'q2_types_genomics.kraken2.tests':
-            ['data/*', 'data/outputs-single/*', 'data/outputs-reads/*/*',
+            ['data/*', 'data/db/*',
+             'data/outputs-single/*', 'data/outputs-reads/*/*',
              'data/outputs-mags/*/*', 'data/reports-single/*',
              'data/reports-reads/*/*', 'data/reports-mags/*/*']
     },
