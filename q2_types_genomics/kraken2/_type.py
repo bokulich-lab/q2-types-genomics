@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Copyright (c) 2022, QIIME 2 development team.
+# Copyright (c) 2023, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
@@ -9,7 +9,8 @@ from q2_types.sample_data import SampleData
 from qiime2.plugin import SemanticType
 
 from . import (
-    Kraken2ReportDirectoryFormat, Kraken2OutputDirectoryFormat
+    Kraken2ReportDirectoryFormat, Kraken2OutputDirectoryFormat,
+    Kraken2DBDirectoryFormat
 )
 from ..plugin_setup import plugin
 
@@ -20,9 +21,9 @@ Kraken2Reports = SemanticType(
 Kraken2Outputs = SemanticType(
     'Kraken2Output', variant_of=SampleData.field['type']
 )
+Kraken2DB = SemanticType('Kraken2DB')
 
-
-plugin.register_semantic_types(Kraken2Reports, Kraken2Outputs)
+plugin.register_semantic_types(Kraken2Reports, Kraken2Outputs, Kraken2DB)
 
 plugin.register_semantic_type_to_format(
     SampleData[Kraken2Reports],
@@ -31,4 +32,8 @@ plugin.register_semantic_type_to_format(
 plugin.register_semantic_type_to_format(
     SampleData[Kraken2Outputs],
     artifact_format=Kraken2OutputDirectoryFormat
+)
+plugin.register_semantic_type_to_format(
+    Kraken2DB,
+    artifact_format=Kraken2DBDirectoryFormat
 )

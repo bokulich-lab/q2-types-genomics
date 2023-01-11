@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Copyright (c) 2022, QIIME 2 development team.
+# Copyright (c) 2023, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
@@ -92,6 +92,21 @@ class Kraken2OutputDirectoryFormat(MultiDirValidationMixin,
         return f'{prefix}output.txt'
 
 
+class Kraken2DBFormat(model.TextFileFormat):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def _validate_(self, level):
+        pass
+
+
+class Kraken2DBDirectoryFormat(model.DirectoryFormat):
+    hash = model.File(r'hash.k2d', format=Kraken2DBFormat)
+    opts = model.File(r'opts.k2d', format=Kraken2DBFormat)
+    taxo = model.File(r'taxo.k2d', format=Kraken2DBFormat)
+
+
 plugin.register_formats(
-    Kraken2ReportDirectoryFormat, Kraken2OutputDirectoryFormat
+    Kraken2ReportDirectoryFormat, Kraken2OutputDirectoryFormat,
+    Kraken2DBDirectoryFormat
 )

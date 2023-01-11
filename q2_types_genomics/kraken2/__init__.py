@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Copyright (c) 2022, QIIME 2 development team.
+# Copyright (c) 2023, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
@@ -8,11 +8,13 @@
 
 from ._format import (
     Kraken2ReportFormat, Kraken2ReportDirectoryFormat,
-    Kraken2OutputFormat, Kraken2OutputDirectoryFormat
+    Kraken2OutputFormat, Kraken2OutputDirectoryFormat,
+    Kraken2DBFormat, Kraken2DBDirectoryFormat
 )
-from ._type import Kraken2Reports, Kraken2Outputs
+from ._type import Kraken2Reports, Kraken2Outputs, Kraken2DB
 
 __all__ = [
     'Kraken2ReportFormat', 'Kraken2ReportDirectoryFormat', 'Kraken2Reports',
-    'Kraken2OutputFormat', 'Kraken2OutputDirectoryFormat', 'Kraken2Outputs'
+    'Kraken2OutputFormat', 'Kraken2OutputDirectoryFormat', 'Kraken2Outputs',
+    'Kraken2DBFormat', 'Kraken2DBDirectoryFormat', 'Kraken2DB'
 ]
