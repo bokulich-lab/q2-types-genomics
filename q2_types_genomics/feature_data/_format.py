@@ -18,3 +18,5 @@ MAGSequencesDirFmt = model.SingleFileDirectoryFormat(
 plugin.register_formats(
     MAGSequencesDirFmt
 )
+
+

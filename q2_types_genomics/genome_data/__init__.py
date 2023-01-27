@@ -10,17 +10,16 @@ import importlib
 
 from ._format import (
     GenesDirectoryFormat, ProteinsDirectoryFormat,
-    GFF3Format, LociDirectoryFormat
+    GFF3Format, LociDirectoryFormat, OrthologFileFmt, SeedOrthologDirFmt,
 )
 from ._transformer import IntervalMetadataIterator
 from ._type import (
-    GenomeData, Genes, Proteins, Loci
+    GenomeData, Genes, Proteins, Loci, Ortholog, BLAST6
 )
 
-__all__ = [
-    'GenomeData', 'Genes', 'Proteins', 'Loci', 'GFF3Format',
-    'GenesDirectoryFormat', 'ProteinsDirectoryFormat', 'LociDirectoryFormat',
-    'IntervalMetadataIterator'
-]
+__all__ = [ 'GenomeData', 'Genes', 'Proteins', 'Loci', 'GFF3Format',
+           'GenesDirectoryFormat', 'ProteinsDirectoryFormat',
+           'LociDirectoryFormat', 'IntervalMetadataIterator',
+           'OrthologFileFmt', 'Ortholog', 'SeedOrthologDirFmt', 'BLAST6' ]
 
 importlib.import_module('q2_types_genomics.genome_data._transformer')

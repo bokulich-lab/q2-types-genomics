@@ -21,3 +21,10 @@ plugin.register_semantic_type_to_format(
     FeatureData[MAG],
     artifact_format=MAGSequencesDirFmt
 )
+
+NOG = SemanticType('NOG', variant_of=FeatureData.field['type'])
+
+plugin.register_semantic_types(NOG)
+#plugin.register_artifact_class(
+#        FeatureData[NOG],
+#        directory_format=

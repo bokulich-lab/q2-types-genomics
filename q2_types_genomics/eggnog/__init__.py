@@ -6,10 +6,10 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
-
-from ._format import (
-        EggnogRefDirFmt,
-        EggnogRefTextFileFmt,
-        EggnogRefBinFileFmt)
-
-__all__ = ['EggnogRefDirFmt', 'EggnogRefTextFileFmt', 'EggnogRefBinFileFmt']
+#
+#from ._format import (
+#        EggnogRefDirFmt,
+#        EggnogRefTextFileFmt,
+#        EggnogRefBinFileFmt)
+#
+#__all__ = ['EggnogRefDirFmt', 'EggnogRefTextFileFmt', 'EggnogRefBinFileFmt']

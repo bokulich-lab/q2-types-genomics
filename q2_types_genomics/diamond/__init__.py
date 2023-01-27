@@ -6,11 +6,11 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
-
-from q2_types_genomics.diamond._format import (
-        DiamondDatabaseFileFmt, DiamondDatabaseDirFmt
-        )
-
-__all__ = [
-        'DiamondDatabaseFileFmt', 'DiamondDatabaseDirFmt'
-        ]
+#
+#from q2_types_genomics.diamond._format import (
+#        DiamondDatabaseFileFmt, DiamondDatabaseDirFmt
+#        )
+#
+#__all__ = [
+#        'DiamondDatabaseFileFmt', 'DiamondDatabaseDirFmt'
+#        ]
