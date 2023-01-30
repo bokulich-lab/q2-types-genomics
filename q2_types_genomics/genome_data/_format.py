@@ -179,7 +179,7 @@ class SeedOrthologDirFmt(model.DirectoryFormat):
 
     @seed_orthologs.set_path_maker
     def seed_ortholog_pathmaker(self, sample_name):
-        return str(sample_name + ".seed_orthologs")
+        return str(sample_name.split(sep=".")[0] + ".seed_orthologs")
 
 
 plugin.register_formats(OrthologFileFmt, SeedOrthologDirFmt)
