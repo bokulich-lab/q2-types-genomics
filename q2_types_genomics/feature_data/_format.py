@@ -20,6 +20,7 @@ plugin.register_formats(
     MAGSequencesDirFmt
 )
 
+
 class OrthologAnnotationDirFmt(model.DirectoryFormat):
     annotations = model.FileCollection(
             r'.+\.annotations',

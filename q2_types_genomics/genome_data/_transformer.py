@@ -25,10 +25,6 @@ CONSTRUCTORS = {
 }
 
 
-def _seed_ortholog_to_df(ortholog):
-
-    return df
-
 @plugin.register_transformer
 def _8(ortholog_file: OrthologFileFmt) -> pd.DataFrame:
 
@@ -36,8 +32,12 @@ def _8(ortholog_file: OrthologFileFmt) -> pd.DataFrame:
                                   'qstart', 'qend', 'sstart', 'send', 'pident',
                                   'qcov', 'scov']
 
-    return pd.read_csv(ortholog_file.path, sep="\t", names=seed_ortholog_column_names, header='infer', comment="#")
-    
+    return pd.read_csv(ortholog_file.path, sep="\t",
+                       names=seed_ortholog_column_names,
+                       header='infer',
+                       comment="#"
+                       )
+
 
 def _series_to_fasta(series, ff, seq_type='DNA'):
     fp = os.path.join(ff.path, f'{series.name}.fasta')

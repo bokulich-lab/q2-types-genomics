@@ -10,11 +10,13 @@ from qiime2.plugin import SemanticType
 from q2_types.feature_data import BLAST6
 
 from . import (
-    GenesDirectoryFormat, ProteinsDirectoryFormat, LociDirectoryFormat, SeedOrthologDirFmt
+    GenesDirectoryFormat, ProteinsDirectoryFormat, LociDirectoryFormat,
+    SeedOrthologDirFmt,
 )
 from ..plugin_setup import plugin
 
-GenomeData = SemanticType('GenomeData', field_names='type', field_members={'type': BLAST6})
+GenomeData = SemanticType('GenomeData', field_names='type',
+                          field_members={'type': BLAST6})
 Genes = SemanticType('Genes', variant_of=GenomeData.field['type'])
 Proteins = SemanticType('Proteins', variant_of=GenomeData.field['type'])
 Loci = SemanticType('Loci', variant_of=GenomeData.field['type'])

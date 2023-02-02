@@ -17,6 +17,7 @@ class OrthologFileFmt(model.TextFileFormat):
     def _validate_(self, level):
         pass
 
+
 class GenesDirectoryFormat(model.DirectoryFormat):
     genes = model.FileCollection(r'genes[0-9]+\.(fa|fna|fasta)$',
                                  format=DNAFASTAFormat)
@@ -183,4 +184,3 @@ class SeedOrthologDirFmt(model.DirectoryFormat):
 
 
 plugin.register_formats(OrthologFileFmt, SeedOrthologDirFmt)
-
