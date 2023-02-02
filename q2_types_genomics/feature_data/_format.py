@@ -22,7 +22,7 @@ plugin.register_formats(
 
 class OrthologAnnotationDirFmt(model.DirectoryFormat):
     annotations = model.FileCollection(
-            r'.*\..*\.annotations',
+            r'.+\.annotations',
             format=OrthologFileFmt
             )
 
