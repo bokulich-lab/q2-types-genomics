@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Copyright (c) 2022, QIIME 2 development team.
+# Copyright (c) 2023, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
@@ -36,7 +36,12 @@ setup(
             ['data/*', 'data/mags-fa/*', 'data/mags-fasta/*'],
         'q2_types_genomics.genome_data.tests':
             ['data/*', 'data/genes/*', 'data/loci/*',
-             'data/loci-invalid/*', 'data/proteins/*']
+             'data/loci-invalid/*', 'data/proteins/*'],
+        'q2_types_genomics.kraken2.tests':
+            ['data/*', 'data/db/*',
+             'data/outputs-single/*', 'data/outputs-reads/*/*',
+             'data/outputs-mags/*/*', 'data/reports-single/*',
+             'data/reports-reads/*/*', 'data/reports-mags/*/*']
     },
     zip_safe=False,
 )

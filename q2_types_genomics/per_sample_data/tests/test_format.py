@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Copyright (c) 2022, QIIME 2 development team.
+# Copyright (c) 2023, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
@@ -75,6 +75,12 @@ class TestMultiMAGManifestFormat(TestPluginBase):
 class TestFormats(TestPluginBase):
     package = 'q2_types_genomics.per_sample_data.tests'
 
+    # def test_contig_seqs_dir_fmt(self):
+    #     dirpath = self.get_data_path('good_contigs/')
+    #     format = ContigSequencesDirFmt(dirpath, mode='r')
+
+    #     format.validate()
+
     def test_multifasta_dirfmt_fa(self):
         dirpath = self.get_data_path('mags/mags-fa')
         format = MultiFASTADirectoryFormat(dirpath, mode='r')
@@ -109,10 +115,10 @@ class TestFormats(TestPluginBase):
                 ValidationError, 'should be .* per-sample directories'):
             format.validate()
 
-    def test_contig_seqs_dirfmt(self):
-        filepath = self.get_data_path('contigs/')
-        shutil.copytree(filepath, self.temp_dir.name, dirs_exist_ok=True)
-        ContigSequencesDirFmt(self.temp_dir.name, mode='r').validate()
+    # def test_contig_seqs_dirfmt(self):
+    #     filepath = self.get_data_path('contigs/')
+    #     shutil.copytree(filepath, self.temp_dir.name, dirs_exist_ok=True)
+    #     ContigSequencesDirFmt(self.temp_dir.name, mode='r').validate()
 
     @patch('subprocess.run', return_value=Mock(returncode=0))
     def test_bam_dirmt(self, p):

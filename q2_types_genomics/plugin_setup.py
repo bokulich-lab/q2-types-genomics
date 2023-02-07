@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Copyright (c) 2022, QIIME 2 development team.
+# Copyright (c) 2023, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
@@ -26,7 +26,8 @@ plugin = qiime2.plugin.Plugin(
                        'genomics datasets.')
 )
 
-importlib.import_module('q2_types_genomics.per_sample_data')
+importlib.import_module('q2_types_genomics.kraken2')
 importlib.import_module('q2_types_genomics.feature_data')
+importlib.import_module('q2_types_genomics.per_sample_data')
 importlib.import_module('q2_types_genomics.genome_data')
 importlib.import_module('q2_types_genomics.reference_db')

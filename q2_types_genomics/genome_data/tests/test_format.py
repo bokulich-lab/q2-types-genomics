@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Copyright (c) 2022, QIIME 2 development team.
+# Copyright (c) 2023, QIIME 2 development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
@@ -13,12 +13,33 @@ from qiime2.plugin.testing import TestPluginBase
 
 from .._format import (
     GenesDirectoryFormat, ProteinsDirectoryFormat, GFF3Format,
-    LociDirectoryFormat
+    LociDirectoryFormat, SeedOrthologDirFmt, OrthologFileFmt,
 )
 
 
 class TestFormats(TestPluginBase):
     package = 'q2_types_genomics.genome_data.tests'
+
+    def test_ortholog_file_fmt(self):
+        dirpath = self.get_data_path(
+                'ortholog/test_sample.emapper.seed_orthologs')
+        fmt = OrthologFileFmt(dirpath, mode='r')
+
+        fmt.validate()
+
+    def test_seed_ortholog_dir_fmt_collection(self):
+        dirpath = self.get_data_path('ortholog/')
+        fmt = SeedOrthologDirFmt(dirpath, mode='r')
+
+        for relpath, obj in fmt.seed_orthologs.iter_views(OrthologFileFmt):
+            self.assertIsInstance(obj=obj, cls=OrthologFileFmt)
+            obj.validate()
+
+    def test_seed_ortholog_dir_fmt(self):
+        dirpath = self.get_data_path('ortholog/')
+        fmt = SeedOrthologDirFmt(dirpath, mode='r')
+
+        fmt.validate()
 
     def test_genes_dirfmt_fa(self):
         dirpath = self.get_data_path('genes')
