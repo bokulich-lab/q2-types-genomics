@@ -35,7 +35,7 @@ setup(
         'q2_types_genomics.feature_data.tests':
             ['data/*', 'data/mags-fa/*', 'data/mags-fasta/*'],
         'q2_types_genomics.genome_data.tests':
-            ['data/*', 'data/genes/*', 'data/loci/*',
+            ['data/*', 'data/*/*' 'data/genes/*', 'data/loci/*',
              'data/loci-invalid/*', 'data/proteins/*'],
         'q2_types_genomics.kraken2.tests':
             ['data/*', 'data/db/*',
