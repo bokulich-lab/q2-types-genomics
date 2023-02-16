@@ -124,7 +124,7 @@ class ContigSequencesDirFmt(model.DirectoryFormat):
 
     @sequences.set_path_maker
     def sequences_path_maker(self, sample_id):
-        return r'%s_contigs\.fasta' % sample_id
+        return r'%s\.fasta' % sample_id
 
 
 # borrowed from q2-phylogenomics
