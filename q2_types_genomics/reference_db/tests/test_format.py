@@ -12,7 +12,6 @@ from q2_types_genomics.reference_db._format import (
         DiamondDatabaseFileFmt, DiamondDatabaseDirFmt,
         EggnogRefBinFileFmt, EggnogRefDirFmt,
         )
-from q2_types_genomics.reference_db._type import ReferenceDB, Diamond
 from qiime2.plugin import ValidationError
 
 

@@ -24,7 +24,7 @@ class TestGenomeFormats(TestPluginBase):
         dirpath = self.get_data_path(
                 'ortholog/test_sample.emapper.seed_orthologs')
         fmt_obj = OrthologFileFmt(dirpath, mode='r')
-        
+
         fmt_obj.validate()
 
     def test_seed_ortholog_dir_fmt_collection_file_name(self):
@@ -44,7 +44,6 @@ class TestGenomeFormats(TestPluginBase):
         fmt_obj = SeedOrthologDirFmt(dirpath, mode='r')
 
         fmt_obj.validate()
-
 
     def test_seed_ortholog_dir_fmt_collection(self):
         dirpath = self.get_data_path('ortholog/')
