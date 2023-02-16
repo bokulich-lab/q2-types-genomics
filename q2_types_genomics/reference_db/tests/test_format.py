@@ -9,7 +9,8 @@
 from qiime2.plugin.testing import TestPluginBase
 
 from q2_types_genomics.reference_db._format import (
-        DiamondDatabaseFileFmt, DiamondDatabaseDirFmt
+        DiamondDatabaseFileFmt, DiamondDatabaseDirFmt,
+        EggnogRefBinFileFmt, EggnogRefDirFmt,
         )
 from q2_types_genomics.reference_db._type import ReferenceDB, Diamond
 from qiime2.plugin import ValidationError
@@ -45,8 +46,46 @@ class TestRefFormats(TestPluginBase):
                 "Missing one or more files for DiamondDatabaseDirFmt"):
             dmnd_obj.validate()
 
-    def test_diamond_semantic_type_registered_to_dmnd_db_dir_fmt(self):
-        self.assertSemanticTypeRegisteredToFormat(
-                ReferenceDB[Diamond],
-                DiamondDatabaseDirFmt
-                )
+    def test_eggnog_ref_bin_main(self):
+        dirpath = self.get_data_path('good_eggnog/eggnog.db')
+        fmt_obj = EggnogRefBinFileFmt(dirpath, mode='r')
+
+        fmt_obj.validate()
+
+    def test_eggnog_ref_bin_pickle(self):
+        dirpath = self.get_data_path('good_eggnog/eggnog.taxa.db.traverse.pkl')
+        fmt_obj = EggnogRefBinFileFmt(dirpath, mode='r')
+
+        fmt_obj.validate()
+
+    def test_eggnog_ref_bin_taxa(self):
+        dirpath = self.get_data_path('good_eggnog/eggnog.taxa.db')
+        fmt_obj = EggnogRefBinFileFmt(dirpath, mode='r')
+
+        fmt_obj.validate()
+
+    def test_eggnog_dir_fmt_all_files(self):
+        dirpath = self.get_data_path('good_eggnog')
+        fmt_obj = EggnogRefDirFmt(dirpath, mode='r')
+
+        self.assertEqual(
+                len([(relpath, obj) for relpath, obj
+                     in fmt_obj.eggnog.iter_views(EggnogRefBinFileFmt)]),
+                3)
+
+    def test_eggnog_dir_fmt_single_file(self):
+        dirpath = self.get_data_path('single_eggnog')
+        fmt_obj = EggnogRefDirFmt(dirpath, mode='r')
+
+        self.assertEqual(
+                len([(relpath, obj) for relpath, obj
+                     in fmt_obj.eggnog.iter_views(EggnogRefBinFileFmt)]),
+                1)
+
+        fmt_obj.validate()
+
+    def test_eggnog_dir_fmt(self):
+        dirpath = self.get_data_path('good_eggnog')
+        fmt_obj = EggnogRefDirFmt(dirpath, mode='r')
+
+        fmt_obj.validate()

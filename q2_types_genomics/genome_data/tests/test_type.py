@@ -18,14 +18,13 @@ from q2_types_genomics.genome_data import (GenomeData, Genes, Proteins, Loci,
                                            SeedOrthologDirFmt)
 
 
-class TestTypes(TestPluginBase):
+class TestGenomeTypes(TestPluginBase):
     package = 'q2_types_genomics.genome_data.tests'
 
     def test_blast6_registered_to_seedorthologdirfmt(self):
         self.assertSemanticTypeRegisteredToFormat(
                 GenomeData[BLAST6],
-                SeedOrthologDirFmt
-                )
+                SeedOrthologDirFmt)
 
     def test_genome_data_semantic_type_registration(self):
         self.assertRegisteredSemanticType(GenomeData)
