@@ -35,7 +35,7 @@ setup(
         'q2_types_genomics.feature_data.tests':
             ['data/*', 'data/mags-fa/*', 'data/mags-fasta/*'],
         'q2_types_genomics.genome_data.tests':
-            ['data/*', 'data/genes/*', 'data/loci/*',
+            ['data/*/', 'data/genes/*', 'data/loci/*',
              'data/loci-invalid/*', 'data/proteins/*',
              'data/ortholog/*',
              ],
@@ -45,7 +45,7 @@ setup(
              'data/outputs-mags/*/*', 'data/reports-single/*',
              'data/reports-reads/*/*', 'data/reports-mags/*/*'],
         'q2_types_genomics.reference_db.tests':
-            ['data/*', 'data/dmnd_db/*',
+            ['data/*', 'data/*/*',
              ],
     },
     zip_safe=False,
