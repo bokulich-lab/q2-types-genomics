@@ -31,11 +31,11 @@ setup(
             ['data/*',
              'data/mags/*/*', 'data/mags/*/*/*',
              'data/manifests/*', 'data/good_contigs/*',
-             'data/bad_char_contigs/*', 'data/bad_name_contigs/*', 
-             'data/diamond_hit/*', 
+             'data/bad_char_contigs/*', 'data/bad_name_contigs/*',
+             'data/diamond_hit/*',
              'data/bowtie/*/*', 'data/bowtie/*/*/*/*', 'data/bowtie/*/*/*'],
         'q2_types_genomics.feature_data.tests':
-            ['data/*', 'data/*/*', 
+            ['data/*', 'data/*/*',
              'data/mags-fa/*', 'data/mags-fasta/*'],
         'q2_types_genomics.genome_data.tests':
             ['data/*/', 'data/genes/*', 'data/loci/*',
