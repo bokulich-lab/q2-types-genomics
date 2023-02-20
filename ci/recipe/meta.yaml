@@ -22,11 +22,14 @@ requirements:
     - samtools
     - q2-types {{ qiime2_epoch }}.*
     - qiime2 {{ qiime2_epoch }}.*
+    - eggnog-mapper >=2.1.10
+    - qiime2 {{ qiime2_epoch }}.*
 
 test:
   requires:
     - coverage
     - pytest-cov
+    - qiime2 {{ qiime2_epoch }}.*
   imports:
     - q2_types_genomics
     - qiime2.plugins.types_genomics
