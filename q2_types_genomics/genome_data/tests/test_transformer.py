@@ -64,8 +64,8 @@ class TestTransformers(TestPluginBase):
     def test_genes_to_dataframe(self):
         _, obs = self.transform_format(GenesDirectoryFormat, pd.DataFrame,
                                        filenames=[
-                                           'genes/genes1.fa',
-                                           'genes/genes2.fa'
+                                           'genes-with-suffix/genes1.fa',
+                                           'genes-with-suffix/genes2.fa'
                                        ])
         exp = self.seqs_to_df(self.genes)
         pd.testing.assert_frame_equal(exp, obs)
@@ -78,11 +78,13 @@ class TestTransformers(TestPluginBase):
         self.assertIsInstance(obs, GenesDirectoryFormat)
 
     def test_proteins_to_dataframe(self):
-        _, obs = self.transform_format(ProteinsDirectoryFormat, pd.DataFrame,
-                                       filenames=[
-                                           'proteins/proteins1.faa',
-                                           'proteins/proteins2.faa'
-                                       ])
+        _, obs = self.transform_format(
+            ProteinsDirectoryFormat,
+            pd.DataFrame,
+            filenames=[
+                'proteins-with-suffix/proteins1.faa',
+                'proteins-with-suffix/proteins2.faa'
+            ])
         exp = self.seqs_to_df(self.proteins)
         pd.testing.assert_frame_equal(exp, obs)
 
@@ -95,9 +97,10 @@ class TestTransformers(TestPluginBase):
         self.assertIsInstance(obs, ProteinsDirectoryFormat)
 
     def test_gff_to_interval_metadata_iterator(self):
-        input, obs = self.transform_format(GFF3Format,
-                                           IntervalMetadataIterator,
-                                           filename='loci/loci1.gff')
+        input, obs = self.transform_format(
+            GFF3Format,
+            IntervalMetadataIterator,
+            filename='loci-with-suffix/loci1.gff')
         exp = skbio.io.read(str(input), format='gff3')
 
         for o, e in zip(obs, exp):
@@ -106,7 +109,7 @@ class TestTransformers(TestPluginBase):
     def test_interval_metadata_iterator_to_gff(self):
         transformer = self.get_transformer(IntervalMetadataIterator,
                                            GFF3Format)
-        filepath = self.get_data_path('loci/loci1.gff')
+        filepath = self.get_data_path('loci-with-suffix/loci1.gff')
         generator = skbio.io.read(filepath, format='gff3')
         input = IntervalMetadataIterator(generator)
 

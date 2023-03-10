@@ -19,7 +19,7 @@ class OrthologFileFmt(model.TextFileFormat):
 
 
 class GenesDirectoryFormat(model.DirectoryFormat):
-    genes = model.FileCollection(r'genes[0-9]+\.(fa|fna|fasta)$',
+    genes = model.FileCollection(r'(.*\_)?genes[0-9]*\.(fa|fna|fasta)$',
                                  format=DNAFASTAFormat)
 
     @genes.set_path_maker
@@ -28,7 +28,7 @@ class GenesDirectoryFormat(model.DirectoryFormat):
 
 
 class ProteinsDirectoryFormat(model.DirectoryFormat):
-    proteins = model.FileCollection(r'proteins[0-9]+\.(fa|faa|fasta)$',
+    proteins = model.FileCollection(r'(.*\_)?proteins[0-9]*\.(fa|faa|fasta)$',
                                     format=ProteinFASTAFormat)
 
     @proteins.set_path_maker
@@ -145,7 +145,7 @@ class GFF3Format(model.TextFileFormat):
                         return
                     line = line.decode('utf-8-sig')
 
-                    if line.startswith(("##", "#!")):
+                    if line.startswith(("##", "#!")) and not self.directives:
                         self._update_directives(line, line_number)
                     elif line.startswith('#'):
                         continue
@@ -160,7 +160,7 @@ class GFF3Format(model.TextFileFormat):
 
 
 class LociDirectoryFormat(model.DirectoryFormat):
-    loci = model.FileCollection(r'loci[0-9]+\.gff$',
+    loci = model.FileCollection(r'(.*\_)?loci[0-9]*\.gff$',
                                 format=GFF3Format)
 
     @loci.set_path_maker
