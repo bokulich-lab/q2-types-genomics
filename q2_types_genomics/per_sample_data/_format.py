@@ -14,7 +14,7 @@ from q2_types.feature_data import DNAFASTAFormat
 from qiime2.core.exceptions import ValidationError
 from qiime2.plugin import model
 
-from q2_types_genomics.plugin_setup import plugin
+from ..plugin_setup import plugin
 
 
 # TODO: that's a copy of the _FastqManifestBase from q2-types
@@ -124,7 +124,7 @@ class ContigSequencesDirFmt(model.DirectoryFormat):
 
     @sequences.set_path_maker
     def sequences_path_maker(self, sample_id):
-        return r'%s\.fasta' % sample_id
+        return r'%s_contigs\.fasta' % sample_id
 
 
 # borrowed from q2-phylogenomics
@@ -158,5 +158,7 @@ plugin.register_formats(
     MultiFASTADirectoryFormat,
     MultiMAGSequencesDirFmt,
     ContigSequencesDirFmt,
-    MultiBowtie2IndexDirFmt, BAMDirFmt, MultiBAMDirFmt
+    MultiBowtie2IndexDirFmt,
+    BAMDirFmt,
+    MultiBAMDirFmt
 )

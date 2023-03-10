@@ -9,7 +9,7 @@ from q2_types.bowtie2 import Bowtie2IndexDirFmt
 from q2_types.sample_data import SampleData
 from qiime2.core.type import SemanticType
 
-from q2_types_genomics.per_sample_data._format import (
+from . import (
     MultiMAGSequencesDirFmt, ContigSequencesDirFmt, MultiBowtie2IndexDirFmt,
     BAMDirFmt, MultiBAMDirFmt
 )

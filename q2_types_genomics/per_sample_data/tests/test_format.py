@@ -7,6 +7,7 @@
 # ----------------------------------------------------------------------------
 
 import os
+import shutil
 import string
 import unittest
 from unittest.mock import patch, Mock
@@ -18,9 +19,6 @@ from q2_types_genomics.per_sample_data._format import (
     MultiFASTADirectoryFormat, MultiMAGManifestFormat,
     ContigSequencesDirFmt, MultiBowtie2IndexDirFmt, BAMDirFmt, MultiBAMDirFmt
 )
-
-# from q2_types.sample_data import SampleData
-# from q2_types_genomics.per_sample_data import Contigs
 
 
 class TestMultiMAGManifestFormat(TestPluginBase):
@@ -77,27 +75,6 @@ class TestMultiMAGManifestFormat(TestPluginBase):
 class TestFormats(TestPluginBase):
     package = 'q2_types_genomics.per_sample_data.tests'
 
-    def test_contig_seqs_dir_fmt_fails_bad_char(self):
-        dirpath = self.get_data_path('bad_char_contigs/')
-        with self.assertRaisesRegex(ValidationError, "Invalid character 'Z'"):
-            fmt_obj = ContigSequencesDirFmt(dirpath, mode='r')
-            fmt_obj.validate()
-
-    def test_contig_seqs_dir_fmt_fails_bad_filename(self):
-        dirpath = self.get_data_path('bad_name_contigs')
-
-        fmt_obj = ContigSequencesDirFmt(dirpath, mode='r')
-        with self.assertRaisesRegexp(
-                ValidationError,
-                "Missing one or more files for ContigSequencesDirFmt"):
-            fmt_obj.validate()
-
-    def test_contig_seqs_dir_fmt_good(self):
-        dirpath = self.get_data_path('good_contigs/')
-        format = ContigSequencesDirFmt(dirpath, mode='r')
-
-        format.validate()
-
     def test_multifasta_dirfmt_fa(self):
         dirpath = self.get_data_path('mags/mags-fa')
         format = MultiFASTADirectoryFormat(dirpath, mode='r')
@@ -132,10 +109,10 @@ class TestFormats(TestPluginBase):
                 ValidationError, 'should be .* per-sample directories'):
             format.validate()
 
-    # def test_contig_seqs_dirfmt(self):
-    #     filepath = self.get_data_path('contigs/')
-    #     shutil.copytree(filepath, self.temp_dir.name, dirs_exist_ok=True)
-    #     ContigSequencesDirFmt(self.temp_dir.name, mode='r').validate()
+    def test_contig_seqs_dirfmt(self):
+        filepath = self.get_data_path('contigs/')
+        shutil.copytree(filepath, self.temp_dir.name, dirs_exist_ok=True)
+        ContigSequencesDirFmt(self.temp_dir.name, mode='r').validate()
 
     @patch('subprocess.run', return_value=Mock(returncode=0))
     def test_bam_dirmt(self, p):

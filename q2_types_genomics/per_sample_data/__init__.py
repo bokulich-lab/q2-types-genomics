@@ -6,28 +6,22 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
-
 import importlib
 
-from q2_types_genomics.per_sample_data._format import (
-    MultiFASTADirectoryFormat, MultiMAGManifestFormat,
-    MultiMAGSequencesDirFmt, ContigSequencesDirFmt, MultiBowtie2IndexDirFmt,
-    BAMFormat, BAMDirFmt, MultiBAMDirFmt,
+from ._format import (
+    MultiMAGSequencesDirFmt, MultiMAGManifestFormat,
+    ContigSequencesDirFmt, MultiBowtie2IndexDirFmt,
+    BAMFormat, BAMDirFmt, MultiBAMDirFmt
 )
-
-from q2_types_genomics.per_sample_data._type import (
+from ._type import (
     MAGs, Contigs, SingleBowtie2Index, MultiBowtie2Index
 )
 
 __all__ = [
-    'MAGs',
-    'MultiMAGSequencesDirFmt',
-    'MultiMAGManifestFormat',
-    'ContigSequencesDirFmt',
-    'Contigs',
-    'SingleBowtie2Index',
+    'MAGs', 'MultiMAGSequencesDirFmt', 'MultiMAGManifestFormat',
+    'ContigSequencesDirFmt', 'Contigs', 'SingleBowtie2Index',
     'MultiBowtie2Index', 'MultiBowtie2IndexDirFmt',
-    'BAMFormat', 'BAMDirFmt', 'MultiBAMDirFmt',  'MultiFASTADirectoryFormat'
+    'BAMFormat', 'BAMDirFmt', 'MultiBAMDirFmt'
 ]
 
 importlib.import_module('q2_types_genomics.per_sample_data._transformer')
