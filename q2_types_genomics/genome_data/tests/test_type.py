@@ -18,7 +18,7 @@ from q2_types_genomics.genome_data import (
         )
 
 
-class TestGenomeTypes(TestPluginBase):
+class TestTypes(TestPluginBase):
     package = 'q2_types_genomics.genome_data.tests'
 
     def test_blast6_registered_to_seedorthologdirfmt(self):

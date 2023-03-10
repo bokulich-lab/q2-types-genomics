@@ -16,7 +16,7 @@ from q2_types_genomics.feature_data import (
         )
 
 
-class TestFeatureDataTypes(TestPluginBase):
+class TestTypes(TestPluginBase):
     package = 'q2_types_genomics.feature_data.tests'
 
     def test_mag_semantic_type_registration(self):

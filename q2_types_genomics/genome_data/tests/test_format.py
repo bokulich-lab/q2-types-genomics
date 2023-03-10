@@ -17,7 +17,7 @@ from .._format import (
 )
 
 
-class TestGenomeFormats(TestPluginBase):
+class TestFormats(TestPluginBase):
     package = 'q2_types_genomics.genome_data.tests'
 
     def test_ortholog_file_fmt(self):

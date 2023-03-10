@@ -16,20 +16,20 @@ from q2_types_genomics.feature_data._format import (
         )
 
 
-class TestFeatureDataFormats(TestPluginBase):
+class TestFormats(TestPluginBase):
     package = 'q2_types_genomics.feature_data.tests'
 
     def test_mag_dirfmt_fa(self):
         dirpath = self.get_data_path('mags-fa')
-        fmt_obj = MAGSequencesDirFmt(dirpath, mode='r')
+        format = MAGSequencesDirFmt(dirpath, mode='r')
 
-        fmt_obj.validate()
+        format.validate()
 
     def test_mag_dirfmt_fasta(self):
         dirpath = self.get_data_path('mags-fasta')
-        fmt_obj = MAGSequencesDirFmt(dirpath, mode='r')
+        format = MAGSequencesDirFmt(dirpath, mode='r')
 
-        fmt_obj.validate()
+        format.validate()
 
     def test_ortholog_annotation_dir_fmt_passing(self):
         dirpath = self.get_data_path('good_ortholog_annotation')
