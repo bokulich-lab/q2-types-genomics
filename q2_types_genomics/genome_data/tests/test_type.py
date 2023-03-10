@@ -11,11 +11,11 @@ import unittest
 from qiime2.plugin.testing import TestPluginBase
 
 
-from q2_types_genomics.genome_data import (GenomeData, Genes, Proteins, Loci,
-                                           GenesDirectoryFormat,
-                                           ProteinsDirectoryFormat,
-                                           LociDirectoryFormat, BLAST6,
-                                           SeedOrthologDirFmt)
+from q2_types_genomics.genome_data import (
+        GenomeData, Genes, Proteins, Loci, GenesDirectoryFormat,
+        ProteinsDirectoryFormat, LociDirectoryFormat, BLAST6,
+        SeedOrthologDirFmt
+        )
 
 
 class TestGenomeTypes(TestPluginBase):
