@@ -106,7 +106,23 @@ class Kraken2DBDirectoryFormat(model.DirectoryFormat):
     taxo = model.File(r'taxo.k2d', format=Kraken2DBFormat)
 
 
+class BrackenDBFormat(model.TextFileFormat):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def _validate_(self, level):
+        pass
+
+
+class BrackenDBDirectoryFormat(model.DirectoryFormat):
+    kmers = model.FileCollection(r'.+\.kmer_distrib', format=BrackenDBFormat)
+
+    @kmers.set_path_maker
+    def reports_path_maker(self, read_len):
+        return f'database{read_len}.kmer_distrib'
+
+
 plugin.register_formats(
     Kraken2ReportDirectoryFormat, Kraken2OutputDirectoryFormat,
-    Kraken2DBDirectoryFormat
+    Kraken2DBDirectoryFormat, BrackenDBDirectoryFormat
 )

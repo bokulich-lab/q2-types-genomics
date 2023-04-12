@@ -9,12 +9,14 @@
 from ._format import (
     Kraken2ReportFormat, Kraken2ReportDirectoryFormat,
     Kraken2OutputFormat, Kraken2OutputDirectoryFormat,
-    Kraken2DBFormat, Kraken2DBDirectoryFormat
+    Kraken2DBFormat, Kraken2DBDirectoryFormat,
+    BrackenDBFormat, BrackenDBDirectoryFormat
 )
 from ._type import Kraken2Reports, Kraken2Outputs, Kraken2DB
 
 __all__ = [
     'Kraken2ReportFormat', 'Kraken2ReportDirectoryFormat', 'Kraken2Reports',
     'Kraken2OutputFormat', 'Kraken2OutputDirectoryFormat', 'Kraken2Outputs',
-    'Kraken2DBFormat', 'Kraken2DBDirectoryFormat', 'Kraken2DB'
+    'Kraken2DBFormat', 'Kraken2DBDirectoryFormat', 'Kraken2DB',
+    'BrackenDBFormat', 'BrackenDBDirectoryFormat'
 ]

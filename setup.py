@@ -42,7 +42,7 @@ setup(
              'data/proteins-with-prefix/*', 'data/proteins-with-suffix/*',
              'data/proteins-with-wrong-prefix/*'],
         'q2_types_genomics.kraken2.tests':
-            ['data/*', 'data/db/*',
+            ['data/*', 'data/kraken2-db/*', 'data/bracken-db/*',
              'data/outputs-single/*', 'data/outputs-reads/*/*',
              'data/outputs-mags/*/*', 'data/reports-single/*',
              'data/reports-reads/*/*', 'data/reports-mags/*/*']
