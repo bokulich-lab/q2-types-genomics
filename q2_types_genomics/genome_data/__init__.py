@@ -18,10 +18,10 @@ from ._type import (
 )
 
 __all__ = [
-        'GenomeData', 'Genes', 'Proteins', 'Loci', 'GFF3Format',
-        'GenesDirectoryFormat', 'ProteinsDirectoryFormat',
-        'LociDirectoryFormat', 'IntervalMetadataIterator',
-        'OrthologFileFmt', 'Ortholog', 'SeedOrthologDirFmt', 'BLAST6',
-        ]
+    'GenomeData', 'Genes', 'Proteins', 'Loci', 'GFF3Format',
+    'GenesDirectoryFormat', 'ProteinsDirectoryFormat', 'LociDirectoryFormat',
+    'IntervalMetadataIterator', 'OrthologFileFmt', 'Ortholog',
+    'SeedOrthologDirFmt', 'BLAST6',
+    ]
 
 importlib.import_module('q2_types_genomics.genome_data._transformer')
