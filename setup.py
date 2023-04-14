@@ -30,17 +30,20 @@ setup(
         'q2_types_genomics.per_sample_data.tests':
             ['data/*',
              'data/mags/*/*', 'data/mags/*/*/*',
-             'data/manifests/*', 'data/good_contigs/*',
-             'data/bad_char_contigs/*', 'data/bad_name_contigs/*',
+             'data/manifests/*', 'data/contigs/*',
              'data/diamond_hit/*',
              'data/bowtie/*/*', 'data/bowtie/*/*/*/*', 'data/bowtie/*/*/*'],
         'q2_types_genomics.feature_data.tests':
             ['data/*', 'data/*/*',
              'data/mags-fa/*', 'data/mags-fasta/*'],
         'q2_types_genomics.genome_data.tests':
-            ['data/*/', 'data/genes/*', 'data/loci/*',
-             'data/loci-invalid/*', 'data/proteins/*',
-             'data/ortholog/*',
+            ['data/*/', 'data/genes-with-prefix/*',
+             'data/genes-with-suffix/*', 'data/genes-with-wrong-prefix/*',
+             'data/loci-invalid/*',  'data/loci-with-prefix',
+             'data/loci-with-suffix', 'data/loci-with-wrong-prefix',
+             'data/ortholog/*', 'data/proteins-with-suffix/*',
+             'data/proteins-with-prefix/*',
+             'data/proteins-with-wrong-prefix/*',
              ],
         'q2_types_genomics.kraken2.tests':
             ['data/*', 'data/db/*',

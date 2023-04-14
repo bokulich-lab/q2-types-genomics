@@ -12,10 +12,9 @@ from qiime2.plugin.testing import TestPluginBase
 
 
 from q2_types_genomics.genome_data import (
-        GenomeData, Genes, Proteins, Loci, GenesDirectoryFormat,
-        ProteinsDirectoryFormat, LociDirectoryFormat, BLAST6,
-        SeedOrthologDirFmt
-        )
+    GenomeData, Genes, Proteins, Loci, GenesDirectoryFormat,
+    ProteinsDirectoryFormat, LociDirectoryFormat, SeedOrthologDirFmt, BLAST6
+    )
 
 
 class TestTypes(TestPluginBase):
