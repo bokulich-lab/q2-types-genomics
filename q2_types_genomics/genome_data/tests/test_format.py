@@ -53,9 +53,6 @@ class TestFormats(TestPluginBase):
             self.assertIsInstance(obj=obj, cls=OrthologFileFmt)
             obj.validate()
 
-    def test_genes_dirfmt_fa(self):
-        dirpath = self.get_data_path('genes')
-
     def test_genes_dirfmt_fa_with_suffix(self):
         dirpath = self.get_data_path('genes-with-suffix')
         fmt = GenesDirectoryFormat(dirpath, mode='r')
