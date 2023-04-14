@@ -39,8 +39,8 @@ setup(
         'q2_types_genomics.genome_data.tests':
             ['data/*/', 'data/genes-with-prefix/*',
              'data/genes-with-suffix/*', 'data/genes-with-wrong-prefix/*',
-             'data/loci-invalid/*',  'data/loci-with-prefix',
-             'data/loci-with-suffix', 'data/loci-with-wrong-prefix',
+             'data/loci-invalid/*',  'data/loci-with-prefix/*',
+             'data/loci-with-suffix/*', 'data/loci-with-wrong-prefix/*',
              'data/ortholog/*', 'data/proteins-with-suffix/*',
              'data/proteins-with-prefix/*',
              'data/proteins-with-wrong-prefix/*',
