@@ -11,7 +11,9 @@ import unittest
 from q2_types.feature_data import FeatureData
 from qiime2.plugin.testing import TestPluginBase
 
-from q2_types_genomics.feature_data import MAG, MAGSequencesDirFmt
+from q2_types_genomics.feature_data import (
+        MAG, MAGSequencesDirFmt, OrthologAnnotationDirFmt, NOG, OG, KEGG,
+        )
 
 
 class TestTypes(TestPluginBase):
@@ -25,6 +27,30 @@ class TestTypes(TestPluginBase):
             FeatureData[MAG],
             MAGSequencesDirFmt
         )
+
+    def test_nog_type_registration(self):
+        self.assertRegisteredSemanticType(NOG)
+
+    def test_og_type_registration(self):
+        self.assertRegisteredSemanticType(OG)
+
+    def test_kegg_type_registration(self):
+        self.assertRegisteredSemanticType(KEGG)
+
+    def test_nog_registered_to_format(self):
+        self.assertSemanticTypeRegisteredToFormat(
+                FeatureData[NOG],
+                OrthologAnnotationDirFmt)
+
+    def test_og_registered_to_format(self):
+        self.assertSemanticTypeRegisteredToFormat(
+                FeatureData[OG],
+                OrthologAnnotationDirFmt)
+
+    def test_kegg_registered_to_format(self):
+        self.assertSemanticTypeRegisteredToFormat(
+                FeatureData[KEGG],
+                OrthologAnnotationDirFmt)
 
 
 if __name__ == '__main__':

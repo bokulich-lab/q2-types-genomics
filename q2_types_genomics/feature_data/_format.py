@@ -7,6 +7,7 @@
 # ----------------------------------------------------------------------------
 
 from q2_types.feature_data import DNAFASTAFormat
+from q2_types_genomics.genome_data._format import OrthologFileFmt
 from qiime2.plugin import model
 
 from ..plugin_setup import plugin
@@ -18,3 +19,19 @@ MAGSequencesDirFmt = model.SingleFileDirectoryFormat(
 plugin.register_formats(
     MAGSequencesDirFmt
 )
+
+
+class OrthologAnnotationDirFmt(model.DirectoryFormat):
+    annotations = model.FileCollection(
+            r'.+\.annotations',
+            format=OrthologFileFmt
+            )
+
+    @annotations.set_path_maker
+    def annotations_path_maker(self, file_name):
+        return file_name.split(sep="_")[0]
+
+
+plugin.register_formats(
+        OrthologAnnotationDirFmt
+        )

@@ -8,12 +8,18 @@
 
 import importlib
 
-from ._format import MAGSequencesDirFmt
-from ._type import MAG
+from ._format import (
+        MAGSequencesDirFmt,
+        OrthologAnnotationDirFmt,
+        OrthologFileFmt
+        )
+
+from ._type import MAG, NOG, OG, KEGG
 from ._transformer import MAGIterator
 
 __all__ = [
-    'MAG', 'MAGSequencesDirFmt', 'MAGIterator'
-]
+        'MAG', 'MAGSequencesDirFmt', 'MAGIterator', 'NOG', 'OG', 'KEGG',
+        'OrthologAnnotationDirFmt', 'OrthologFileFmt',
+        ]
 
 importlib.import_module('q2_types_genomics.feature_data._transformer')

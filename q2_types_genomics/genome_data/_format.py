@@ -13,6 +13,11 @@ from qiime2.core.exceptions import ValidationError
 from ..plugin_setup import plugin
 
 
+class OrthologFileFmt(model.TextFileFormat):
+    def _validate_(self, level):
+        pass
+
+
 class GenesDirectoryFormat(model.DirectoryFormat):
     genes = model.FileCollection(r'(.*\_)?genes[0-9]*\.(fa|fna|fasta)$',
                                  format=DNAFASTAFormat)
@@ -166,3 +171,16 @@ class LociDirectoryFormat(model.DirectoryFormat):
 plugin.register_formats(
     GenesDirectoryFormat, ProteinsDirectoryFormat, LociDirectoryFormat
 )
+
+
+class SeedOrthologDirFmt(model.DirectoryFormat):
+    seed_orthologs = model.FileCollection(r'.*\..*\.seed_orthologs',
+                                          format=OrthologFileFmt,
+                                          optional=False)
+
+    @seed_orthologs.set_path_maker
+    def seed_ortholog_pathmaker(self, sample_name):
+        return str(sample_name.split(sep=".")[0] + ".seed_orthologs")
+
+
+plugin.register_formats(OrthologFileFmt, SeedOrthologDirFmt)

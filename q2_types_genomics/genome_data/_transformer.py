@@ -14,7 +14,7 @@ import skbio
 from skbio.io import read
 
 from . import (
-    GenesDirectoryFormat, ProteinsDirectoryFormat, GFF3Format
+    GenesDirectoryFormat, ProteinsDirectoryFormat, GFF3Format, OrthologFileFmt
 )
 from ..plugin_setup import plugin
 
@@ -23,6 +23,20 @@ CONSTRUCTORS = {
     'RNA': skbio.RNA,
     'protein': skbio.Protein
 }
+
+
+@plugin.register_transformer
+def _8(ortholog_file: OrthologFileFmt) -> pd.DataFrame:
+
+    seed_ortholog_column_names = ['qseqid', 'sseqid', 'evalue', 'bitscore',
+                                  'qstart', 'qend', 'sstart', 'send', 'pident',
+                                  'qcov', 'scov']
+
+    return pd.read_csv(ortholog_file.path, sep="\t",
+                       names=seed_ortholog_column_names,
+                       header='infer',
+                       comment="#"
+                       )
 
 
 def _series_to_fasta(series, ff, seq_type='DNA'):

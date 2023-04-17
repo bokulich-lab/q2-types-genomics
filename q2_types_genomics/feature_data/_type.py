@@ -8,7 +8,9 @@
 
 from q2_types.feature_data import FeatureData
 
-from q2_types_genomics.feature_data._format import MAGSequencesDirFmt
+from q2_types_genomics.feature_data._format import (
+        MAGSequencesDirFmt, OrthologAnnotationDirFmt
+        )
 from qiime2.core.type import SemanticType
 
 from ..plugin_setup import plugin
@@ -21,3 +23,26 @@ plugin.register_semantic_type_to_format(
     FeatureData[MAG],
     artifact_format=MAGSequencesDirFmt
 )
+
+NOG = SemanticType('NOG', variant_of=FeatureData.field['type'])
+
+plugin.register_semantic_types(NOG)
+plugin.register_artifact_class(
+        FeatureData[NOG],
+        directory_format=OrthologAnnotationDirFmt)
+
+
+OG = SemanticType('OG', variant_of=FeatureData.field['type'])
+
+plugin.register_semantic_types(OG)
+plugin.register_artifact_class(
+        FeatureData[OG],
+        directory_format=OrthologAnnotationDirFmt)
+
+
+KEGG = SemanticType('KEGG', variant_of=FeatureData.field['type'])
+
+plugin.register_semantic_types(KEGG)
+plugin.register_artifact_class(
+        FeatureData[KEGG],
+        directory_format=OrthologAnnotationDirFmt)

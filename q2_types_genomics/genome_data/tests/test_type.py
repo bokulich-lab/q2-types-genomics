@@ -10,14 +10,20 @@ import unittest
 
 from qiime2.plugin.testing import TestPluginBase
 
+
 from q2_types_genomics.genome_data import (
-    GenomeData, Genes, Proteins, Loci,
-    GenesDirectoryFormat, ProteinsDirectoryFormat, LociDirectoryFormat
-)
+    GenomeData, Genes, Proteins, Loci, GenesDirectoryFormat,
+    ProteinsDirectoryFormat, LociDirectoryFormat, SeedOrthologDirFmt, BLAST6
+    )
 
 
 class TestTypes(TestPluginBase):
     package = 'q2_types_genomics.genome_data.tests'
+
+    def test_blast6_registered_to_seedorthologdirfmt(self):
+        self.assertSemanticTypeRegisteredToFormat(
+                GenomeData[BLAST6],
+                SeedOrthologDirFmt)
 
     def test_genome_data_semantic_type_registration(self):
         self.assertRegisteredSemanticType(GenomeData)
