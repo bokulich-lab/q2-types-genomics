@@ -115,10 +115,10 @@ class BrackenDBFormat(model.TextFileFormat):
 
 
 class BrackenDBDirectoryFormat(model.DirectoryFormat):
-    kmers = model.FileCollection(r'.+\.kmer_distrib', format=BrackenDBFormat)
+    kmers = model.FileCollection(r'.+\.kmer_distrib$', format=BrackenDBFormat)
 
     @kmers.set_path_maker
-    def reports_path_maker(self, read_len):
+    def kmers_path_maker(self, read_len):
         return f'database{read_len}.kmer_distrib'
 
 
