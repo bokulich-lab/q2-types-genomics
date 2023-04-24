@@ -115,11 +115,13 @@ class BrackenDBFormat(model.TextFileFormat):
 
 
 class BrackenDBDirectoryFormat(model.DirectoryFormat):
-    kmers = model.FileCollection(r'.+\.kmer_distrib$', format=BrackenDBFormat)
+    kmers = model.FileCollection(
+        r'database(\d{2,})mers\.kmer_distrib$', format=BrackenDBFormat
+    )
 
     @kmers.set_path_maker
     def kmers_path_maker(self, read_len):
-        return f'database{read_len}.kmer_distrib'
+        return f'database{read_len}mers.kmer_distrib'
 
 
 plugin.register_formats(
