@@ -18,11 +18,9 @@ requirements:
 
   run:
     - python {{ python }}
-    - bowtie2
     - samtools
     - q2-types {{ qiime2_epoch }}.*
     - qiime2 {{ qiime2_epoch }}.*
-    - eggnog-mapper >=2.1.10
 
 test:
   requires:
