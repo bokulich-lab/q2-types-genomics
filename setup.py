@@ -18,11 +18,10 @@ setup(
     author="Michal Ziemski",
     author_email="ziemski.michal@gmail.com",
     description="QIIME 2 semantic types for genomics applications.",
-    license='BSD-3-Clause',
+    license="BSD-3-Clause",
     url="https://github.com/bokulich-lab/q2-types-genomics",
     entry_points={
-        'qiime2.plugins':
-        ['q2-types-genomics=q2_types_genomics.plugin_setup:plugin']
+        "qiime2.plugins": ["q2-types-genomics=q2_types_genomics.plugin_setup:plugin"]
     },
     package_data={
         'q2_types_genomics': ['citations.bib'],
@@ -45,11 +44,19 @@ setup(
              'data/proteins-with-prefix/*',
              'data/proteins-with-wrong-prefix/*',
              ],
-        'q2_types_genomics.kraken2.tests':
-            ['data/*', 'data/kraken2-db/*', 'data/bracken-db/*',
-             'data/outputs-single/*', 'data/outputs-reads/*/*',
-             'data/outputs-mags/*/*', 'data/reports-single/*',
-             'data/reports-reads/*/*', 'data/reports-mags/*/*'],
+        'q2_types_genomics.kraken2.tests': [
+            'data/*',
+            'data/kraken2-db/*',
+            'data/bracken-db/*',
+            'data/outputs-single/*',
+            'data/outputs-reads/*/*',
+            'data/outputs-mags/*/*',
+            'data/reports-single/*',
+            'data/reports-reads/*/*',
+            'data/reports-mags/*/*',
+        ],
+        'q2_types_genomics.kaiju.tests':
+            ['data/*', 'data/db-valid/*'],
         'q2_types_genomics.reference_db.tests':
             ['data/*', 'data/*/*', ],
         'q2_types_genomics.feature_map.tests':
