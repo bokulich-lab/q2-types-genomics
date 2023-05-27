@@ -6,6 +6,8 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
+import importlib
+
 from ._format import (
     Kraken2ReportFormat, Kraken2ReportDirectoryFormat,
     Kraken2OutputFormat, Kraken2OutputDirectoryFormat,
@@ -20,3 +22,5 @@ __all__ = [
     'Kraken2DBFormat', 'Kraken2DBDirectoryFormat', 'Kraken2DB',
     'BrackenDBFormat', 'BrackenDBDirectoryFormat'
 ]
+
+importlib.import_module('q2_types_genomics.kraken2._transformer')
