@@ -42,8 +42,11 @@ class Kraken2ReportFormat(model.TextFileFormat):
             return df, self.NORMAL_COLUMNS
         elif len(df.columns) == len(self.ALL_COLUMNS):
             return df, self.ALL_COLUMNS
-
-        return df, None
+        else:
+            raise ValueError(
+                'Length mismatch: expected 6 or 8 columns, '
+                f'found {len(df.columns)}.'
+            )
 
     def _validate_(self, level):
         try:
@@ -51,10 +54,7 @@ class Kraken2ReportFormat(model.TextFileFormat):
             df.columns = COLUMNS.keys()
         except ValueError as e:
             if 'Length mismatch' in str(e):
-                raise ValidationError(
-                    f'Expected 6 or 8 columns in the Kraken2 report file but '
-                    f'{df.shape[1]} were found.'
-                )
+                raise ValidationError(str(e))
             else:
                 raise ValidationError(
                     'An error occurred when reading in the '

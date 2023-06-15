@@ -32,7 +32,7 @@ class TestFormats(TestPluginBase):
         fmt = Kraken2ReportFormat(report_fp, mode='r')
 
         with self.assertRaisesRegex(
-            ValidationError, '5 were found'
+            ValidationError, 'found 5'
         ):
             fmt.validate()
 
