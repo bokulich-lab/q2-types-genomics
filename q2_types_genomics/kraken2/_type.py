@@ -10,7 +10,7 @@ from qiime2.plugin import SemanticType
 
 from . import (
     Kraken2ReportDirectoryFormat, Kraken2OutputDirectoryFormat,
-    Kraken2DBDirectoryFormat
+    Kraken2DBDirectoryFormat, BrackenDBDirectoryFormat
 )
 from ..plugin_setup import plugin
 
@@ -22,8 +22,11 @@ Kraken2Outputs = SemanticType(
     'Kraken2Output', variant_of=SampleData.field['type']
 )
 Kraken2DB = SemanticType('Kraken2DB')
+BrackenDB = SemanticType('BrackenDB')
 
-plugin.register_semantic_types(Kraken2Reports, Kraken2Outputs, Kraken2DB)
+plugin.register_semantic_types(
+    Kraken2Reports, Kraken2Outputs, Kraken2DB, BrackenDB
+)
 
 plugin.register_semantic_type_to_format(
     SampleData[Kraken2Reports],
@@ -36,4 +39,8 @@ plugin.register_semantic_type_to_format(
 plugin.register_semantic_type_to_format(
     Kraken2DB,
     artifact_format=Kraken2DBDirectoryFormat
+)
+plugin.register_semantic_type_to_format(
+    BrackenDB,
+    artifact_format=BrackenDBDirectoryFormat
 )

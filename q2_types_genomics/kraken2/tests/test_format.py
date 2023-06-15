@@ -13,7 +13,7 @@ from qiime2.plugin.testing import TestPluginBase
 from q2_types_genomics.kraken2._format import (
     Kraken2ReportFormat, Kraken2ReportDirectoryFormat,
     Kraken2OutputFormat, Kraken2OutputDirectoryFormat,
-    Kraken2DBDirectoryFormat
+    Kraken2DBDirectoryFormat, BrackenDBDirectoryFormat
 )
 
 
@@ -32,7 +32,7 @@ class TestFormats(TestPluginBase):
         fmt = Kraken2ReportFormat(report_fp, mode='r')
 
         with self.assertRaisesRegex(
-            ValidationError, '5 were found'
+            ValidationError, 'found 5'
         ):
             fmt.validate()
 
@@ -103,9 +103,14 @@ class TestFormats(TestPluginBase):
         format = Kraken2OutputDirectoryFormat(dirpath, mode='r')
         format.validate()
 
-    def test_database_dirfmt(self):
-        dirpath = self.get_data_path('db')
+    def test_kraken2db_dirfmt(self):
+        dirpath = self.get_data_path('kraken2-db')
         format = Kraken2DBDirectoryFormat(dirpath, mode='r')
+        format.validate()
+
+    def test_brackendb_dirfmt(self):
+        dirpath = self.get_data_path('bracken-db')
+        format = BrackenDBDirectoryFormat(dirpath, mode='r')
         format.validate()
 
 
