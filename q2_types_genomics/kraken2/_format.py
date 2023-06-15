@@ -16,23 +16,43 @@ from ..plugin_setup import plugin
 
 
 class Kraken2ReportFormat(model.TextFileFormat):
-    COLUMNS = {
-        'perc_frags_covered': float, 'no_frags_covered': int,
-        'no_frags_assigned': int, 'rank': str, 'ncbi_tax_id': int,
-        'name': str
+    MEASURE_COLUMNS = {
+        'perc_frags_covered': float, 'n_frags_covered': int,
+        'n_frags_assigned': int
     }
+
+    MINIMIZER_COLUMS = {
+        'n_read_minimizers': int,
+        'n_uniq_minimizers': int
+    }
+
+    TAXA_COLUMNS = {
+        'rank': str, 'ncbi_tax_id': int, 'name': str
+    }
+
+    NORMAL_COLUMNS = {**MEASURE_COLUMNS, **TAXA_COLUMNS}
+    ALL_COLUMNS = {**MEASURE_COLUMNS, **MINIMIZER_COLUMS, **TAXA_COLUMNS}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def _validate_(self, level):
+    def _to_dataframe(self):
         df = pd.read_csv(self.path, sep='\t', header=None)
+        if len(df.columns) == len(self.NORMAL_COLUMNS):
+            return df, self.NORMAL_COLUMNS
+        elif len(df.columns) == len(self.ALL_COLUMNS):
+            return df, self.ALL_COLUMNS
+
+        return df, None
+
+    def _validate_(self, level):
         try:
-            df.columns = self.COLUMNS.keys()
+            df, COLUMNS = self._to_dataframe()
+            df.columns = COLUMNS.keys()
         except ValueError as e:
             if 'Length mismatch' in str(e):
                 raise ValidationError(
-                    f'Expected 6 columns in the Kraken2 report file but '
+                    f'Expected 6 or 8 columns in the Kraken2 report file but '
                     f'{df.shape[1]} were found.'
                 )
             else:
@@ -40,7 +60,7 @@ class Kraken2ReportFormat(model.TextFileFormat):
                     'An error occurred when reading in the '
                     'Kraken2 report file'
                 ) from e
-        for col, dtype in self.COLUMNS.items():
+        for col, dtype in COLUMNS.items():
             if dtype == str and is_string_dtype(df[col]):
                 continue
             if df[col].dtype == dtype:
