@@ -10,6 +10,8 @@ import unittest
 
 from q2_types.bowtie2 import Bowtie2IndexDirFmt
 from q2_types.sample_data import SampleData
+from q2_types.feature_data import BLAST6
+
 from qiime2.plugin.testing import TestPluginBase
 
 from q2_types_genomics.per_sample_data import (
@@ -20,6 +22,8 @@ from q2_types_genomics.per_sample_data import (
 )
 from q2_types_genomics.per_sample_data._type import (AlignmentMap,
                                                      MultiAlignmentMap)
+from q2_types_genomics.genome_data import SeedOrthologDirFmt
+
 
 
 class TestTypes(TestPluginBase):
@@ -79,6 +83,11 @@ class TestTypes(TestPluginBase):
             MultiBAMDirFmt
         )
 
+    def test_sdb6_semantic_type_to_format_registration(self):
+        self.assertSemanticTypeRegisteredToFormat(
+            SampleData[BLAST6],
+            SeedOrthologDirFmt
+        )
 
 if __name__ == '__main__':
     unittest.main()
