@@ -25,7 +25,6 @@ from q2_types_genomics.per_sample_data._type import (AlignmentMap,
 from q2_types_genomics.genome_data import SeedOrthologDirFmt
 
 
-
 class TestTypes(TestPluginBase):
     package = "q2_types_genomics.per_sample_data.tests"
 
@@ -88,6 +87,7 @@ class TestTypes(TestPluginBase):
             SampleData[BLAST6],
             SeedOrthologDirFmt
         )
+
 
 if __name__ == '__main__':
     unittest.main()
