@@ -7,8 +7,10 @@
 # ----------------------------------------------------------------------------
 from q2_types.bowtie2 import Bowtie2IndexDirFmt
 from q2_types.sample_data import SampleData
+from q2_types.feature_data import BLAST6
 from qiime2.core.type import SemanticType
 
+from ..genome_data import SeedOrthologDirFmt
 from . import (
     MultiMAGSequencesDirFmt, ContigSequencesDirFmt, MultiBowtie2IndexDirFmt,
     BAMDirFmt, MultiBAMDirFmt
@@ -56,4 +58,9 @@ plugin.register_semantic_type_to_format(
 plugin.register_semantic_type_to_format(
     SampleData[MultiAlignmentMap],
     artifact_format=MultiBAMDirFmt
+)
+
+plugin.register_semantic_type_to_format(
+    SampleData[BLAST6],
+    artifact_format=SeedOrthologDirFmt
 )
