@@ -11,7 +11,9 @@ from ._format import MAGtoContigsDirFmt
 from ..plugin_setup import plugin
 
 FeatureMap = SemanticType("FeatureMap", field_names="type")
-MAGtoContigs = SemanticType("MAGtoContigs", variant_of=FeatureMap.field["type"])
+MAGtoContigs = SemanticType(
+    "MAGtoContigs", variant_of=FeatureMap.field["type"]
+)
 
 plugin.register_semantic_types(FeatureMap, MAGtoContigs)
 plugin.register_semantic_type_to_format(

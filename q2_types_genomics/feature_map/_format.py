@@ -16,7 +16,6 @@ class MAGtoContigsFormat(model.TextFileFormat):
     def _validate_(self, level):
         with self.path.open("r") as fh:
             data = json.load(fh)
-            mag_ids = list(data.keys())
 
             level_map = {"min": 1, "max": len(data)}
             max_lines = level_map[level]

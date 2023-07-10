@@ -10,7 +10,9 @@ import unittest
 from qiime2.plugin.testing import TestPluginBase
 
 
-from q2_types_genomics.feature_map import FeatureMap, MAGtoContigs, MAGtoContigsDirFmt
+from q2_types_genomics.feature_map import (
+    FeatureMap, MAGtoContigs, MAGtoContigsDirFmt
+)
 
 
 class TestTypes(TestPluginBase):

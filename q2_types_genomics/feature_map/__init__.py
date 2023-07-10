@@ -12,6 +12,8 @@ from ._format import MAGtoContigsFormat, MAGtoContigsDirFmt
 
 from ._type import FeatureMap, MAGtoContigs
 
-__all__ = ["FeatureMap", "MAGtoContigs", "MAGtoContigsFormat", "MAGtoContigsDirFmt"]
+__all__ = [
+    "FeatureMap", "MAGtoContigs", "MAGtoContigsFormat", "MAGtoContigsDirFmt"
+]
 
 importlib.import_module("q2_types_genomics.feature_map._transformer")
