@@ -27,15 +27,15 @@ class TestTransformers(TestPluginBase):
     def setUp(self):
         super().setUp()
         self.mags_fa = {
-            'mag1': {
+            '23c5b64e-3f3e-4688-9862-e9dae4fa0f5b': {
                 'k129_5480': 'TTATTTTCAAGATAATGAGCCAATTTAAGCGGTGTCTGGCCG'
                              'CCAAGCTGCACGATCACACCTTTAA'
             },
-            'mag2': {
+            '70c5a728-96a6-4eed-b9f9-9a73153c1385': {
                 'k129_5112': 'CCCCGGAAAGGGCTGGCGACCGACGATGACCTCGGGAAGCCC'
                              'CAACTCGCGGCCGATGGCGCGTACCTCGTC'
             },
-            'mag3': {
+            '7e2a749a-a19a-4b62-8195-0ee601b5fdfb': {
                 'k129_6525': 'AAACTCTATCAAGCGTATACCAAAGTGAGTGGTGTATTGATC'
                              'AGTCAGCTCATTATTGAATCGGA',
                 'k129_6531': 'TCGGATTTGCCGAATGCTTTTTGTAAGGGCCTTCAATTGATT'
@@ -43,7 +43,11 @@ class TestTransformers(TestPluginBase):
             }
         }
         self.mags_fasta = {
-            'mag1': {
+            '3b7d53fb-5b60-46c6-8819-aeda065b12e9': {
+                'k129_5401': 'CCATTGTATGTCTTTAGGTAGCTCCTCATGTTTGAGGTTCAT'
+                             'GTCTTGGATTTTGTTTTCTCCAAAAATC'
+            },
+            '6232c7e1-8ed7-47c8-9bdb-b94706a26931': {
                 'k129_4684': 'TGATACCGACGCGGCACTTGAGTGCGCGCTATCCTTCAAGGA'
                              'AGCCACATGCGTTATTGTTAAACA',
                 'k129_5618': 'GTGCTAATCGCACCCTCATGAGCGACACCATTATTCTTTATT'
@@ -53,10 +57,6 @@ class TestTransformers(TestPluginBase):
                 'k129_2817': 'GTCGCCAATTAGCAACTATGATGTCTTCTGGAGTACCTTTGG'
                              'TCCAATCATTTGAAATCA'
             },
-            'mag2': {
-                'k129_5401': 'CCATTGTATGTCTTTAGGTAGCTCCTCATGTTTGAGGTTCAT'
-                             'GTCTTGGATTTTGTTTTCTCCAAAAATC'
-            }
         }
 
     @staticmethod
@@ -86,11 +86,13 @@ class TestTransformers(TestPluginBase):
         return seqs
 
     def test_mag_sequences_dir_fmt_to_dataframe(self):
-        _, obs = self.transform_format(MAGSequencesDirFmt, pd.DataFrame,
-                                       filenames=[
-                                           'mags-fasta/mag1.fasta',
-                                           'mags-fasta/mag2.fasta',
-                                       ])
+        _, obs = self.transform_format(
+            MAGSequencesDirFmt, pd.DataFrame,
+            filenames=[
+               'mags-fasta/3b7d53fb-5b60-46c6-8819-aeda065b12e9.fasta',
+               'mags-fasta/6232c7e1-8ed7-47c8-9bdb-b94706a26931.fasta',
+            ]
+        )
         exp = self.mags_to_df(self.mags_fasta)
         pd.testing.assert_frame_equal(exp, obs)
 
@@ -105,11 +107,13 @@ class TestTransformers(TestPluginBase):
         self.assertDictEqual(self.mags_fasta, obs_seqs)
 
     def test_mag_sequences_dir_fmt_to_mag_iterator(self):
-        _, obs = self.transform_format(MAGSequencesDirFmt, MAGIterator,
-                                       filenames=[
-                                           'mags-fasta/mag1.fasta',
-                                           'mags-fasta/mag2.fasta',
-                                       ])
+        _, obs = self.transform_format(
+            MAGSequencesDirFmt, MAGIterator,
+            filenames=[
+               'mags-fasta/6232c7e1-8ed7-47c8-9bdb-b94706a26931.fasta',
+               'mags-fasta/3b7d53fb-5b60-46c6-8819-aeda065b12e9.fasta',
+            ]
+        )
 
         exp = self.create_multi_generator(self.mags_fasta)
         for e, o in zip(exp, obs):
