@@ -39,7 +39,17 @@ class TestFormats(TestPluginBase):
         fmt = MAGtoContigsFormat(fp, mode="r")
         with self.assertRaisesRegex(
             ValidationError,
-            'Found "abc" for MAG "6232c7e1-8ed7-47c8-9bdb-b94706a26931".',
+            'Found "<class \'str\'>" for MAG '
+            '"6232c7e1-8ed7-47c8-9bdb-b94706a26931".',
+        ):
+            fmt.validate(level="max")
+
+    def test_mag_to_contigs_has_no_contigs(self):
+        fp = self.get_data_path("mag-to-contigs-empty-list.json")
+        fmt = MAGtoContigsFormat(fp, mode="r")
+        with self.assertRaisesRegex(
+            ValidationError,
+            'MAG "6232c7e1-8ed7-47c8-9bdb-b94706a26931" is empty.',
         ):
             fmt.validate(level="max")
 

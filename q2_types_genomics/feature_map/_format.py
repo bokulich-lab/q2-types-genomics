@@ -20,10 +20,11 @@ class MAGtoContigsFormat(model.TextFileFormat):
             data = json.load(fh)
 
             level_map = {"min": 1, "max": len(data)}
-            max_lines = level_map[level]
+            max_entries = level_map[level]
 
             # assert keys are proper UUIDs and dict values are lists
-            for _id, contigs in list(data.items())[:max_lines]:
+            # with at least one contig
+            for _id, contigs in list(data.items())[:max_entries]:
                 try:
                     UUID(_id, version=4)
                 except ValueError:
@@ -35,7 +36,13 @@ class MAGtoContigsFormat(model.TextFileFormat):
                 if not isinstance(contigs, list):
                     raise ValidationError(
                         "Values corresponding to MAG IDs must be lists of "
-                        f'contigs. Found "{contigs}" for MAG "{_id}".'
+                        f'contigs. Found "{type(contigs)}" for MAG "{_id}".'
+                    )
+
+                if len(contigs) == 0:
+                    raise ValidationError(
+                        "Only non-empty MAGs are allowed. The list of "
+                        f'contigs for MAG "{_id}" is empty.'
                     )
 
 

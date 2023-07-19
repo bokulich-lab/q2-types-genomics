@@ -24,7 +24,7 @@ class TestTypes(TestPluginBase):
     def test_feature_map_mag_to_contigs_semantic_type_registration(self):
         self.assertRegisteredSemanticType(MAGtoContigs)
 
-    def test_genome_data_genes_to_genes_dir_fmt_registration(self):
+    def test_feature_map_to_dir_fmt_registration(self):
         self.assertSemanticTypeRegisteredToFormat(
             FeatureMap[MAGtoContigs], MAGtoContigsDirFmt
         )
