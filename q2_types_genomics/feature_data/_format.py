@@ -14,24 +14,24 @@ from ..plugin_setup import plugin
 
 
 MAGSequencesDirFmt = model.SingleFileDirectoryFormat(
-    'MAGSequencesDirFmt', r'mag[0-9]+\.(fa|fasta)$', DNAFASTAFormat)
-
-plugin.register_formats(
-    MAGSequencesDirFmt
+    "MAGSequencesDirFmt",
+    r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-"
+    r"[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\.(fa|fasta)$",
+    DNAFASTAFormat,
 )
+
+plugin.register_formats(MAGSequencesDirFmt)
 
 
 class OrthologAnnotationDirFmt(model.DirectoryFormat):
     annotations = model.FileCollection(
-            r'.+\.annotations',
-            format=OrthologFileFmt
-            )
+        r'.+\.annotations',
+        format=OrthologFileFmt
+    )
 
     @annotations.set_path_maker
     def annotations_path_maker(self, file_name):
         return file_name.split(sep="_")[0]
 
 
-plugin.register_formats(
-        OrthologAnnotationDirFmt
-        )
+plugin.register_formats(OrthologAnnotationDirFmt)

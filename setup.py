@@ -51,8 +51,9 @@ setup(
              'data/outputs-mags/*/*', 'data/reports-single/*',
              'data/reports-reads/*/*', 'data/reports-mags/*/*'],
         'q2_types_genomics.reference_db.tests':
-            ['data/*', 'data/*/*',
-             ],
+            ['data/*', 'data/*/*', ],
+        'q2_types_genomics.feature_map.tests':
+            ['data/*', ],
     },
     zip_safe=False,
 )
