@@ -8,6 +8,7 @@
 
 import unittest
 
+from q2_types.feature_data import FeatureData
 from q2_types.sample_data import SampleData
 from qiime2.plugin.testing import TestPluginBase
 
@@ -26,18 +27,30 @@ class TestTypes(TestPluginBase):
     def test_reports_semantic_type_registration(self):
         self.assertRegisteredSemanticType(Kraken2Reports)
 
-    def test_reports_semantic_type_to_format_registration(self):
+    def test_reports_semantic_type_to_format_registration_sd(self):
         self.assertSemanticTypeRegisteredToFormat(
             SampleData[Kraken2Reports],
+            Kraken2ReportDirectoryFormat
+        )
+
+    def test_reports_semantic_type_to_format_registration_fd(self):
+        self.assertSemanticTypeRegisteredToFormat(
+            FeatureData[Kraken2Reports],
             Kraken2ReportDirectoryFormat
         )
 
     def test_outputs_semantic_type_registration(self):
         self.assertRegisteredSemanticType(Kraken2Outputs)
 
-    def test_outputs_semantic_type_to_format_registration(self):
+    def test_outputs_semantic_type_to_format_registration_sd(self):
         self.assertSemanticTypeRegisteredToFormat(
             SampleData[Kraken2Outputs],
+            Kraken2OutputDirectoryFormat
+        )
+
+    def test_outputs_semantic_type_to_format_registration_fd(self):
+        self.assertSemanticTypeRegisteredToFormat(
+            FeatureData[Kraken2Outputs],
             Kraken2OutputDirectoryFormat
         )
 

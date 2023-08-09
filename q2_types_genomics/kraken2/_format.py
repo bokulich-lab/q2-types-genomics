@@ -11,7 +11,6 @@ from pandas.core.dtypes.common import is_string_dtype
 from qiime2.core.exceptions import ValidationError
 from qiime2.plugin import model
 
-from ..per_sample_data._format import MultiDirValidationMixin
 from ..plugin_setup import plugin
 
 
@@ -71,8 +70,7 @@ class Kraken2ReportFormat(model.TextFileFormat):
             )
 
 
-class Kraken2ReportDirectoryFormat(MultiDirValidationMixin,
-                                   model.DirectoryFormat):
+class Kraken2ReportDirectoryFormat(model.DirectoryFormat):
     reports = model.FileCollection(
         r'.+report\.(txt|tsv)$', format=Kraken2ReportFormat
     )
@@ -100,8 +98,7 @@ class Kraken2OutputFormat(model.TextFileFormat):
             )
 
 
-class Kraken2OutputDirectoryFormat(MultiDirValidationMixin,
-                                   model.DirectoryFormat):
+class Kraken2OutputDirectoryFormat(model.DirectoryFormat):
     reports = model.FileCollection(
         r'.+output\.(txt|tsv)$', format=Kraken2OutputFormat
     )
