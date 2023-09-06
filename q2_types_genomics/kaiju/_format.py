@@ -34,15 +34,17 @@ class NCBITaxonomyNodesFormat(model.TextFileFormat):
                 if not line[0].isnumeric() or not line[1].isnumeric():
                     raise ValidationError(
                         "NCBI taxonomy nodes file must contain a numeric "
-                        "taxonomy ID in the first two columns, found non-numeric "
-                        f"value on line {i + 1}."
+                        "taxonomy ID in the first two columns, found "
+                        f"non-numeric value on line {i + 1}."
                     )
                 for col in (5, 7, 9, 10, 11):
-                    if not line[col].isnumeric() or not int(line[col]) in (0, 1):
+                    if not line[col].isnumeric() or \
+                            not int(line[col]) in (0, 1):
                         raise ValidationError(
-                            "NCBI taxonomy nodes file must contain 0 or 1 in columns "
-                            "6, 8, 10, 11, and 12, found a non-allowed value on line "
-                            f"{i + 1}, column {col + 1}: {line[col]}."
+                            "NCBI taxonomy nodes file must contain 0 or 1 "
+                            "in columns 6, 8, 10, 11, and 12, found a "
+                            f"non-allowed value on line {i + 1}, column "
+                            f"{col + 1}: {line[col]}."
                         )
 
     def _validate_(self, level):

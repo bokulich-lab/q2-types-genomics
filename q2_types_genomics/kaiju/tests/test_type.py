@@ -20,7 +20,9 @@ class TestTypes(TestPluginBase):
         self.assertRegisteredSemanticType(KaijuDB)
 
     def test_kaijudb_semantic_type_to_format_registration(self):
-        self.assertSemanticTypeRegisteredToFormat(KaijuDB, KaijuDBDirectoryFormat)
+        self.assertSemanticTypeRegisteredToFormat(
+            KaijuDB, KaijuDBDirectoryFormat
+        )
 
 
 if __name__ == "__main__":

@@ -21,7 +21,9 @@ setup(
     license="BSD-3-Clause",
     url="https://github.com/bokulich-lab/q2-types-genomics",
     entry_points={
-        "qiime2.plugins": ["q2-types-genomics=q2_types_genomics.plugin_setup:plugin"]
+        "qiime2.plugins": [
+            "q2-types-genomics=q2_types_genomics.plugin_setup:plugin"
+        ]
     },
     package_data={
         'q2_types_genomics': ['citations.bib'],
