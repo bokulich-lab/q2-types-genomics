@@ -1,0 +1,11 @@
+name: ci-dev
+on:
+  pull_request:
+    branches: ["main"]
+  push:
+    branches: ["main"]
+jobs:
+  ci:
+    uses: qiime2/distributions/.github/workflows/lib-ci-dev.yaml@dev
+    with:
+      distro: shotgun
