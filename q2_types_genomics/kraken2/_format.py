@@ -26,7 +26,7 @@ class Kraken2ReportFormat(model.TextFileFormat):
     }
 
     TAXA_COLUMNS = {
-        'rank': str, 'ncbi_tax_id': int, 'name': str
+        'rank': str, 'feature_id': int, 'name': str
     }
 
     NORMAL_COLUMNS = {**MEASURE_COLUMNS, **TAXA_COLUMNS}
