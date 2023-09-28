@@ -61,8 +61,6 @@ setup(
             ['data/*', 'data/db-valid/*'],
         'q2_types_genomics.reference_db.tests':
             ['data/*', 'data/*/*', ],
-        'q2_types_genomics.feature_map.tests':
-            ['data/*', ],
     },
     zip_safe=False,
 )
