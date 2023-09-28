@@ -85,6 +85,21 @@ class Kraken2OutputFormat(model.TextFileFormat):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+    COLUMNS = (
+        'classification', 'sequence_id', 'feature_id', 'sequence_length',
+        'kmer_mappings'
+    )
+
+    def _to_dataframe(self):
+        df = pd.read_csv(self.path, sep='\t', header=None)
+        if len(df.columns) != 5:
+            msg = (
+                f'Lenth mismatch: expected 5 columns, found {len(df.columns)}.'
+            )
+            raise ValueError(msg)
+
+        return df, self.COLUMNS
+
     def _validate_(self, level):
         df = pd.read_csv(self.path, sep='\t', header=None)
         if df.shape[1] != 5:
