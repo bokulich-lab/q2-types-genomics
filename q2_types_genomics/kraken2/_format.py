@@ -92,13 +92,6 @@ class Kraken2OutputFormat(model.TextFileFormat):
 
     def _to_dataframe(self):
         df = pd.read_csv(self.path, sep='\t', header=None)
-        if len(df.columns) != 5:
-            msg = (
-                'Length mismatch: expected 5 columns, found '
-                f'{len(df.columns)} columns.'
-            )
-            raise ValueError(msg)
-
         return df, self.COLUMNS
 
     def _validate_(self, level):
