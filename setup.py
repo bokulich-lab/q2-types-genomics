@@ -52,6 +52,7 @@ setup(
             'data/bracken-db/*',
             'data/outputs-single/*',
             'data/outputs-reads/*/*',
+            'data/outputs-contigs/*',
             'data/outputs-mags/*/*',
             'data/reports-single/*',
             'data/reports-reads/*/*',
