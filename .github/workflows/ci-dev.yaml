@@ -14,8 +14,8 @@ jobs:
     uses: qiime2/distributions/.github/workflows/lib-ci-dev.yaml@dev
     with:
       distro: shotgun
-      extra-reports-path: ${{ env.cov_path }}
-      extra-reports-name: ${{ env.cov_key }}
+      extra-reports-path: ./coverage.xml
+      extra-reports-name: coverage
 
   coverage:
     needs: [ci]
@@ -23,12 +23,12 @@ jobs:
       - uses: actions/download-artifact@v3
         name: 'Fetch coverage from builds'
         with:
-          name: ${{ env.cov_key }}
-          path: ${{ env.cov_path }}
+          name: ${{ needs.ci.outputs.extra-reports-name }}
+          path: ${{ needs.ci.outputs.extra-reports-path }}
 
       - uses: codecov/codecov-action@v3
         name: 'Upload coverage'
         with:
-          files: ${{ env.cov_path }}
+          files: ${{ needs.ci.outputs.extra-reports-path }}
           fail_ci_if_error: true
 
