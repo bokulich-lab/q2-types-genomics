@@ -19,6 +19,7 @@ jobs:
 
   coverage:
     needs: [ci]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v3
         name: 'Fetch coverage from builds'
