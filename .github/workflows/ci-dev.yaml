@@ -5,10 +5,6 @@ on:
   push:
     branches: ["main"]
 
-env:
-  cov_path: ./coverage.xml
-  cov_key: coverage
-
 jobs:
   ci:
     uses: qiime2/distributions/.github/workflows/lib-ci-dev.yaml@dev
