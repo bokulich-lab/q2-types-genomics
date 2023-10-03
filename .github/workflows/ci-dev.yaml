@@ -10,7 +10,7 @@ jobs:
     uses: qiime2/distributions/.github/workflows/lib-ci-dev.yaml@dev
     with:
       distro: shotgun
-      additional-reports-path: ./.coverage
+      additional-reports-path: ./coverage.xml
       additional-reports-name: coverage
 
   coverage:
@@ -22,11 +22,6 @@ jobs:
         with:
           name: ${{ needs.ci.outputs.additional-reports-name }}
           path: ${{ needs.ci.outputs.additional-reports-path }}
-
-      - name: 'Convert coverage to XML report'
-        shell: bash
-        run: |
-          coverage xml -o ./coverage.xml
 
       - uses: codecov/codecov-action@v3
         name: 'Upload coverage'
