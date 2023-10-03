@@ -5,13 +5,14 @@
 #
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
+import os
 import unittest
 
 import pandas as pd
 from pandas._testing import assert_frame_equal
 from qiime2.plugin.testing import TestPluginBase
 
-from q2_types_genomics.kraken2 import Kraken2ReportFormat
+from q2_types_genomics.kraken2 import Kraken2ReportFormat, Kraken2OutputFormat
 
 
 class TestTransformers(TestPluginBase):
@@ -32,6 +33,17 @@ class TestTransformers(TestPluginBase):
             'reports-single/report-ok.txt'
         )
         exp = pd.read_csv(self.get_data_path('report-ok-table.csv'))
+        assert_frame_equal(exp, obs)
+
+    def test_kraken2_output_to_df(self):
+        obs = self.apply_transformation(
+            Kraken2OutputFormat,
+            pd.DataFrame,
+            'outputs-contigs/output-ok.txt'
+        )
+        exp = pd.read_csv(self.get_data_path(
+            os.path.join('outputs-contigs', 'output-ok-table.csv'))
+        )
         assert_frame_equal(exp, obs)
 
 
