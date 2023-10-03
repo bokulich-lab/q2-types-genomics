@@ -1,4 +1,4 @@
-classification,sequence_id,feature_id,sequence_length,kmer_mappings
+classification,sequence_id,taxon_id,sequence_length,kmer_mappings
 C,contig0,10090,685,10090:651
 C,contig1,10090,522,10090:21 0:66 10090:48 0:108 10090:245
 C,contig2,10090,746,10090:712
