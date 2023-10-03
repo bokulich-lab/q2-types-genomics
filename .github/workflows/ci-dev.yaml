@@ -4,8 +4,31 @@ on:
     branches: ["main"]
   push:
     branches: ["main"]
+
+env:
+  cov_path: ./coverage.xml
+  cov_key: coverage
+
 jobs:
   ci:
     uses: qiime2/distributions/.github/workflows/lib-ci-dev.yaml@dev
     with:
       distro: shotgun
+      extra-reports-path: ${{ env.cov_path }}
+      extra-reports-name: ${{ env.cov_key }}
+
+  coverage:
+    needs: [ci]
+    steps:
+      - uses: actions/download-artifact@v3
+        name: 'Fetch coverage from builds'
+        with:
+          name: ${{ env.cov_key }}
+          path: ${{ env.cov_path }}
+
+      - uses: codecov/codecov-action@v3
+        name: 'Upload coverage'
+        with:
+          files: ${{ env.cov_path }}
+          fail_ci_if_error: true
+
