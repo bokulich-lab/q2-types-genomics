@@ -7,6 +7,7 @@
 # ----------------------------------------------------------------------------
 
 import os
+import re
 import subprocess
 
 from q2_types.bowtie2 import Bowtie2IndexDirFmt
@@ -125,6 +126,40 @@ class ContigSequencesDirFmt(model.DirectoryFormat):
     @sequences.set_path_maker
     def sequences_path_maker(self, sample_id):
         return r'%s_contigs\.fasta' % sample_id
+
+    def sample_dict(self, relative=False):
+        '''
+        Returns a mapping of sample id to file path for each set of per-sample
+        contigs in the directory format.
+
+        Parameters
+        ---------
+        relative : bool
+            Whether to return filepaths relative to the directory's location.
+            Returns absolute filepaths by default.
+
+        Returns
+        -------
+        dict
+            Mapping of sample id -> filepath as described above. Sorted
+            alphabetically by key.
+        '''
+        contigs_pattern = re.compile(r'[^\.].+_contigs.(fasta|fa)$')
+        samples = {}
+        for sample_path in self.path.iterdir():
+            if not contigs_pattern.match(sample_path.name):
+                continue
+
+            sample_id = sample_path.name.rsplit('_contigs', 1)[0]
+            absolute_path = sample_path.absolute()
+            if relative:
+                samples[sample_id] = str(
+                    absolute_path.relative_to(self.path.absolute())
+                )
+            else:
+                samples[sample_id] = str(absolute_path)
+
+        return dict(sorted(samples.items()))
 
 
 # borrowed from q2-phylogenomics
