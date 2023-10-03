@@ -14,7 +14,7 @@ jobs:
     uses: qiime2/distributions/.github/workflows/lib-ci-dev.yaml@dev
     with:
       distro: shotgun
-      additional-reports-path: ./coverage.xml
+      additional-reports-path: ./.coverage
       additional-reports-name: coverage
 
   coverage:
