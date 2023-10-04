@@ -17,6 +17,8 @@ jobs:
     needs: [ci]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - uses: actions/download-artifact@v3
         name: 'Fetch coverage from builds'
         with:
@@ -27,4 +29,3 @@ jobs:
         name: 'Upload coverage'
         with:
           fail_ci_if_error: true
-
