@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: I am not sure how to use QIIME 2
+    url: https://docs.qiime2.org/
+    about: Please try checking our extensive user documentation.
+  - name: I am unsure where to go
+    url: https://forum.qiime2.org/
+    about: We use GitHub to track bugs and feature requests - please ask your questions here.
