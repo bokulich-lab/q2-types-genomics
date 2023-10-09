@@ -13,12 +13,17 @@ from qiime2.plugin import model
 from ..plugin_setup import plugin
 
 
-MAGSequencesDirFmt = model.SingleFileDirectoryFormat(
-    "MAGSequencesDirFmt",
-    r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-"
-    r"[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\.(fa|fasta)$",
-    DNAFASTAFormat,
-)
+class MAGSequencesDirFmt(model.DirectoryFormat):
+    sequences = model.FileCollection(
+        r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-"
+        r"[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\.(fa|fasta)$",
+        format=DNAFASTAFormat
+    )
+
+    @sequences.set_path_maker
+    def sequences_path_maker(self, mag_id):
+        return r'%s.fasta' % mag_id
+
 
 plugin.register_formats(MAGSequencesDirFmt)
 
