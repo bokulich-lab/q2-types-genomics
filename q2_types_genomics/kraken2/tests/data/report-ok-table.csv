@@ -1,4 +1,4 @@
-perc_frags_covered,n_frags_covered,n_frags_assigned,rank,ncbi_tax_id,name
+perc_frags_covered,n_frags_covered,n_frags_assigned,rank,taxon_id,name
 100.0,229,17,R,1,root
 92.58,212,0,R1,131567,  cellular organisms
 92.58,212,2,D,2,    Bacteria

@@ -30,7 +30,7 @@ test:
     - q2_types_genomics
     - qiime2.plugins.types_genomics
   commands:
-    - pytest --cov q2_types_genomics --pyargs q2_types_genomics
+    - pytest --cov q2_types_genomics --cov-report xml:coverage.xml --pyargs q2_types_genomics
 
 about:
   home: https://github.com/bokulich-lab/q2-types-genomics

@@ -26,7 +26,7 @@ class Kraken2ReportFormat(model.TextFileFormat):
     }
 
     TAXA_COLUMNS = {
-        'rank': str, 'ncbi_tax_id': int, 'name': str
+        'rank': str, 'taxon_id': int, 'name': str
     }
 
     NORMAL_COLUMNS = {**MEASURE_COLUMNS, **TAXA_COLUMNS}
@@ -86,7 +86,7 @@ class Kraken2OutputFormat(model.TextFileFormat):
         super().__init__(*args, **kwargs)
 
     COLUMNS = (
-        'classification', 'sequence_id', 'feature_id', 'sequence_length',
+        'classification', 'sequence_id', 'taxon_id', 'sequence_length',
         'kmer_mappings'
     )
 
