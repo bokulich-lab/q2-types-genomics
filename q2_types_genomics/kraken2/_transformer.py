@@ -8,7 +8,7 @@
 
 import pandas as pd
 
-from . import Kraken2ReportFormat, Kraken2OutputFormat
+from . import Kraken2ReportFormat, Kraken2OutputFormat, Kraken2DBReportFormat
 from ..plugin_setup import plugin
 
 
@@ -23,4 +23,11 @@ def _1(ff: Kraken2ReportFormat) -> pd.DataFrame:
 def _2(ff: Kraken2OutputFormat) -> pd.DataFrame:
     df, cols = ff._to_dataframe()
     df.columns = cols
+    return df
+
+
+@plugin.register_transformer
+def _3(ff: Kraken2DBReportFormat) -> pd.DataFrame:
+    df, cols = ff._to_dataframe()
+    df.columns = cols.keys()
     return df

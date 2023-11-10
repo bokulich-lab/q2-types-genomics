@@ -81,6 +81,46 @@ class Kraken2ReportDirectoryFormat(model.DirectoryFormat):
         return f'{prefix}report.txt'
 
 
+class Kraken2DBReportFormat(Kraken2ReportFormat):
+    COLUMNS = {
+        'perc_minimizers_covered': float,
+        'n_minimizers_covered': int,
+        'n_minimizers_assigned': int,
+        'rank': str,
+        'taxon_id': int,
+        'name': str
+    }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def _to_dataframe(self):
+        self._remove_report_headers()
+        df = pd.read_csv(self.path, sep='\t', header=None)
+        if not len(df.columns) == len(self.COLUMNS):
+            raise ValueError(
+                f'Length mismatch: expected {len(self.COLUMNS)} columns, '
+                f'found {len(df.columns)}.'
+            )
+        return df, self.COLUMNS
+
+    def _remove_report_headers(self):
+        '''
+        kraken2-inspect adds several additional bits of information above
+        the standard tabular data which we discard here
+        '''
+        with open(self.path, 'r') as fh:
+            lines = fh.readlines()
+
+        with open(self.path, 'w') as fh:
+            fh.writelines([line for line in lines if line[0] != '#'])
+
+
+Kraken2DBReportDirectoryFormat = model.SingleFileDirectoryFormat(
+    'Kraken2DBReportDirectoryFormat', 'report.txt', Kraken2DBReportFormat
+)
+
+
 class Kraken2OutputFormat(model.TextFileFormat):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -152,5 +192,6 @@ class BrackenDBDirectoryFormat(model.DirectoryFormat):
 
 plugin.register_formats(
     Kraken2ReportDirectoryFormat, Kraken2OutputDirectoryFormat,
-    Kraken2DBDirectoryFormat, BrackenDBDirectoryFormat
+    Kraken2DBDirectoryFormat, Kraken2DBReportDirectoryFormat,
+    BrackenDBDirectoryFormat
 )

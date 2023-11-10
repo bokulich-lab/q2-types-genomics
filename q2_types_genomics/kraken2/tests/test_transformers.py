@@ -12,7 +12,9 @@ import pandas as pd
 from pandas._testing import assert_frame_equal
 from qiime2.plugin.testing import TestPluginBase
 
-from q2_types_genomics.kraken2 import Kraken2ReportFormat, Kraken2OutputFormat
+from q2_types_genomics.kraken2 import (
+    Kraken2ReportFormat, Kraken2OutputFormat, Kraken2DBReportFormat
+)
 
 
 class TestTransformers(TestPluginBase):
@@ -43,6 +45,17 @@ class TestTransformers(TestPluginBase):
         )
         exp = pd.read_csv(self.get_data_path(
             os.path.join('outputs-contigs', 'output-ok-table.csv'))
+        )
+        assert_frame_equal(exp, obs)
+
+    def test_kraken2_db_report_to_df(self):
+        obs = self.apply_transformation(
+            Kraken2DBReportFormat,
+            pd.DataFrame,
+            os.path.join('db-reports', 'report.txt')
+        )
+        exp = pd.read_csv(self.get_data_path(
+            os.path.join('db-reports', 'report-ok.csv'))
         )
         assert_frame_equal(exp, obs)
 
