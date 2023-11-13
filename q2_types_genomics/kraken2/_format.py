@@ -95,8 +95,10 @@ class Kraken2DBReportFormat(Kraken2ReportFormat):
         super().__init__(*args, **kwargs)
 
     def _to_dataframe(self):
-        self._remove_report_headers()
-        df = pd.read_csv(self.path, sep='\t', header=None)
+        num_headers = self._count_headers()
+        df = pd.read_csv(
+            self.path, sep='\t', header=None, skiprows=num_headers
+        )
         if not len(df.columns) == len(self.COLUMNS):
             raise ValueError(
                 f'Length mismatch: expected {len(self.COLUMNS)} columns, '
@@ -104,16 +106,16 @@ class Kraken2DBReportFormat(Kraken2ReportFormat):
             )
         return df, self.COLUMNS
 
-    def _remove_report_headers(self):
+    def _count_headers(self):
         '''
-        kraken2-inspect adds several additional bits of information above
-        the standard tabular data which we discard here
+        kraken2-inspect adds several headers beginning with '#' which we
+        wish to ignore
         '''
         with open(self.path, 'r') as fh:
             lines = fh.readlines()
 
-        with open(self.path, 'w') as fh:
-            fh.writelines([line for line in lines if line[0] != '#'])
+        headers = filter(lambda line: line[0] == '#', lines)
+        return len(list(headers))
 
 
 Kraken2DBReportDirectoryFormat = model.SingleFileDirectoryFormat(
