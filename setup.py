@@ -57,7 +57,7 @@ setup(
             'data/reports-single/*',
             'data/reports-reads/*/*',
             'data/reports-mags/*/*',
-            'data/db-reports/*'
+            'data/db-reports/**/*'
         ],
         'q2_types_genomics.kaiju.tests':
             ['data/*', 'data/db-valid/*'],
