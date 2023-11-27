@@ -81,6 +81,48 @@ class Kraken2ReportDirectoryFormat(model.DirectoryFormat):
         return f'{prefix}report.txt'
 
 
+class Kraken2DBReportFormat(Kraken2ReportFormat):
+    COLUMNS = {
+        'perc_minimizers_covered': float,
+        'n_minimizers_covered': int,
+        'n_minimizers_assigned': int,
+        'rank': str,
+        'taxon_id': int,
+        'name': str
+    }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def _to_dataframe(self):
+        num_headers = self._count_headers()
+        df = pd.read_csv(
+            self.path, sep='\t', header=None, skiprows=num_headers
+        )
+        if not len(df.columns) == len(self.COLUMNS):
+            raise ValueError(
+                f'Length mismatch: expected {len(self.COLUMNS)} columns, '
+                f'found {len(df.columns)}.'
+            )
+        return df, self.COLUMNS
+
+    def _count_headers(self):
+        '''
+        kraken2-inspect adds several headers beginning with '#' which we
+        wish to ignore
+        '''
+        with open(self.path, 'r') as fh:
+            lines = fh.readlines()
+
+        headers = filter(lambda line: line[0] == '#', lines)
+        return len(list(headers))
+
+
+Kraken2DBReportDirectoryFormat = model.SingleFileDirectoryFormat(
+    'Kraken2DBReportDirectoryFormat', 'report.txt', Kraken2DBReportFormat
+)
+
+
 class Kraken2OutputFormat(model.TextFileFormat):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -152,5 +194,6 @@ class BrackenDBDirectoryFormat(model.DirectoryFormat):
 
 plugin.register_formats(
     Kraken2ReportDirectoryFormat, Kraken2OutputDirectoryFormat,
-    Kraken2DBDirectoryFormat, BrackenDBDirectoryFormat
+    Kraken2DBDirectoryFormat, Kraken2DBReportDirectoryFormat,
+    BrackenDBDirectoryFormat
 )

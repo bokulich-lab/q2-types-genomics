@@ -5,6 +5,7 @@
 #
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
+import os
 import unittest
 
 from qiime2.core.exceptions import ValidationError
@@ -13,6 +14,7 @@ from qiime2.plugin.testing import TestPluginBase
 from q2_types_genomics.kraken2._format import (
     Kraken2ReportFormat, Kraken2ReportDirectoryFormat,
     Kraken2OutputFormat, Kraken2OutputDirectoryFormat,
+    Kraken2DBReportFormat, Kraken2DBReportDirectoryFormat,
     Kraken2DBDirectoryFormat, BrackenDBDirectoryFormat
 )
 
@@ -25,11 +27,29 @@ class TestFormats(TestPluginBase):
         fmt = Kraken2ReportFormat(report_fp, mode='r')
         fmt.validate()
 
+    def test_db_report_format_ok(self):
+        report_fp = self.get_data_path(
+            os.path.join('db-reports', 'report.txt')
+        )
+        fmt = Kraken2DBReportFormat(report_fp, mode='r')
+        fmt.validate()
+
     def test_report_format_missing_col(self):
         report_fp = self.get_data_path(
             'reports-single/report-missing-column.txt'
         )
         fmt = Kraken2ReportFormat(report_fp, mode='r')
+
+        with self.assertRaisesRegex(
+            ValidationError, 'found 5'
+        ):
+            fmt.validate()
+
+    def test_db_report_format_missing_col(self):
+        report_fp = self.get_data_path(
+            os.path.join('db-reports', 'report-missing-column.txt')
+        )
+        fmt = Kraken2DBReportFormat(report_fp, mode='r')
 
         with self.assertRaisesRegex(
             ValidationError, 'found 5'
@@ -49,15 +69,35 @@ class TestFormats(TestPluginBase):
         ):
             fmt.validate()
 
+    def test_db_report_format_wrong_types(self):
+        report_fp = self.get_data_path(
+            os.path.join('db-reports', 'report-wrong-types.txt')
+        )
+        fmt = Kraken2DBReportFormat(report_fp, mode='r')
+
+        with self.assertRaisesRegex(
+            ValidationError,
+                'Expected <class \'float\'> type in the '
+                '"perc_minimizers_covered" column, got int64'
+        ):
+            fmt.validate()
+
     def test_report_dirfmt_from_reads(self):
         dirpath = self.get_data_path('reports-reads')
-        format = Kraken2ReportDirectoryFormat(dirpath, mode='r')
-        format.validate()
+        fmt = Kraken2ReportDirectoryFormat(dirpath, mode='r')
+        fmt.validate()
 
     def test_report_dirfmt_from_mags(self):
         dirpath = self.get_data_path('reports-mags')
-        format = Kraken2ReportDirectoryFormat(dirpath, mode='r')
-        format.validate()
+        fmt = Kraken2ReportDirectoryFormat(dirpath, mode='r')
+        fmt.validate()
+
+    def test_db_report_dirfmt(self):
+        dirpath = self.get_data_path(
+            os.path.join('db-reports', 'report-dir')
+        )
+        fmt = Kraken2DBReportDirectoryFormat(dirpath, mode='r')
+        fmt.validate()
 
     def test_output_format_ok(self):
         output_fp = self.get_data_path('outputs-single/output-ok.txt')

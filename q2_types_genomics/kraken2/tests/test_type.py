@@ -14,10 +14,11 @@ from qiime2.plugin.testing import TestPluginBase
 
 from q2_types_genomics.kraken2._format import (
     Kraken2ReportDirectoryFormat, Kraken2OutputDirectoryFormat,
-    Kraken2DBDirectoryFormat, BrackenDBDirectoryFormat
+    Kraken2DBDirectoryFormat, Kraken2DBReportDirectoryFormat,
+    BrackenDBDirectoryFormat
 )
 from q2_types_genomics.kraken2._type import (
-    Kraken2Reports, Kraken2Outputs, Kraken2DB, BrackenDB
+    Kraken2Reports, Kraken2Outputs, Kraken2DB, Kraken2DBReport, BrackenDB
 )
 
 
@@ -61,6 +62,15 @@ class TestTypes(TestPluginBase):
         self.assertSemanticTypeRegisteredToFormat(
             Kraken2DB,
             Kraken2DBDirectoryFormat
+        )
+
+    def test_kraken2dbreport_semantic_type_registration(self):
+        self.assertRegisteredSemanticType(Kraken2DBReport)
+
+    def test_kraken2dbreport_semantic_type_to_format_registration(self):
+        self.assertSemanticTypeRegisteredToFormat(
+            Kraken2DBReport,
+            Kraken2DBReportDirectoryFormat
         )
 
     def test_brackendb_semantic_type_registration(self):
