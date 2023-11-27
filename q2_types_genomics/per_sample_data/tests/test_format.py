@@ -7,6 +7,7 @@
 # ----------------------------------------------------------------------------
 
 import os
+from pathlib import Path
 import shutil
 import string
 import unittest
@@ -113,6 +114,27 @@ class TestFormats(TestPluginBase):
         filepath = self.get_data_path('contigs/')
         shutil.copytree(filepath, self.temp_dir.name, dirs_exist_ok=True)
         ContigSequencesDirFmt(self.temp_dir.name, mode='r').validate()
+
+    def test_contig_seqs_dirfmt_sample_dict(self):
+        filepath = self.get_data_path('contigs/')
+        shutil.copytree(filepath, self.temp_dir.name, dirs_exist_ok=True)
+        contigs = ContigSequencesDirFmt(self.temp_dir.name, mode='r')
+
+        obs = contigs.sample_dict()
+        exp = {
+            'sample1': str(Path(contigs.path / 'sample1_contigs.fa')),
+            'sample2': str(Path(contigs.path / 'sample2_contigs.fa')),
+            'sample3': str(Path(contigs.path / 'sample3_contigs.fa'))
+        }
+        self.assertEqual(obs, exp)
+
+        obs = contigs.sample_dict(relative=True)
+        exp = {
+            'sample1': 'sample1_contigs.fa',
+            'sample2': 'sample2_contigs.fa',
+            'sample3': 'sample3_contigs.fa'
+        }
+        self.assertEqual(obs, exp)
 
     @patch('subprocess.run', return_value=Mock(returncode=0))
     def test_bam_dirmt(self, p):
