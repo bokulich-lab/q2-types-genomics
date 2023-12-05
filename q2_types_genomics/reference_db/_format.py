@@ -11,7 +11,7 @@ from qiime2.plugin import model
 from q2_types_genomics.plugin_setup import plugin
 from q2_types_genomics.reference_db._type import (
     ReferenceDB, Eggnog, Diamond, EggnogSequenceTaxa
-)                                              
+)
 from q2_types.feature_data import ProteinFASTAFormat
 
 
