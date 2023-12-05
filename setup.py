@@ -62,7 +62,7 @@ setup(
         'q2_types_genomics.kaiju.tests':
             ['data/*', 'data/db-valid/*'],
         'q2_types_genomics.reference_db.tests':
-            ['data/*', 'data/*/*', 'data/db-valid/*'],
+            ['data/*', 'data/*/*', 'data/*/*/*'],
     },
     zip_safe=False,
 )
