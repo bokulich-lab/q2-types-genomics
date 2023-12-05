@@ -9,7 +9,10 @@
 
 from qiime2.plugin import model
 from q2_types_genomics.plugin_setup import plugin
-from q2_types_genomics.reference_db._type import ReferenceDB, Eggnog, Diamond
+from q2_types_genomics.reference_db._type import (
+    ReferenceDB, Eggnog, Diamond, EggnogSequenceTaxa
+)                                              
+from q2_types.feature_data import ProteinFASTAFormat
 
 
 class EggnogRefTextFileFmt(model.TextFileFormat):
@@ -54,3 +57,13 @@ DiamondDatabaseDirFmt = model.SingleFileDirectoryFormat(
 plugin.register_formats(DiamondDatabaseFileFmt, DiamondDatabaseDirFmt)
 plugin.register_semantic_type_to_format(ReferenceDB[Diamond],
                                         DiamondDatabaseDirFmt)
+
+
+class EggnogSequenceTaxaDirFmt(model.DirectoryFormat):
+    taxid_info = model.File("e5.taxid_info.tsv", format=EggnogRefTextFileFmt)
+    faa = model.File("e5.proteomes.faa", format=ProteinFASTAFormat)
+
+
+plugin.register_formats(EggnogSequenceTaxaDirFmt)
+plugin.register_semantic_type_to_format(ReferenceDB[EggnogSequenceTaxa],
+                                        EggnogSequenceTaxaDirFmt)

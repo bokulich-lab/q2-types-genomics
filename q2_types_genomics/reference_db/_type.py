@@ -14,4 +14,9 @@ ReferenceDB = SemanticType('ReferenceDB', field_names='type')
 Diamond = SemanticType('Diamond', variant_of=ReferenceDB.field['type'])
 Eggnog = SemanticType('Eggnog', variant_of=ReferenceDB.field['type'])
 
-plugin.register_semantic_types(ReferenceDB, Diamond, Eggnog)
+EggnogSequenceTaxa = SemanticType(
+    'EggnogSequenceTaxa', variant_of=ReferenceDB.field['type']
+)
+plugin.register_semantic_types(
+    ReferenceDB, Diamond, Eggnog, EggnogSequenceTaxa
+)
