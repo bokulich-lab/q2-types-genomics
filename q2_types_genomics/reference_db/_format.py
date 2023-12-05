@@ -77,7 +77,7 @@ class NCBITaxonomyDirFmt(model.DirectoryFormat):
     node = model.File('nodes.dmp', format=NCBITaxonomyTextFileFmt)
     names = model.File('names.dmp', format=NCBITaxonomyTextFileFmt)
     tax_map = model.File(
-        'prot.accession2taxid.FULL.gz',
+        'prot.accession2taxid.gz',
         format=NCBITaxonomyBinaryFileFmt
         )
 
