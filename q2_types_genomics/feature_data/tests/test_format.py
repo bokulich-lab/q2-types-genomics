@@ -6,6 +6,7 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
+from pathlib import Path
 import shutil
 import unittest
 
@@ -36,6 +37,10 @@ class TestFormats(TestPluginBase):
         dirpath = self.get_data_path('mags-fasta')
         shutil.copytree(dirpath, self.temp_dir.name, dirs_exist_ok=True)
         mags = MAGSequencesDirFmt(self.temp_dir.name, mode='r')
+
+        # non-mags should not be collected
+        with open(Path(self.temp_dir.name) / 'not-a-mag.fasta', 'w') as fh:
+            fh.write('not a mag')
 
         obs = mags.feature_dict()
         exp = {
