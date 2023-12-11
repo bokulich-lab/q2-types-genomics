@@ -121,24 +121,28 @@ class NCBITaxonomyBinaryFileFmt(model.BinaryFileFormat):
         (
             "accession",
             0,
-            r'''
-            [OPQ][0-9][A-Z0-9]{3}[0-9]|
-            [A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}
-            '''
+            re.compile(
+                r'^[OPQ][0-9][A-Z0-9]{3}[0-9]$|'  # UniProt
+                r'^[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$|'  # UniProt
+                r'^[A-Z]{3}\d{3,7}$|'  # EMBL-EBI
+                r'^[A-Z]+\_\d+$'  # NCBI
+            )
         ),
         (
             "accession.version",
             1,
-            r'''
-            [OPQ][0-9][A-Z0-9]{3}[0-9].\d+|
-            [A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}.\d+
-            '''
+            re.compile(
+                r'^[OPQ][0-9][A-Z0-9]{3}[0-9]\.\d+$|'
+                r'^[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}\.\d+$|'
+                r'^[A-Z]{3}\d{3,7}\.\d+$|'
+                r'^[A-Z]+[_]?\d+\.\d+$'
+            )
         ),
         ("taxid", 2, r'^\d{1,10}$'),
         ("gi", 3, r'^\d+$')
     ]
 
-    def _validate_1st_line(line: list):
+    def _validate_1st_line(self, line: list):
         if not (
             line[0] == "accession" and
             line[1] == "accession.version" and
@@ -160,23 +164,26 @@ class NCBITaxonomyBinaryFileFmt(model.BinaryFileFormat):
             if not re.match(pattern, line[filed_no]):
                 raise ValidationError(
                     f"Non-allowed value found in line {line_no}, {filed} filed"
+                    ".\nPrinting entry: \n"
+                    f"{line[filed_no]}"
                 )
 
     def _validate_(self, level):
-        with gzip.open(str(self), 'rb') as file:
+        with gzip.open(str(self), 'rt', encoding='utf-8') as file:
             # Flag first line
             is_first_line = True
             line_no = 1
 
             for line in file:
                 # Get line and split it into fields
-                line = line.rstrip("\n").split("\t|\t")
+                line = line.rstrip("\n").split(sep="\t")
 
                 # Check that it is split in 4
                 if len(line) != 4:
                     raise ValidationError(
                         "NCBI prot.accession2taxid file must have 4 columns, "
-                        f"found {len(line)} columns in line {line_no}."
+                        f"found {len(line)} columns in line {line_no}. \n"
+                        f"Printing line: \n{line}"
                     )
 
                 # Parse first line
