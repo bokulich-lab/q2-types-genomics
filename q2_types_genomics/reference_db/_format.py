@@ -7,6 +7,8 @@
 # ----------------------------------------------------------------------------
 
 
+import gzip
+import re
 from qiime2.plugin import model
 from qiime2.core.exceptions import ValidationError
 from q2_types_genomics.plugin_setup import plugin
@@ -114,9 +116,79 @@ class NCBITaxonomyNamesFormat(model.TextFileFormat):
         self._validate_n_records(n={"min": 10, "max": None}[level])
 
 
-class NCBITaxonomyBinaryFileFmt(model.TextFileFormat):
+class NCBITaxonomyBinaryFileFmt(model.BinaryFileFormat):
+    _filed_fieldNo_pattern = [
+        (
+            "accession",
+            0,
+            r'''
+            [OPQ][0-9][A-Z0-9]{3}[0-9]|
+            [A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}
+            '''
+        ),
+        (
+            "accession.version",
+            1,
+            r'''
+            [OPQ][0-9][A-Z0-9]{3}[0-9].\d+|
+            [A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}.\d+
+            '''
+        ),
+        ("taxid", 2, r'^\d{1,10}$'),
+        ("gi", 3, r'^\d+$')
+    ]
+
+    def _validate_1st_line(line: list):
+        if not (
+            line[0] == "accession" and
+            line[1] == "accession.version" and
+            line[2] == "taxid" and
+            line[3] == "gi"
+        ):
+            raise ValidationError(
+                "NCBI prot.accession2taxid file must have "
+                "columns: 'accession', 'accession.version' "
+                f", 'taxid' and 'gi'. Got {line} instead."
+            )
+
+    def _validate_Nth_line(self, line: list, line_no: int):
+        # For every filed validate one record
+        for filed, filed_no, pattern in (
+            NCBITaxonomyBinaryFileFmt._filed_fieldNo_pattern
+        ):
+            # Raise exception if the entry does not match pattern
+            if not re.match(pattern, line[filed_no]):
+                raise ValidationError(
+                    f"Non-allowed value found in line {line_no}, {filed} filed"
+                )
+
     def _validate_(self, level):
-        pass
+        with gzip.open(str(self), 'rb') as file:
+            # Flag first line
+            is_first_line = True
+            line_no = 1
+
+            for line in file:
+                # Get line and split it into fields
+                line = line.rstrip("\n").split("\t|\t")
+
+                # Check that it is split in 4
+                if len(line) != 4:
+                    raise ValidationError(
+                        "NCBI prot.accession2taxid file must have 4 columns, "
+                        f"found {len(line)} columns in line {line_no}."
+                    )
+
+                # Parse first line
+                if is_first_line:
+                    self._validate_1st_line(line)
+                    is_first_line = False
+                    line_no += 1
+
+                # Parse Nth line
+                else:
+                    self._validate_Nth_line(line, line_no)
+                    line_no += 1
 
 
 plugin.register_formats(
