@@ -11,7 +11,7 @@ from qiime2.plugin import model
 from qiime2.core.exceptions import ValidationError
 from q2_types_genomics.plugin_setup import plugin
 from q2_types_genomics.reference_db._type import (
-    ReferenceDB, Eggnog, Diamond, TaxonomyNCBI
+    ReferenceDB, Eggnog, Diamond, NCBITaxonomy
 )
 
 
@@ -136,5 +136,5 @@ class NCBITaxonomyDirFmt(model.DirectoryFormat):
 plugin.register_formats(NCBITaxonomyDirFmt)
 
 plugin.register_semantic_type_to_format(
-        ReferenceDB[TaxonomyNCBI],
+        ReferenceDB[NCBITaxonomy],
         NCBITaxonomyDirFmt)

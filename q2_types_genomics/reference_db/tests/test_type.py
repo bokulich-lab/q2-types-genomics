@@ -12,7 +12,7 @@ from q2_types_genomics.reference_db._format import (
         DiamondDatabaseDirFmt, EggnogRefDirFmt, NCBITaxonomyDirFmt
         )
 from q2_types_genomics.reference_db._type import (
-    ReferenceDB, Diamond, Eggnog, TaxonomyNCBI
+    ReferenceDB, Diamond, Eggnog, NCBITaxonomy
 )
 
 
@@ -39,9 +39,9 @@ class TestReferenceType(TestPluginBase):
                 EggnogRefDirFmt)
 
     def test_ncbi_registration(self):
-        self.assertRegisteredSemanticType(TaxonomyNCBI)
+        self.assertRegisteredSemanticType(NCBITaxonomy)
 
     def test_ncbi_semantic_type_registered_to_eggnog_dir_fmt(self):
         self.assertSemanticTypeRegisteredToFormat(
-                ReferenceDB[TaxonomyNCBI],
+                ReferenceDB[NCBITaxonomy],
                 NCBITaxonomyDirFmt)
