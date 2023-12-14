@@ -11,7 +11,7 @@ from qiime2.plugin.testing import TestPluginBase
 from q2_types_genomics.reference_db._format import (
         DiamondDatabaseFileFmt, DiamondDatabaseDirFmt, EggnogRefBinFileFmt,
         EggnogRefDirFmt, NCBITaxonomyNamesFormat, NCBITaxonomyNodesFormat,
-        NCBITaxonomyDirFmt
+        NCBITaxonomyDirFmt, NCBITaxonomyBinaryFileFmt
         )
 from qiime2.plugin import ValidationError
 
@@ -144,3 +144,44 @@ class TestNCBIFormats(TestPluginBase):
         dirpath = self.get_data_path("ncbi/db-valid")
         format = NCBITaxonomyDirFmt(dirpath, mode="r")
         format.validate()
+
+    def test_binary_file_fmt_positive(self):
+        dirpath = self.get_data_path("ncbi/db-valid/prot.accession2taxid.gz")
+        format = NCBITaxonomyBinaryFileFmt(dirpath, mode="r")
+        format.validate()
+
+    def test_binary_file_fmt_wrong_col(self):
+        dirpath = self.get_data_path("ncbi/wrong_col.gz")
+        format = NCBITaxonomyBinaryFileFmt(dirpath, mode="r")
+        with self.assertRaises(ValidationError):
+            format.validate()
+
+    def test_binary_file_fmt_extra_col(self):
+        dirpath = self.get_data_path("ncbi/too_many_cols.gz")
+        format = NCBITaxonomyBinaryFileFmt(dirpath, mode="r")
+        with self.assertRaises(ValidationError):
+            format.validate()
+
+    def test_binary_file_fmt_wrong_accession(self):
+        dirpath = self.get_data_path("ncbi/wrong_accession.gz")
+        format = NCBITaxonomyBinaryFileFmt(dirpath, mode="r")
+        with self.assertRaises(ValidationError):
+            format.validate()
+
+    def test_binary_file_fmt_wrong_accession_version(self):
+        dirpath = self.get_data_path("ncbi/wrong_accession_version.gz")
+        format = NCBITaxonomyBinaryFileFmt(dirpath, mode="r")
+        with self.assertRaises(ValidationError):
+            format.validate()
+
+    def test_binary_file_fmt_wrong_taxid(self):
+        dirpath = self.get_data_path("ncbi/wrong_taxid.gz")
+        format = NCBITaxonomyBinaryFileFmt(dirpath, mode="r")
+        with self.assertRaises(ValidationError):
+            format.validate()
+
+    def test_binary_file_fmt_wrong_gi(self):
+        dirpath = self.get_data_path("ncbi/wrong_gi.gz")
+        format = NCBITaxonomyBinaryFileFmt(dirpath, mode="r")
+        with self.assertRaises(ValidationError):
+            format.validate()
