@@ -9,6 +9,7 @@
 
 import gzip
 import re
+import time
 from qiime2.plugin import model
 from qiime2.core.exceptions import ValidationError
 from q2_types_genomics.plugin_setup import plugin
@@ -117,30 +118,26 @@ class NCBITaxonomyNamesFormat(model.TextFileFormat):
 
 
 class NCBITaxonomyBinaryFileFmt(model.BinaryFileFormat):
-    _filed_fieldNo_pattern = [
-        (
-            "accession",
-            0,
-            re.compile(
-                r'^[OPQ][0-9][A-Z0-9]{3}[0-9]$|'  # UniProt
-                r'^[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$|'  # UniProt
-                r'^[A-Z]{3}\d{3,7}$|'  # EMBL-EBI
-                r'^[A-Z]+\_\d+$'  # NCBI
-            )
-        ),
-        (
-            "accession.version",
-            1,
-            re.compile(
-                r'^[OPQ][0-9][A-Z0-9]{3}[0-9]\.\d+$|'
-                r'^[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}\.\d+$|'
-                r'^[A-Z]{3}\d{3,7}\.\d+$|'
-                r'^[A-Z]+[_]?\d+\.\d+$'
-            )
-        ),
-        ("taxid", 2, r'^\d{1,10}$'),
-        ("gi", 3, r'^\d+$')
-    ]
+    _accession_regex = re.compile(
+        r'[OPQ][0-9][A-Z0-9]{3}[0-9]|'  # UniProt
+        r'[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}|'  # UniProt
+        r'[A-Z]{3}\d{3,7}|'  # EMBL-EBI
+        r'[A-Z]+[-._]?\d+'  # NCBI
+    )
+    _accession_version_regex = re.compile(
+        r'[OPQ][0-9][A-Z0-9]{3}[0-9]\.\d+|'
+        r'[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}\.\d+|'
+        r'[A-Z]{3}\d{3,7}\.\d+|'
+        r'[A-Z]+[-._]?\d+\.\d+'
+    )
+    _taxid_regex = r'\d{1,10}'
+    _gi_regex = r'\d+'
+    _line_regex = re.compile(
+        rf"^({_accession_regex.pattern})\t"
+        rf"({_accession_version_regex.pattern})"
+        rf"\t({_taxid_regex})"
+        rf"\t({_gi_regex})\n$"
+    )
 
     def _validate_1st_line(self, line: list):
         if not (
@@ -157,16 +154,16 @@ class NCBITaxonomyBinaryFileFmt(model.BinaryFileFormat):
 
     def _validate_Nth_line(self, line: list, line_no: int):
         # For every filed validate one record
-        for filed, filed_no, pattern in (
-            NCBITaxonomyBinaryFileFmt._filed_fieldNo_pattern
-        ):
-            # Raise exception if the entry does not match pattern
-            if not re.match(pattern, line[filed_no]):
-                raise ValidationError(
-                    f"Non-allowed value found in line {line_no}, {filed} filed"
-                    ".\nPrinting entry: \n"
-                    f"{line[filed_no]}"
-                )
+        _line_regex = NCBITaxonomyBinaryFileFmt._line_regex
+        splitted_line = line.rstrip("\n").split(sep="\t")
+
+        # Raise exception if the entry does not match pattern
+        if not re.match(_line_regex, line):
+            raise ValidationError(
+                f"Non-allowed value found in line {line_no}.\n"
+                "Printing line:\n"
+                f"{splitted_line}"
+            )
 
     def _validate_(self, level):
         with gzip.open(str(self), 'rt', encoding='utf-8') as file:
@@ -174,21 +171,31 @@ class NCBITaxonomyBinaryFileFmt(model.BinaryFileFormat):
             is_first_line = True
             line_no = 1
 
+            # Set the maximum time for processing (in seconds)
+            max_processing_time = 60
+
+            # Get the current time
+            start_time = time.time()
+
             for line in file:
+                # Check time
+                if time.time() - start_time >= max_processing_time:
+                    break
+
                 # Get line and split it into fields
-                line = line.rstrip("\n").split(sep="\t")
+                splitted_line = line.rstrip("\n").split(sep="\t")
 
                 # Check that it is split in 4
-                if len(line) != 4:
+                if len(splitted_line) != 4:
                     raise ValidationError(
                         "NCBI prot.accession2taxid file must have 4 columns, "
-                        f"found {len(line)} columns in line {line_no}. \n"
-                        f"Printing line: \n{line}"
+                        f"found {len(splitted_line)} columns in line "
+                        f"{line_no}. \nPrinting line: \n{splitted_line}"
                     )
 
                 # Parse first line
                 if is_first_line:
-                    self._validate_1st_line(line)
+                    self._validate_1st_line(splitted_line)
                     is_first_line = False
                     line_no += 1
 
