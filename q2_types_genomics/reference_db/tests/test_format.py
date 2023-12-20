@@ -10,7 +10,8 @@ from qiime2.plugin.testing import TestPluginBase
 
 from q2_types_genomics.reference_db._format import (
         DiamondDatabaseFileFmt, DiamondDatabaseDirFmt,
-        EggnogRefBinFileFmt, EggnogRefDirFmt, EggnogSequenceTaxaDirFmt
+        EggnogRefBinFileFmt, EggnogRefDirFmt, EggnogSequenceTaxaDirFmt,
+        EggnogRefTextFileFmt
         )
 from qiime2.plugin import ValidationError
 
@@ -94,3 +95,38 @@ class TestRefFormats(TestPluginBase):
         fmt_obj = EggnogSequenceTaxaDirFmt(dirpath, mode='r')
 
         fmt_obj.validate()
+
+    def test_EggnogRefTextFileFmt_valid(self):
+        filepath = self.get_data_path('eggnog_seq_tax/e5.taxid_info.tsv')
+        fmt_obj = EggnogRefTextFileFmt(filepath, mode='r')
+
+        fmt_obj.validate()
+
+    def test_EggnogRefTextFileFmt_too_many_cols(self):
+        filepath = self.get_data_path('eggnog_seq_tax_bad/too_many_cols.tsv')
+        fmt_obj = EggnogRefTextFileFmt(filepath, mode='r')
+
+        with self.assertRaises(ValidationError):
+            fmt_obj.validate()
+
+    def test_EggnogRefTextFileFmt_invalid_rank(self):
+        filepath = self.get_data_path('eggnog_seq_tax_bad/invalid_rank.tsv')
+        fmt_obj = EggnogRefTextFileFmt(filepath, mode='r')
+
+        with self.assertRaises(ValidationError):
+            fmt_obj.validate()
+
+    def test_EggnogRefTextFileFmt_invalid_taxid(self):
+        filepath = self.get_data_path('eggnog_seq_tax_bad/invalid_taxid.tsv')
+        fmt_obj = EggnogRefTextFileFmt(filepath, mode='r')
+
+        with self.assertRaises(ValidationError):
+            fmt_obj.validate()
+
+    def test_EggnogRefTextFileFmt_invalid_taxid_lineage(self):
+        filepath = self.get_data_path(
+            'eggnog_seq_tax_bad/invalid_taxid_lineage.tsv')
+        fmt_obj = EggnogRefTextFileFmt(filepath, mode='r')
+
+        with self.assertRaises(ValidationError):
+            fmt_obj.validate()
