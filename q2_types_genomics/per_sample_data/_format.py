@@ -120,8 +120,9 @@ class MultiBowtie2IndexDirFmt(MultiDirValidationMixin, Bowtie2IndexDirFmt):
 
 
 class ContigSequencesDirFmt(model.DirectoryFormat):
-    sequences = model.FileCollection(r'.+_contigs\.(fa|fasta)$',
-                                     format=DNAFASTAFormat)
+    pathspec = r'[^\.].+_contigs.(fasta|fa)$'
+
+    sequences = model.FileCollection(pathspec, format=DNAFASTAFormat)
 
     @sequences.set_path_maker
     def sequences_path_maker(self, sample_id):
@@ -129,8 +130,8 @@ class ContigSequencesDirFmt(model.DirectoryFormat):
 
     def sample_dict(self, relative=False):
         '''
-        Returns a mapping of sample id to file path for each set of per-sample
-        contigs in the directory format.
+        Returns a mapping of sample id to filepath for each set of per-sample
+        contigs.
 
         Parameters
         ---------
@@ -144,22 +145,22 @@ class ContigSequencesDirFmt(model.DirectoryFormat):
             Mapping of sample id -> filepath as described above. Sorted
             alphabetically by key.
         '''
-        contigs_pattern = re.compile(r'[^\.].+_contigs.(fasta|fa)$')
-        samples = {}
-        for sample_path in self.path.iterdir():
-            if not contigs_pattern.match(sample_path.name):
+        contigs_pattern = re.compile(self.pathspec)
+        ids = {}
+        for path in self.path.iterdir():
+            if not contigs_pattern.match(path.name):
                 continue
 
-            sample_id = sample_path.name.rsplit('_contigs', 1)[0]
-            absolute_path = sample_path.absolute()
+            id = path.name.rsplit('_contigs', 1)[0]
+            absolute_path = path.absolute()
             if relative:
-                samples[sample_id] = str(
+                ids[id] = str(
                     absolute_path.relative_to(self.path.absolute())
                 )
             else:
-                samples[sample_id] = str(absolute_path)
+                ids[id] = str(absolute_path)
 
-        return dict(sorted(samples.items()))
+        return dict(sorted(ids.items()))
 
 
 # borrowed from q2-phylogenomics
