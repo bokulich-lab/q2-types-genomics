@@ -25,9 +25,9 @@ class EggnogRefTextFileFmt(model.TextFileFormat):
     ]
     _line_pattern = re.compile(
         r'^\d+\t'  # Taxid
-        r'([\w\/\- ]*\t)'  # Sci.Name
+        r'([^\t]*\t)'  # Sci.Name
         r'(no rank|species|subspecies)\t'  # Rank
-        r'([\w\/\- ,]*\t)'  # Named Lineage
+        r'([^\t]*\t)'  # Named Lineage
         r'\d+(,\d+)*$'  # 'Taxid Lineage'
     )
 
@@ -59,10 +59,9 @@ class EggnogRefTextFileFmt(model.TextFileFormat):
 
     def _validate_Nth_line(self, line, line_no):
         if not self._line_pattern.match(line):
-            fields = line.strip("\n").split("\t")
             raise ValidationError(
                 f"Invalid line at line {line_no}:\n"
-                f"{fields}"
+                f"{line}"
             )
 
     def _validate_(self, level):
