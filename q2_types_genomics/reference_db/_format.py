@@ -157,7 +157,7 @@ class NCBITaxonomyBinaryFileFmt(model.BinaryFileFormat):
         splitted_line = line.rstrip("\n").split(sep="\t")
 
         # Raise exception if the entry does not match pattern
-        if not re.match(_line_regex, line):
+        if not re.match(self._line_regex, line):
             raise ValidationError(
                 f"Non-allowed value found in line {line_no}.\n"
                 "Printing line:\n"
