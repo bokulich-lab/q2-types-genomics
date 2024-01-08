@@ -9,7 +9,6 @@
 
 import gzip
 import re
-import time
 from qiime2.plugin import model
 from qiime2.core.exceptions import ValidationError
 from q2_types_genomics.plugin_setup import plugin
@@ -170,15 +169,12 @@ class NCBITaxonomyBinaryFileFmt(model.BinaryFileFormat):
             is_first_line = True
             line_no = 1
 
-            # Set the maximum time for processing (in seconds)
-            max_processing_time = 60
-
-            # Get the current time
-            start_time = time.time()
+            # Set the number of rows to be parsed
+            max_lines = {"min": 100, "max": 10000000}[level]
 
             for line in file:
                 # Check time
-                if time.time() - start_time >= max_processing_time:
+                if line_no >= max_lines:
                     break
 
                 # Get line and split it into fields
