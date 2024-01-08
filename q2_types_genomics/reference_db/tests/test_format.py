@@ -102,25 +102,44 @@ class TestRefFormats(TestPluginBase):
 
         fmt_obj.validate()
 
+    def test_EggnogRefTextFileFmt_invalid_col(self):
+        filepath = self.get_data_path('eggnog_seq_tax_bad/invalid_col.tsv')
+        fmt_obj = EggnogRefTextFileFmt(filepath, mode='r')
+
+        with self.assertRaisesRegex(
+            ValidationError,
+            r"Wrong columns"
+        ):
+            fmt_obj.validate()
+
     def test_EggnogRefTextFileFmt_too_many_cols(self):
         filepath = self.get_data_path('eggnog_seq_tax_bad/too_many_cols.tsv')
         fmt_obj = EggnogRefTextFileFmt(filepath, mode='r')
 
-        with self.assertRaises(ValidationError):
+        with self.assertRaisesRegex(
+            ValidationError,
+            r"Too many columns."
+        ):
             fmt_obj.validate()
 
     def test_EggnogRefTextFileFmt_invalid_rank(self):
         filepath = self.get_data_path('eggnog_seq_tax_bad/invalid_rank.tsv')
         fmt_obj = EggnogRefTextFileFmt(filepath, mode='r')
 
-        with self.assertRaises(ValidationError):
+        with self.assertRaisesRegex(
+            ValidationError,
+            r"Invalid line at line 3:"
+        ):
             fmt_obj.validate()
 
     def test_EggnogRefTextFileFmt_invalid_taxid(self):
         filepath = self.get_data_path('eggnog_seq_tax_bad/invalid_taxid.tsv')
         fmt_obj = EggnogRefTextFileFmt(filepath, mode='r')
 
-        with self.assertRaises(ValidationError):
+        with self.assertRaisesRegex(
+            ValidationError,
+            r"Invalid line at line 4"
+        ):
             fmt_obj.validate()
 
     def test_EggnogRefTextFileFmt_invalid_taxid_lineage(self):
@@ -128,5 +147,8 @@ class TestRefFormats(TestPluginBase):
             'eggnog_seq_tax_bad/invalid_taxid_lineage.tsv')
         fmt_obj = EggnogRefTextFileFmt(filepath, mode='r')
 
-        with self.assertRaises(ValidationError):
+        with self.assertRaisesRegex(
+            ValidationError,
+            r"Invalid line at line 9"
+        ):
             fmt_obj.validate()
