@@ -5,9 +5,7 @@
 #
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
-
 from qiime2.plugin.testing import TestPluginBase
-
 from q2_types_genomics.reference_db._format import (
         DiamondDatabaseFileFmt, DiamondDatabaseDirFmt, EggnogRefBinFileFmt,
         EggnogRefDirFmt, NCBITaxonomyNamesFormat, NCBITaxonomyNodesFormat,
@@ -153,35 +151,54 @@ class TestNCBIFormats(TestPluginBase):
     def test_binary_file_fmt_wrong_col(self):
         dirpath = self.get_data_path("ncbi/wrong_col.gz")
         format = NCBITaxonomyBinaryFileFmt(dirpath, mode="r")
-        with self.assertRaises(ValidationError):
+        with self.assertRaisesRegex(
+                ValidationError,
+                r"['accession', 'accession_version', 'taxid', 'gi']"
+        ):
             format.validate()
 
     def test_binary_file_fmt_extra_col(self):
         dirpath = self.get_data_path("ncbi/too_many_cols.gz")
         format = NCBITaxonomyBinaryFileFmt(dirpath, mode="r")
-        with self.assertRaises(ValidationError):
+        with self.assertRaisesRegex(
+                ValidationError,
+                r"['accession', 'accession.version', "
+                r"'taxid', 'gi', 'something_else']"
+        ):
             format.validate()
 
     def test_binary_file_fmt_wrong_accession(self):
         dirpath = self.get_data_path("ncbi/wrong_accession.gz")
         format = NCBITaxonomyBinaryFileFmt(dirpath, mode="r")
-        with self.assertRaises(ValidationError):
+        with self.assertRaisesRegex(
+                ValidationError,
+                r"['P1ABC1234', 'A0A009IHW8.1', '1310613', '1835922267']"
+        ):
             format.validate()
 
     def test_binary_file_fmt_wrong_accession_version(self):
         dirpath = self.get_data_path("ncbi/wrong_accession_version.gz")
         format = NCBITaxonomyBinaryFileFmt(dirpath, mode="r")
-        with self.assertRaises(ValidationError):
+        with self.assertRaisesRegex(
+                ValidationError,
+                r"['A0A009IHW8', 'A0A009IHW8.1a', '1310613', '1835922267']"
+        ):
             format.validate()
 
     def test_binary_file_fmt_wrong_taxid(self):
         dirpath = self.get_data_path("ncbi/wrong_taxid.gz")
         format = NCBITaxonomyBinaryFileFmt(dirpath, mode="r")
-        with self.assertRaises(ValidationError):
+        with self.assertRaisesRegex(
+                ValidationError,
+                r"['A0A009IHW8', 'A0A009IHW8.1', '1310613a', '1835922267']"
+        ):
             format.validate()
 
     def test_binary_file_fmt_wrong_gi(self):
         dirpath = self.get_data_path("ncbi/wrong_gi.gz")
         format = NCBITaxonomyBinaryFileFmt(dirpath, mode="r")
-        with self.assertRaises(ValidationError):
+        with self.assertRaisesRegex(
+                ValidationError,
+                r"['A0A009IHW8', 'A0A009IHW8.1', '1310613', '1835922267s']"
+        ):
             format.validate()
