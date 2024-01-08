@@ -154,7 +154,6 @@ class NCBITaxonomyBinaryFileFmt(model.BinaryFileFormat):
 
     def _validate_Nth_line(self, line: list, line_no: int):
         # For every filed validate one record
-        _line_regex = NCBITaxonomyBinaryFileFmt._line_regex
         splitted_line = line.rstrip("\n").split(sep="\t")
 
         # Raise exception if the entry does not match pattern
