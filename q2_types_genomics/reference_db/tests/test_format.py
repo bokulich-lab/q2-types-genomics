@@ -10,7 +10,7 @@ from qiime2.plugin.testing import TestPluginBase
 
 from q2_types_genomics.reference_db._format import (
         DiamondDatabaseFileFmt, DiamondDatabaseDirFmt,
-        EggnogRefBinFileFmt, EggnogRefDirFmt, EggnogSequenceTaxaDirFmt,
+        EggnogRefBinFileFmt, EggnogRefDirFmt, EggnogProteinSequencesDirFmt,
         EggnogRefTextFileFmt
         )
 from qiime2.plugin import ValidationError
@@ -92,7 +92,7 @@ class TestRefFormats(TestPluginBase):
 
     def test_eggnog_sequence_taxa_dir_fmt(self):
         dirpath = self.get_data_path('eggnog_seq_tax')
-        fmt_obj = EggnogSequenceTaxaDirFmt(dirpath, mode='r')
+        fmt_obj = EggnogProteinSequencesDirFmt(dirpath, mode='r')
 
         fmt_obj.validate()
 

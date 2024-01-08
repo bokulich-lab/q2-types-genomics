@@ -120,13 +120,13 @@ plugin.register_semantic_type_to_format(ReferenceDB[Diamond],
                                         DiamondDatabaseDirFmt)
 
 
-class EggnogSequenceTaxaDirFmt(model.DirectoryFormat):
+class EggnogProteinSequencesDirFmt(model.DirectoryFormat):
     taxid_info = model.File("e5.taxid_info.tsv", format=EggnogRefTextFileFmt)
     proteins = model.File(
         "e5.proteomes.faa", format=MixedCaseProteinFASTAFormat
     )
 
 
-plugin.register_formats(EggnogSequenceTaxaDirFmt)
+plugin.register_formats(EggnogProteinSequencesDirFmt)
 plugin.register_semantic_type_to_format(ReferenceDB[EggnogSequenceTaxa],
-                                        EggnogSequenceTaxaDirFmt)
+                                        EggnogProteinSequencesDirFmt)

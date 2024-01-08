@@ -17,11 +17,11 @@ from q2_types_genomics.reference_db._format import (
     EggnogRefBinFileFmt,
     DiamondDatabaseFileFmt,
     DiamondDatabaseDirFmt,
-    EggnogSequenceTaxaDirFmt
+    EggnogProteinSequencesDirFmt
     )
 
 __all__ = [
     'ReferenceDB', 'Diamond', 'Eggnog', 'DiamondDatabaseFileFmt',
     'DiamondDatabaseDirFmt', 'EggnogRefDirFmt', 'EggnogRefTextFileFmt',
-    'EggnogRefBinFileFmt', 'EggnogSequenceTaxaDirFmt', 'EggnogSequenceTaxa'
+    'EggnogRefBinFileFmt', 'EggnogProteinSequencesDirFmt', 'EggnogSequenceTaxa'
 ]
