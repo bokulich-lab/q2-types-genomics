@@ -145,10 +145,6 @@ class NCBITaxonomyBinaryFileFmt(model.BinaryFileFormat):
             line[2] == "taxid" and
             line[3] == "gi"
         ):
-            print(line[0])
-            print(line[1])
-            print(line[2])
-            print(line[3])
             raise ValidationError(
                 "NCBI prot.accession2taxid file must have "
                 "columns: 'accession', 'accession.version'"
@@ -182,9 +178,7 @@ class NCBITaxonomyBinaryFileFmt(model.BinaryFileFormat):
                     break
 
                 # Get line and split it into fields
-                print(line)
                 splitted_line = line.rstrip("\n").split(sep="\t")
-                print(splitted_line)
 
                 # Check that it is split in 4
                 if len(splitted_line) != 4:
