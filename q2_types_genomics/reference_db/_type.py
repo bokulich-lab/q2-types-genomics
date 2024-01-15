@@ -5,18 +5,19 @@
 #
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
-
-
 from qiime2.plugin import SemanticType
 from q2_types_genomics.plugin_setup import plugin
 
 ReferenceDB = SemanticType('ReferenceDB', field_names='type')
 Diamond = SemanticType('Diamond', variant_of=ReferenceDB.field['type'])
 Eggnog = SemanticType('Eggnog', variant_of=ReferenceDB.field['type'])
-
+NCBITaxonomy = SemanticType(
+    'NCBITaxonomy', variant_of=ReferenceDB.field['type']
+    )
 EggnogSequenceTaxa = SemanticType(
     'EggnogSequenceTaxa', variant_of=ReferenceDB.field['type']
 )
+
 plugin.register_semantic_types(
-    ReferenceDB, Diamond, Eggnog, EggnogSequenceTaxa
+    ReferenceDB, Diamond, Eggnog, EggnogSequenceTaxa, NCBITaxonomy
 )

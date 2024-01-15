@@ -5,14 +5,13 @@
 #
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
-
 from qiime2.plugin.testing import TestPluginBase
-
 from q2_types_genomics.reference_db._format import (
-        DiamondDatabaseDirFmt, EggnogRefDirFmt, EggnogProteinSequencesDirFmt
-        )
+    DiamondDatabaseDirFmt, EggnogRefDirFmt, NCBITaxonomyDirFmt,
+    EggnogProteinSequencesDirFmt
+)
 from q2_types_genomics.reference_db._type import (
-    ReferenceDB, Diamond, Eggnog, EggnogSequenceTaxa
+    ReferenceDB, Diamond, Eggnog, NCBITaxonomy, EggnogSequenceTaxa
 )
 
 
@@ -45,3 +44,11 @@ class TestReferenceType(TestPluginBase):
         self.assertSemanticTypeRegisteredToFormat(
                 ReferenceDB[EggnogSequenceTaxa],
                 EggnogProteinSequencesDirFmt)
+
+    def test_ncbi_registration(self):
+        self.assertRegisteredSemanticType(NCBITaxonomy)
+
+    def test_ncbi_semantic_type_registered_to_eggnog_dir_fmt(self):
+        self.assertSemanticTypeRegisteredToFormat(
+                ReferenceDB[NCBITaxonomy],
+                NCBITaxonomyDirFmt)
