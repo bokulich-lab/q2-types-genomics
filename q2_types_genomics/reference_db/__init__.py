@@ -8,7 +8,8 @@
 
 
 from q2_types_genomics.reference_db._type import (
-    ReferenceDB, Diamond, Eggnog, NCBITaxonomy
+    ReferenceDB, Diamond, Eggnog, NCBITaxonomy,
+    EggnogProteinSequences
 )
 
 from q2_types_genomics.reference_db._format import (
@@ -17,9 +18,11 @@ from q2_types_genomics.reference_db._format import (
     EggnogRefBinFileFmt,
     DiamondDatabaseFileFmt,
     DiamondDatabaseDirFmt,
-    NCBITaxonomyDirFmt
+    NCBITaxonomyDirFmt,
+    EggnogProteinSequencesDirFmt
     )
 
 __all__ = ['ReferenceDB', 'Diamond', 'Eggnog', 'DiamondDatabaseFileFmt',
            'DiamondDatabaseDirFmt', 'EggnogRefDirFmt', 'EggnogRefTextFileFmt',
-           'EggnogRefBinFileFmt', 'NCBITaxonomyDirFmt', 'NCBITaxonomy']
+           'EggnogRefBinFileFmt', 'NCBITaxonomyDirFmt', 'NCBITaxonomy',
+           'EggnogProteinSequencesDirFmt', 'EggnogProteinSequences']

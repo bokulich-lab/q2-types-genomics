@@ -9,7 +9,8 @@ from qiime2.plugin.testing import TestPluginBase
 from q2_types_genomics.reference_db._format import (
         DiamondDatabaseFileFmt, DiamondDatabaseDirFmt, EggnogRefBinFileFmt,
         EggnogRefDirFmt, NCBITaxonomyNamesFormat, NCBITaxonomyNodesFormat,
-        NCBITaxonomyDirFmt, NCBITaxonomyBinaryFileFmt
+        NCBITaxonomyDirFmt, NCBITaxonomyBinaryFileFmt,
+        EggnogProteinSequencesDirFmt, EggnogRefTextFileFmt
         )
 from qiime2.plugin import ValidationError
 
@@ -87,6 +88,69 @@ class TestRefFormats(TestPluginBase):
         fmt_obj = EggnogRefDirFmt(dirpath, mode='r')
 
         fmt_obj.validate()
+
+    def test_eggnog_sequence_taxa_dir_fmt(self):
+        dirpath = self.get_data_path('eggnog_seq_tax')
+        fmt_obj = EggnogProteinSequencesDirFmt(dirpath, mode='r')
+
+        fmt_obj.validate()
+
+    def test_EggnogRefTextFileFmt_valid(self):
+        filepath = self.get_data_path('eggnog_seq_tax/e5.taxid_info.tsv')
+        fmt_obj = EggnogRefTextFileFmt(filepath, mode='r')
+
+        fmt_obj.validate()
+
+    def test_EggnogRefTextFileFmt_invalid_col(self):
+        filepath = self.get_data_path('eggnog_seq_tax_bad/invalid_col.tsv')
+        fmt_obj = EggnogRefTextFileFmt(filepath, mode='r')
+
+        with self.assertRaisesRegex(
+            ValidationError,
+            r"Wrong columns"
+        ):
+            fmt_obj.validate()
+
+    def test_EggnogRefTextFileFmt_too_many_cols(self):
+        filepath = self.get_data_path('eggnog_seq_tax_bad/too_many_cols.tsv')
+        fmt_obj = EggnogRefTextFileFmt(filepath, mode='r')
+
+        with self.assertRaisesRegex(
+            ValidationError,
+            r"Too many columns."
+        ):
+            fmt_obj.validate()
+
+    def test_EggnogRefTextFileFmt_invalid_rank(self):
+        filepath = self.get_data_path('eggnog_seq_tax_bad/invalid_rank.tsv')
+        fmt_obj = EggnogRefTextFileFmt(filepath, mode='r')
+
+        with self.assertRaisesRegex(
+            ValidationError,
+            r"Invalid line at line 3:"
+        ):
+            fmt_obj.validate()
+
+    def test_EggnogRefTextFileFmt_invalid_taxid(self):
+        filepath = self.get_data_path('eggnog_seq_tax_bad/invalid_taxid.tsv')
+        fmt_obj = EggnogRefTextFileFmt(filepath, mode='r')
+
+        with self.assertRaisesRegex(
+            ValidationError,
+            r"Invalid line at line 4"
+        ):
+            fmt_obj.validate()
+
+    def test_EggnogRefTextFileFmt_invalid_taxid_lineage(self):
+        filepath = self.get_data_path(
+            'eggnog_seq_tax_bad/invalid_taxid_lineage.tsv')
+        fmt_obj = EggnogRefTextFileFmt(filepath, mode='r')
+
+        with self.assertRaisesRegex(
+            ValidationError,
+            r"Invalid line at line 9"
+        ):
+            fmt_obj.validate()
 
 
 class TestNCBIFormats(TestPluginBase):
