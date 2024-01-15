@@ -11,7 +11,7 @@ from qiime2.plugin import model
 from qiime2.core.exceptions import ValidationError
 from q2_types_genomics.plugin_setup import plugin
 from q2_types_genomics.reference_db._type import (
-    ReferenceDB, Eggnog, Diamond, EggnogSequenceTaxa, NCBITaxonomy
+    ReferenceDB, Eggnog, Diamond, EggnogProteinSequences, NCBITaxonomy
 )
 from q2_types.feature_data import MixedCaseProteinFASTAFormat
 
@@ -129,7 +129,7 @@ class EggnogProteinSequencesDirFmt(model.DirectoryFormat):
 
 
 plugin.register_formats(EggnogProteinSequencesDirFmt)
-plugin.register_semantic_type_to_format(ReferenceDB[EggnogSequenceTaxa],
+plugin.register_semantic_type_to_format(ReferenceDB[EggnogProteinSequences],
                                         EggnogProteinSequencesDirFmt)
 
 

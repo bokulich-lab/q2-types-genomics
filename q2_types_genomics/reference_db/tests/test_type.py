@@ -11,7 +11,7 @@ from q2_types_genomics.reference_db._format import (
     EggnogProteinSequencesDirFmt
 )
 from q2_types_genomics.reference_db._type import (
-    ReferenceDB, Diamond, Eggnog, NCBITaxonomy, EggnogSequenceTaxa
+    ReferenceDB, Diamond, Eggnog, NCBITaxonomy, EggnogProteinSequences
 )
 
 
@@ -37,12 +37,12 @@ class TestReferenceType(TestPluginBase):
                 ReferenceDB[Eggnog],
                 EggnogRefDirFmt)
 
-    def test_EggnogSequenceTaxa_registration(self):
-        self.assertRegisteredSemanticType(EggnogSequenceTaxa)
+    def test_EggnogProteinSequences_registration(self):
+        self.assertRegisteredSemanticType(EggnogProteinSequences)
 
     def test_SequenceTaxa_semantic_type_registered_to_DirFmt(self):
         self.assertSemanticTypeRegisteredToFormat(
-                ReferenceDB[EggnogSequenceTaxa],
+                ReferenceDB[EggnogProteinSequences],
                 EggnogProteinSequencesDirFmt)
 
     def test_ncbi_registration(self):

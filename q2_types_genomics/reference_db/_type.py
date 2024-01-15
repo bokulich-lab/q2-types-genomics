@@ -14,10 +14,10 @@ Eggnog = SemanticType('Eggnog', variant_of=ReferenceDB.field['type'])
 NCBITaxonomy = SemanticType(
     'NCBITaxonomy', variant_of=ReferenceDB.field['type']
     )
-EggnogSequenceTaxa = SemanticType(
-    'EggnogSequenceTaxa', variant_of=ReferenceDB.field['type']
+EggnogProteinSequences = SemanticType(
+    'EggnogProteinSequences', variant_of=ReferenceDB.field['type']
 )
 
 plugin.register_semantic_types(
-    ReferenceDB, Diamond, Eggnog, EggnogSequenceTaxa, NCBITaxonomy
+    ReferenceDB, Diamond, Eggnog, EggnogProteinSequences, NCBITaxonomy
 )
