@@ -290,13 +290,22 @@ class NCBITaxonomyVersionFormat(model.TextFileFormat):
 
     def _validate_body(self, lines):
         file_names = ['nodes.dmp', 'names.dmp', 'prot.accession2taxid.gz']
-        for line in lines:
-            fields = line.strip("\n").split("\t")
+        if len(lines[1:]) > 3:
+            raise ValidationError(
+                "Too many entries. "
+                f"There should only be 3, namely: {file_names}\n"
+                "Printing entires in version.tsv\n"
+                f"{lines}"
+            )
 
+        for line in lines[1:]:
+            fields = line.strip("\n").split("\t")
             # Raise error if file name is not valid
             if fields[0] not in file_names:
                 raise ValidationError(
-                    "Invalid filename found in version.tsv"
+                    "Invalid or repeated filename found in version.tsv.\n"
+                    "Printing entires in version.tsv\n"
+                    f"{lines}"
                 )
             else:
                 # Remove file name to insure its not repeated
@@ -305,7 +314,7 @@ class NCBITaxonomyVersionFormat(model.TextFileFormat):
             # Raise error if invalid date
             try:
                 day, month, year = fields[1].strip("\n").split("/")
-                datetime.date(day=day, month=month, year=year)
+                datetime.date(day=int(day), month=int(month), year=int(year))
             except ValueError:
                 raise ValidationError(
                     "Invalid date found in version.tsv\n"
@@ -316,7 +325,9 @@ class NCBITaxonomyVersionFormat(model.TextFileFormat):
             # Raise error if invalid time
             try:
                 hour, minute, second = fields[2].strip("\n").split(":")
-                datetime.time(hour=hour, minute=minute, second=second)
+                datetime.time(
+                    hour=int(hour), minute=int(minute), second=int(second)
+                )
             except ValueError:
                 raise ValidationError(
                     "Invalid time found in version.tsv\n"
@@ -328,7 +339,7 @@ class NCBITaxonomyVersionFormat(model.TextFileFormat):
         with open(str(self), "r") as file:
             lines = file.readlines()
             self._validate_header(lines)
-            self._validate_header(lines)
+            self._validate_body(lines)
 
 
 plugin.register_formats(

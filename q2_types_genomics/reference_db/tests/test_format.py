@@ -10,7 +10,8 @@ from q2_types_genomics.reference_db._format import (
         DiamondDatabaseFileFmt, DiamondDatabaseDirFmt, EggnogRefBinFileFmt,
         EggnogRefDirFmt, NCBITaxonomyNamesFormat, NCBITaxonomyNodesFormat,
         NCBITaxonomyDirFmt, NCBITaxonomyBinaryFileFmt,
-        EggnogProteinSequencesDirFmt, EggnogRefTextFileFmt
+        EggnogProteinSequencesDirFmt, EggnogRefTextFileFmt,
+        NCBITaxonomyVersionFormat
         )
 from qiime2.plugin import ValidationError
 
@@ -264,5 +265,73 @@ class TestNCBIFormats(TestPluginBase):
         with self.assertRaisesRegex(
                 ValidationError,
                 r"['A0A009IHW8', 'A0A009IHW8.1', '1310613', '1835922267s']"
+        ):
+            format.validate()
+
+    def test_version_file_fmt_positive(self):
+        dirpath = self.get_data_path("ncbi/db-valid/version.tsv")
+        format = NCBITaxonomyVersionFormat(dirpath, mode="r")
+        format.validate()
+
+    def test_version_file_fmt_too_many_cols(self):
+        dirpath = self.get_data_path("ncbi/version_too_many_cols.tsv")
+        format = NCBITaxonomyVersionFormat(dirpath, mode="r")
+        with self.assertRaisesRegex(
+                ValidationError,
+                "Too many columns"
+        ):
+            format.validate()
+
+    def test_version_file_fmt_wrong_cols(self):
+        dirpath = self.get_data_path("ncbi/version_wrong_cols.tsv")
+        format = NCBITaxonomyVersionFormat(dirpath, mode="r")
+        with self.assertRaisesRegex(
+                ValidationError,
+                "Wrong columns"
+        ):
+            format.validate()
+
+    def test_version_file_fmt_too_many_entries(self):
+        dirpath = self.get_data_path("ncbi/version_too_many_entries.tsv")
+        format = NCBITaxonomyVersionFormat(dirpath, mode="r")
+        with self.assertRaisesRegex(
+                ValidationError,
+                "Too many entries"
+        ):
+            format.validate()
+
+    def test_version_file_fmt_invalid_filename(self):
+        dirpath = self.get_data_path("ncbi/version_invalid_filename.tsv")
+        format = NCBITaxonomyVersionFormat(dirpath, mode="r")
+        with self.assertRaisesRegex(
+                ValidationError,
+                "Invalid or repeated filename"
+        ):
+            format.validate()
+
+    def test_version_file_fmt_repeated_filename(self):
+        dirpath = self.get_data_path("ncbi/version_repeated_filename.tsv")
+        format = NCBITaxonomyVersionFormat(dirpath, mode="r")
+        with self.assertRaisesRegex(
+                ValidationError,
+                "Invalid or repeated filename"
+        ):
+            format.validate()
+
+    def test_version_file_fmt_invalid_date(self):
+        dirpath = self.get_data_path("ncbi/version_invalid_date.tsv")
+        format = NCBITaxonomyVersionFormat(dirpath, mode="r")
+        with self.assertRaisesRegex(
+                ValidationError,
+                "Invalid date"
+        ):
+            format.validate()
+
+    def test_version_file_fmt_invalid_time(self):
+        dirpath = self.get_data_path("ncbi/version_invalid_time.tsv")
+        format = NCBITaxonomyVersionFormat(dirpath, mode="r")
+        with self.assertRaisesRegex(
+                ValidationError,
+                "Invalid time"
         ):
             format.validate()
