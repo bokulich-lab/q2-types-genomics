@@ -6,7 +6,7 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
-
+import datetime
 import gzip
 import re
 from qiime2.plugin import model
@@ -263,8 +263,77 @@ class NCBITaxonomyBinaryFileFmt(model.BinaryFileFormat):
                     line_no += 1
 
 
+class NCBITaxonomyVersionFormat(model.TextFileFormat):
+    def _validate_header(self, lines):
+        first_line = lines[0].strip("\n").split("\t")
+        if len(first_line) > 3:
+            raise ValidationError(
+                "Too many columns.\n"
+                "Expected columns:\n"
+                "['file_name', 'date', 'time']\n"
+                "Columns given:\n"
+                f"{first_line}"
+            )
+
+        if not (
+            first_line[0] == 'file_name' and
+            first_line[1] == 'date' and
+            first_line[2] == 'time'
+        ):
+            raise ValidationError(
+                "Wrong columns.\n"
+                "Expected columns:\n"
+                "['file_name', 'date', 'time']\n"
+                "Columns given:\n"
+                f"{first_line}"
+            )
+
+    def _validate_body(self, lines):
+        file_names = ['nodes.dmp', 'names.dmp', 'prot.accession2taxid.gz']
+        for line in lines:
+            fields = line.strip("\n").split("\t")
+
+            # Raise error if file name is not valid
+            if fields[0] not in file_names:
+                raise ValidationError(
+                    "Invalid filename found in version.tsv"
+                )
+            else:
+                # Remove file name to insure its not repeated
+                file_names.remove(fields[0])
+
+            # Raise error if invalid date
+            try:
+                day, month, year = fields[1].strip("\n").split("/")
+                datetime.date(day=day, month=month, year=year)
+            except ValueError:
+                raise ValidationError(
+                    "Invalid date found in version.tsv\n"
+                    "Printing invalid date:\n"
+                    f"{fields[1]}"
+                )
+
+            # Raise error if invalid time
+            try:
+                hour, minute, second = fields[2].strip("\n").split(":")
+                datetime.time(hour=hour, minute=minute, second=second)
+            except ValueError:
+                raise ValidationError(
+                    "Invalid time found in version.tsv\n"
+                    "Printing invalid time:\n"
+                    f"{fields[2]}\n"
+                )
+
+    def _validate_(self, level):
+        with open(str(self), "r") as file:
+            lines = file.readlines()
+            self._validate_header(lines)
+            self._validate_header(lines)
+
+
 plugin.register_formats(
-    NCBITaxonomyNodesFormat, NCBITaxonomyNamesFormat, NCBITaxonomyBinaryFileFmt
+    NCBITaxonomyNodesFormat, NCBITaxonomyNamesFormat, 
+    NCBITaxonomyBinaryFileFmt, NCBITaxonomyVersionFormat
     )
 
 
@@ -275,6 +344,7 @@ class NCBITaxonomyDirFmt(model.DirectoryFormat):
         'prot.accession2taxid.gz',
         format=NCBITaxonomyBinaryFileFmt
         )
+    version = model.File("version.tsv", format=NCBITaxonomyVersionFormat)
 
 
 plugin.register_formats(NCBITaxonomyDirFmt)
