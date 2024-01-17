@@ -343,7 +343,7 @@ class NCBITaxonomyVersionFormat(model.TextFileFormat):
 
 
 plugin.register_formats(
-    NCBITaxonomyNodesFormat, NCBITaxonomyNamesFormat, 
+    NCBITaxonomyNodesFormat, NCBITaxonomyNamesFormat,
     NCBITaxonomyBinaryFileFmt, NCBITaxonomyVersionFormat
     )
 
