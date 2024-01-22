@@ -14,7 +14,7 @@ from qiime2.core.exceptions import ValidationError
 from q2_types_genomics.plugin_setup import plugin
 from q2_types_genomics.reference_db._type import (
     ReferenceDB, Eggnog, Diamond, NCBITaxonomy,
-    EggnogProteinSequences
+    EggnogProteinSequences, BuscoDB
 )
 from q2_types.feature_data import MixedCaseProteinFASTAFormat
 
@@ -294,3 +294,108 @@ class EggnogProteinSequencesDirFmt(model.DirectoryFormat):
 plugin.register_formats(EggnogProteinSequencesDirFmt)
 plugin.register_semantic_type_to_format(ReferenceDB[EggnogProteinSequences],
                                         EggnogProteinSequencesDirFmt)
+
+
+class BuscoGenericTextFileFmt(model.TextFileFormat):
+    def _validate_(self, level):
+        pass
+
+
+class BuscoGenericBinaryFileFmt(model.BinaryFileFormat):
+    def _validate_(self, level):
+        pass
+
+
+class BuscoDatabaseDirFmt(model.DirectoryFormat):
+    # Text files
+    version_file = model.File(
+        'file_versions.tsv', format=BuscoGenericTextFileFmt
+    )
+    ancestral = model.FileCollection(
+        r'.+ancestral$', format=BuscoGenericTextFileFmt
+    )
+    dataset = model.FileCollection(
+        r'.+dataset\.cfg$', format=BuscoGenericTextFileFmt
+    )
+    lengths_cutoff = model.FileCollection(
+        r'.+lengths_cutoff$', format=BuscoGenericTextFileFmt
+    )
+    scores_cutoff = model.FileCollection(
+        r'.+scores_cutoff$', format=BuscoGenericTextFileFmt
+    )
+    links_to_ODB10 = model.FileCollection(
+        r'.+links_to_ODB10\.txt$', format=BuscoGenericTextFileFmt
+    )
+    ancestral_variants = model.FileCollection(
+        r'.+ancestral_variants$', format=BuscoGenericTextFileFmt
+    )
+    ogs_id = model.FileCollection(
+        r'.+ogs\.id\.info$', format=BuscoGenericTextFileFmt
+    )
+    species = model.FileCollection(
+        r'.+species\.info$', format=BuscoGenericTextFileFmt
+    )
+    prfls = model.FileCollection(r'.+\.prfl$', format=BuscoGenericTextFileFmt)
+    hmms = model.FileCollection(r'.+\.hmm', format=BuscoGenericTextFileFmt)
+
+    # Compressed files
+    refseq_db = model.FileCollection(
+        r'.+refseq_db\.faa\.gz', format=BuscoGenericBinaryFileFmt
+    )
+    refseq_db_md5 = model.FileCollection(
+        r'.+refseq_db\.faa\.gz\.md5', format=BuscoGenericBinaryFileFmt
+    )
+
+    @ancestral.set_path_maker
+    def ancestral_path_maker(self, name):
+        return str(name)
+
+    @dataset.set_path_maker
+    def dataset_path_maker(self, name):
+        return str(name)
+
+    @lengths_cutoff.set_path_maker
+    def lengths_cutoff_path_maker(self, name):
+        return str(name)
+
+    @scores_cutoff.set_path_maker
+    def scores_cutoff_path_maker(self, name):
+        return str(name)
+
+    @links_to_ODB10.set_path_maker
+    def links_to_ODB10_path_maker(self, name):
+        return str(name)
+
+    @ancestral_variants.set_path_maker
+    def ancestral_variants_path_maker(self, name):
+        return str(name)
+
+    @ogs_id.set_path_maker
+    def ogs_id_path_maker(self, name):
+        return str(name)
+
+    @species.set_path_maker
+    def species_path_maker(self, name):
+        return str(name)
+
+    @prfls.set_path_maker
+    def prfls_path_maker(self, name):
+        return str(name)
+
+    @hmms.set_path_maker
+    def hmms_path_maker(self, name):
+        return str(name)
+
+    @refseq_db.set_path_maker
+    def refseq_db_path_maker(self, name):
+        return str(name)
+
+    @refseq_db_md5.set_path_maker
+    def refseq_db_md5_path_maker(self, name):
+        return str(name)
+
+
+plugin.register_formats(BuscoDatabaseDirFmt)
+plugin.register_semantic_type_to_format(
+    ReferenceDB[BuscoDB], BuscoDatabaseDirFmt
+)
