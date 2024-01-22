@@ -307,45 +307,47 @@ class BuscoGenericBinaryFileFmt(model.BinaryFileFormat):
 
 
 class BuscoDatabaseDirFmt(model.DirectoryFormat):
-    # Text files
+    # File collections for text files
+    (
+        ancestral,
+        dataset,
+        lengths_cutoff,
+        scores_cutoff,
+        links_to_ODB10,
+        ancestral_variants,
+        ogs_id,
+        species,
+        prfls,
+        hmms,
+        refseq_db_md5
+    ) = [
+            model.FileCollection(pattern, format=BuscoGenericTextFileFmt)
+            for pattern in [
+                r'.+ancestral$',
+                r'.+dataset\.cfg$',
+                r'.+lengths_cutoff$',
+                r'.+scores_cutoff$',
+                r'.+links_to_ODB10\.txt$',
+                r'.+ancestral_variants$',
+                r'.+ogs\.id\.info$',
+                r'.+species\.info$',
+                r'.+\.prfl$',
+                r'.+\.hmm$',
+                r'.+refseq_db\.faa\.gz\.md5'
+            ]
+        ]
+
+    # Version files
     version_file = model.File(
         'file_versions.tsv', format=BuscoGenericTextFileFmt
     )
-    ancestral = model.FileCollection(
-        r'.+ancestral$', format=BuscoGenericTextFileFmt
-    )
-    dataset = model.FileCollection(
-        r'.+dataset\.cfg$', format=BuscoGenericTextFileFmt
-    )
-    lengths_cutoff = model.FileCollection(
-        r'.+lengths_cutoff$', format=BuscoGenericTextFileFmt
-    )
-    scores_cutoff = model.FileCollection(
-        r'.+scores_cutoff$', format=BuscoGenericTextFileFmt
-    )
-    links_to_ODB10 = model.FileCollection(
-        r'.+links_to_ODB10\.txt$', format=BuscoGenericTextFileFmt
-    )
-    ancestral_variants = model.FileCollection(
-        r'.+ancestral_variants$', format=BuscoGenericTextFileFmt
-    )
-    ogs_id = model.FileCollection(
-        r'.+ogs\.id\.info$', format=BuscoGenericTextFileFmt
-    )
-    species = model.FileCollection(
-        r'.+species\.info$', format=BuscoGenericTextFileFmt
-    )
-    prfls = model.FileCollection(r'.+\.prfl$', format=BuscoGenericTextFileFmt)
-    hmms = model.FileCollection(r'.+\.hmm', format=BuscoGenericTextFileFmt)
 
     # Compressed files
     refseq_db = model.FileCollection(
         r'.+refseq_db\.faa\.gz', format=BuscoGenericBinaryFileFmt
     )
-    refseq_db_md5 = model.FileCollection(
-        r'.+refseq_db\.faa\.gz\.md5', format=BuscoGenericBinaryFileFmt
-    )
 
+    # Define path maker methods for each
     @ancestral.set_path_maker
     def ancestral_path_maker(self, name):
         return str(name)
