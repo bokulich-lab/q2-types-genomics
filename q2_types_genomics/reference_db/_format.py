@@ -16,7 +16,9 @@ from q2_types_genomics.reference_db._type import (
     ReferenceDB, Eggnog, Diamond, NCBITaxonomy,
     EggnogProteinSequences, BuscoDB
 )
-from q2_types.feature_data import MixedCaseProteinFASTAFormat
+from q2_types.feature_data import (
+    MixedCaseProteinFASTAFormat, AlignedProteinFASTAFormat
+)
 
 
 class EggnogRefTextFileFmt(model.TextFileFormat):
@@ -313,29 +315,64 @@ class BuscoDatabaseDirFmt(model.DirectoryFormat):
         dataset,
         lengths_cutoff,
         scores_cutoff,
-        links_to_ODB10,
+        links_to_ODB,
         ancestral_variants,
         ogs_id,
         species,
-        prfls,
         hmms,
         refseq_db_md5
     ) = [
-            model.FileCollection(pattern, format=BuscoGenericTextFileFmt)
+            model.FileCollection(
+                rf"lineages\/{pattern}",
+                format=BuscoGenericTextFileFmt
+            )
             for pattern in [
-                r'.+ancestral$',
-                r'.+dataset\.cfg$',
-                r'.+lengths_cutoff$',
-                r'.+scores_cutoff$',
-                r'.+links_to_ODB10\.txt$',
-                r'.+ancestral_variants$',
-                r'.+ogs\.id\.info$',
-                r'.+species\.info$',
-                r'.+\.prfl$',
-                r'.+\.hmm$',
-                r'.+refseq_db\.faa\.gz\.md5'
+                r'.+\/ancestral$',
+                r'.+\/dataset\.cfg$',
+                r'.+\/lengths_cutoff$',
+                r'.+\/scores_cutoff$',
+                r'.+\/links_to_ODB.+\.txt$',
+                r'.+\/ancestral_variants$',
+                r'.+\/info\/ogs\.id\.info$',
+                r'.+\/info\/species\.info$',
+                r'.+\/hmms\/.+\.hmm$',
+                r'.+\/refseq_db\.faa\.gz\.md5'
             ]
         ]
+
+    # Placement_files. Optional because they are not in virus DB
+    (
+        list_of_reference_markers,
+        mapping_taxid_lineage,
+        mapping_taxids_busco_dataset_name,
+        tree,
+        tree_metadata,
+    ) = [
+            model.FileCollection(
+                rf"placement_files\/{pattern}",
+                format=BuscoGenericTextFileFmt,
+                optional=True
+            )
+            for pattern in [
+                r'list_of_reference_markers\..+\.txt$',
+                r'mapping_taxid-lineage\..+\.txt$',
+                r'mapping_taxids-busco_dataset_name\..+\.txt$',
+                r'tree\..+\.nwk$',
+                r'tree_metadata\..+\.txt$',
+            ]
+        ]
+    supermatrix_aln = model.FileCollection(
+        r'placement_files\/supermatrix\.aln\..+\.faa$',
+        format=AlignedProteinFASTAFormat,
+        optional=True
+    )
+
+    # Profiles ore not in Prok DB so they need to be optional
+    prfls = model.FileCollection(
+        r'lineages\/.+\/prfl\/.+\.prfl$',
+        format=BuscoGenericTextFileFmt,
+        optional=True
+    )
 
     # Version files
     version_file = model.File(
@@ -344,7 +381,8 @@ class BuscoDatabaseDirFmt(model.DirectoryFormat):
 
     # Compressed files
     refseq_db = model.FileCollection(
-        r'.+refseq_db\.faa\.gz', format=BuscoGenericBinaryFileFmt
+        r'lineages\/.+refseq_db\.faa\.gz',
+        format=BuscoGenericBinaryFileFmt
     )
 
     # Define path maker methods for each
@@ -364,7 +402,7 @@ class BuscoDatabaseDirFmt(model.DirectoryFormat):
     def scores_cutoff_path_maker(self, name):
         return str(name)
 
-    @links_to_ODB10.set_path_maker
+    @links_to_ODB.set_path_maker
     def links_to_ODB10_path_maker(self, name):
         return str(name)
 
@@ -380,10 +418,6 @@ class BuscoDatabaseDirFmt(model.DirectoryFormat):
     def species_path_maker(self, name):
         return str(name)
 
-    @prfls.set_path_maker
-    def prfls_path_maker(self, name):
-        return str(name)
-
     @hmms.set_path_maker
     def hmms_path_maker(self, name):
         return str(name)
@@ -394,6 +428,34 @@ class BuscoDatabaseDirFmt(model.DirectoryFormat):
 
     @refseq_db_md5.set_path_maker
     def refseq_db_md5_path_maker(self, name):
+        return str(name)
+
+    @list_of_reference_markers.set_path_maker
+    def list_of_reference_markers_path_maker(self, name):
+        return str(name)
+
+    @mapping_taxid_lineage.set_path_maker
+    def mapping_taxid_lineage_path_maker(self, name):
+        return str(name)
+
+    @mapping_taxids_busco_dataset_name.set_path_maker
+    def mapping_taxids_busco_dataset_name_path_maker(self, name):
+        return str(name)
+
+    @tree.set_path_maker
+    def tree_path_maker(self, name):
+        return str(name)
+
+    @tree_metadata.set_path_maker
+    def tree_metadata_path_maker(self, name):
+        return str(name)
+
+    @supermatrix_aln.set_path_maker
+    def supermatrix_aln_path_maker(self, name):
+        return str(name)
+
+    @prfls.set_path_maker
+    def prfls_path_maker(self, name):
         return str(name)
 
 
