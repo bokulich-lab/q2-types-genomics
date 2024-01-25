@@ -323,20 +323,20 @@ class BuscoDatabaseDirFmt(model.DirectoryFormat):
         refseq_db_md5
     ) = [
             model.FileCollection(
-                rf"busco_downloads\/lineages\/{pattern}",
+                rf"busco_downloads\/lineages\/.+\/{pattern}",
                 format=BuscoGenericTextFileFmt
             )
             for pattern in [
-                r'.+\/ancestral$',
-                r'.+\/dataset\.cfg$',
-                r'.+\/lengths_cutoff$',
-                r'.+\/scores_cutoff$',
-                r'.+\/links_to_ODB.+\.txt$',
-                r'.+\/ancestral_variants$',
-                r'.+\/info\/ogs\.id\.info$',
-                r'.+\/info\/species\.info$',
-                r'.+\/hmms\/.+\.hmm$',
-                r'.+\/refseq_db\.faa\.gz\.md5'
+                r'ancestral$',
+                r'dataset\.cfg$',
+                r'lengths_cutoff$',
+                r'scores_cutoff$',
+                r'links_to_ODB.+\.txt$',
+                r'ancestral_variants$',
+                r'info\/ogs\.id\.info$',
+                r'info\/species\.info$',
+                r'hmms\/.+\.hmm$',
+                r'refseq_db\.faa\.gz\.md5'
             ]
         ]
 
@@ -361,102 +361,36 @@ class BuscoDatabaseDirFmt(model.DirectoryFormat):
                 r'tree_metadata\..+\.txt$',
             ]
         ]
+
+    # Others
     supermatrix_aln = model.FileCollection(
         r'busco_downloads\/placement_files\/supermatrix\.aln\..+\.faa$',
         format=AlignedProteinFASTAFormat,
         optional=True
     )
-
-    # Profiles ore not in Prok DB so they need to be optional
     prfls = model.FileCollection(
         r'busco_downloads\/lineages\/.+\/prfl\/.+\.prfl$',
         format=BuscoGenericTextFileFmt,
         optional=True
     )
-
-    # Version files
     version_file = model.File(
         'busco_downloads/file_versions.tsv', format=BuscoGenericTextFileFmt
     )
-
-    # Compressed files
     refseq_db = model.FileCollection(
         r'busco_downloads\/lineages\/.+refseq_db\.faa\.gz',
         format=BuscoGenericBinaryFileFmt
     )
 
-    # Define path maker methods for each
-    @ancestral.set_path_maker
-    def ancestral_path_maker(self, name):
+    def _path_maker(self, name):
         return str(name)
 
-    @dataset.set_path_maker
-    def dataset_path_maker(self, name):
-        return str(name)
+    def __init__(self, path, mode):
+        super().__init__(path, mode)
 
-    @lengths_cutoff.set_path_maker
-    def lengths_cutoff_path_maker(self, name):
-        return str(name)
-
-    @scores_cutoff.set_path_maker
-    def scores_cutoff_path_maker(self, name):
-        return str(name)
-
-    @links_to_ODB.set_path_maker
-    def links_to_ODB10_path_maker(self, name):
-        return str(name)
-
-    @ancestral_variants.set_path_maker
-    def ancestral_variants_path_maker(self, name):
-        return str(name)
-
-    @ogs_id.set_path_maker
-    def ogs_id_path_maker(self, name):
-        return str(name)
-
-    @species.set_path_maker
-    def species_path_maker(self, name):
-        return str(name)
-
-    @hmms.set_path_maker
-    def hmms_path_maker(self, name):
-        return str(name)
-
-    @refseq_db.set_path_maker
-    def refseq_db_path_maker(self, name):
-        return str(name)
-
-    @refseq_db_md5.set_path_maker
-    def refseq_db_md5_path_maker(self, name):
-        return str(name)
-
-    @list_of_reference_markers.set_path_maker
-    def list_of_reference_markers_path_maker(self, name):
-        return str(name)
-
-    @mapping_taxid_lineage.set_path_maker
-    def mapping_taxid_lineage_path_maker(self, name):
-        return str(name)
-
-    @mapping_taxids_busco_dataset_name.set_path_maker
-    def mapping_taxids_busco_dataset_name_path_maker(self, name):
-        return str(name)
-
-    @tree.set_path_maker
-    def tree_path_maker(self, name):
-        return str(name)
-
-    @tree_metadata.set_path_maker
-    def tree_metadata_path_maker(self, name):
-        return str(name)
-
-    @supermatrix_aln.set_path_maker
-    def supermatrix_aln_path_maker(self, name):
-        return str(name)
-
-    @prfls.set_path_maker
-    def prfls_path_maker(self, name):
-        return str(name)
+        # Overwrite path maker methods for all file collections
+        for var_name, var_value in vars(self.__class__).items():
+            if isinstance(var_value, model.FileCollection):
+                var_value.set_path_maker(self._path_maker)
 
 
 plugin.register_formats(BuscoDatabaseDirFmt)
