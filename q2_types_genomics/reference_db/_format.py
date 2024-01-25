@@ -323,7 +323,7 @@ class BuscoDatabaseDirFmt(model.DirectoryFormat):
         refseq_db_md5
     ) = [
             model.FileCollection(
-                rf"lineages\/{pattern}",
+                rf"busco_downloads\/lineages\/{pattern}",
                 format=BuscoGenericTextFileFmt
             )
             for pattern in [
@@ -349,7 +349,7 @@ class BuscoDatabaseDirFmt(model.DirectoryFormat):
         tree_metadata,
     ) = [
             model.FileCollection(
-                rf"placement_files\/{pattern}",
+                rf"busco_downloads\/placement_files\/{pattern}",
                 format=BuscoGenericTextFileFmt,
                 optional=True
             )
@@ -362,26 +362,26 @@ class BuscoDatabaseDirFmt(model.DirectoryFormat):
             ]
         ]
     supermatrix_aln = model.FileCollection(
-        r'placement_files\/supermatrix\.aln\..+\.faa$',
+        r'busco_downloads\/placement_files\/supermatrix\.aln\..+\.faa$',
         format=AlignedProteinFASTAFormat,
         optional=True
     )
 
     # Profiles ore not in Prok DB so they need to be optional
     prfls = model.FileCollection(
-        r'lineages\/.+\/prfl\/.+\.prfl$',
+        r'busco_downloads\/lineages\/.+\/prfl\/.+\.prfl$',
         format=BuscoGenericTextFileFmt,
         optional=True
     )
 
     # Version files
     version_file = model.File(
-        'file_versions.tsv', format=BuscoGenericTextFileFmt
+        'busco_downloads/file_versions.tsv', format=BuscoGenericTextFileFmt
     )
 
     # Compressed files
     refseq_db = model.FileCollection(
-        r'lineages\/.+refseq_db\.faa\.gz',
+        r'busco_downloads\/lineages\/.+refseq_db\.faa\.gz',
         format=BuscoGenericBinaryFileFmt
     )
 
