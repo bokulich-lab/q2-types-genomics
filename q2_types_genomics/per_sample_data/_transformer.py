@@ -6,6 +6,7 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 import os
+import shutil
 
 import pandas as pd
 from q2_types.feature_data import DNAFASTAFormat
@@ -26,6 +27,19 @@ def _1(dirfmt: MultiFASTADirectoryFormat) \
     return _mag_manifest_helper(
         dirfmt, MultiMAGSequencesDirFmt,
         MultiMAGManifestFormat, DNAFASTAFormat)
+
+
+@plugin.register_transformer
+def _2(dirfmt: MultiMAGSequencesDirFmt) \
+        -> MultiFASTADirectoryFormat:
+    result = MultiFASTADirectoryFormat()
+    for sample_id, mag in dirfmt.sample_dict().items():
+        os.makedirs(os.path.join(result.path, sample_id))
+        for mag_id, mag_fp in mag.items():
+            shutil.copy(
+                mag_fp, os.path.join(result.path, sample_id, f"{mag_id}.fa")
+            )
+    return result
 
 
 @plugin.register_transformer
