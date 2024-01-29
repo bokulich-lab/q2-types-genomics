@@ -133,6 +133,9 @@ class MultiFASTADirectoryFormat(MultiDirValidationMixin,
         mags_pattern = re.compile(self.pathspec)
         ids = {}
         for d in self.path.iterdir():
+            if not d.is_dir():
+                continue
+
             sample_id = d.name.rsplit('/', 1)[0]
             if sample_id not in ids:
                 ids[sample_id] = {}
